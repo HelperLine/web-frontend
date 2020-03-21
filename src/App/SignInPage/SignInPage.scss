@@ -1,0 +1,35 @@
+.SignInPage {
+
+    .SignInForm {
+        min-height: calc(100vh - 192px);
+        margin: 128px 0 64px 0;
+
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        .MuiButton-root .MuiButton-label a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .ButtonBox {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        a {
+            color: hsl(0, 0%, 60%);
+            text-decoration: underline;
+            text-align: center;
+        }
+    }
+}
