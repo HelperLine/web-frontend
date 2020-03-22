@@ -240,7 +240,7 @@ export function AccountPageComponent(props) {
 
                 <Grid container spacing={1} className={classes.formContainer}>
 
-                    <Grid item xs={props.account.email_verified ? 9 : 6}>
+                    <Grid item xs={12} md={props.account.email_verified ? 9 : 6}>
                         <CustomTextField
                             required disabled={props.account.email_verified}
                             ref={emailInputRef} onTab={blurEmail} onEnter={blurEmail} onEscape={blurEmail}
@@ -248,7 +248,7 @@ export function AccountPageComponent(props) {
                             value={state.account.email} onChange={(email) => handleFormChange({email: email})}/>
                     </Grid>
 
-                    <Grid item xs={props.account.email_verified ? 3 : 6}>
+                    <Grid item xs={12} md={props.account.email_verified ? 3 : 6}>
                         <div className="ButtonBox">
                             {!props.account.email_verified && (
                                 <div className={classes.wrapper}>
