@@ -103,10 +103,8 @@ export const GuidePage = (props) => {
             <Container maxWidth="sm">
                 <Typography variant="body1" className={classes.crowdSource}>
                     If you want to <strong>help us in the process</strong> feel free to contact us via:
-
                     <br/>
-
-                    <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>.
+                    <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
                 </Typography>
             </Container>
         </Container>

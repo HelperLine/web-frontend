@@ -32,6 +32,8 @@ import WifiIcon from '@material-ui/icons/Wifi';
 import WifiOffIcon from '@material-ui/icons/WifiOff';
 import AddIcon from '@material-ui/icons/Add';
 
+import './CallsPage.scss';
+
 var cloneDeep = require('lodash.clonedeep');
 
 
@@ -69,7 +71,7 @@ const useStyles = makeStyles(theme => ({
         marginRight: -4,
     },
     snackbar: {
-        margin: theme.spacing(1)
+        margin: theme.spacing(1),
     },
     snackbarContentError: {
         backgroundColor: theme.palette.primary.main,
@@ -105,6 +107,8 @@ class CallsPageWrapper extends React.Component {
         this.state = {
             loadingNewCall: false,
             loadingGoOnline: false,
+            errorMessageVisible: false,
+            errorMessageText: "",
         };
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -141,7 +145,18 @@ class CallsPageWrapper extends React.Component {
                 if (response.data.status === "ok") {
                     this.props.handleNewCallData(response);
                     console.log(response.data.calls);
+                } else if (response.data.status === "no new calls") {
+                    this.setState({
+                        errorMessageVisible: true,
+                        errorMessageText: "Currently no new calls. Please try again in a few minutes.",
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            errorMessageVisible: false,
+                        })
+                    }, 2500);
                 }
+
             }).catch(response => {
             console.log("Axios promise rejected! Response:");
             console.log(response);
@@ -182,7 +197,10 @@ class CallsPageWrapper extends React.Component {
 
                                 goOnline={this.goOnline}
                                 goOffline={this.goOffline}
-                                loadingGoOnline={this.state.loadingGoOnline}/>
+                                loadingGoOnline={this.state.loadingGoOnline}
+
+                                errorMessageVisible={this.state.errorMessageVisible}
+                                errorMessageText={this.state.errorMessageText}/>
         );
     }
 
@@ -193,7 +211,7 @@ export function CallsPageComponent(props) {
     const classes = useStyles();
 
     return (
-        <Container maxWidth="md" className="AccountPage">
+        <Container maxWidth="md" className="CallsPage">
 
             <Grid container spacing={1} className={classes.formContainer}>
 
@@ -258,6 +276,16 @@ export function CallsPageComponent(props) {
                 </Grid>
 
             </Grid>
+
+            <Snackbar className={classes.snackbar}
+                      open={props.errorMessageVisible}
+                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                <SnackbarContent
+                    className={classes.snackbarContentError}
+                    aria-describedby="message-id"
+                    message={<span id="message-id">{props.errorMessageText}</span>}
+                />
+            </Snackbar>
 
         </Container>
     );
