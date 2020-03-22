@@ -184,7 +184,7 @@ export function AccountPageComponent(props) {
             })
                 .then(response => {
                     if (response.data.status === "ok") {
-                        props.handleNewAccountData(response.data.account);
+                        props.handleNewAccountData(response);
                     } else {
                         errorSnackbar(response.data.status);
                     }
@@ -330,7 +330,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleNewAccountData: (account) => dispatch(handleNewAccountData(account)),
+    handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
 });
 
 export const AccountPage = connect(mapStateToProps, mapDispatchToProps)(AccountPageComponent);

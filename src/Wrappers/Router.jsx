@@ -12,6 +12,7 @@ import {Navbar, ReducedNavbar} from "../App/Navbar/Navbar";
 import {LoginPage} from '../App/SignInPage/LoginPage';
 import {RegisterPage} from "../App/SignInPage/RegisterPage";
 import {AccountPage} from "../App/AccountPage/AccountPage";
+import {CallsPage} from "../App/CallsPage/CallsPage";
 // import {Footer} from "../App/Footer/Footer";
 
 
@@ -69,7 +70,7 @@ const RouterComponent = (props) => (
                         <React.Fragment>
                             <Navbar/>
                             <Content>
-                                <p>Calls</p>
+                                <CallsPage/>
                             </Content>
                         </React.Fragment>
                     )}

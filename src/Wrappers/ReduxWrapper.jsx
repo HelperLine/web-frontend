@@ -20,7 +20,14 @@ function storeReducer(state = {
     loggedIn: false,
     autoLogin: false,
 
-    account: {},
+    account: {
+        email: "",
+        online: false,
+    },
+    calls: {
+        accepted: [],
+        fulfilled: []
+    },
     api_key: "",
 }, action) {
 
@@ -30,18 +37,18 @@ function storeReducer(state = {
         case "LOGIN":
             newState.loggedIn = true;
             newState.autoLogin = false;
-            newState.email = action.email;
             newState.api_key = action.api_key;
             newState.account = action.account;
+            newState.calls = action.calls;
 
-            Cookies.set('email', action.email, {expires: 7});
+            Cookies.set('email', action.account.email, {expires: 7});
             Cookies.set('api_key', action.api_key, {expires: 7});
 
             return newState;
 
         case "LOGOUT":
             newState.loggedIn = false;
-            delete newState.email;
+            delete newState.account.email;
             delete newState.api_key;
 
             Cookies.remove('email');
@@ -63,6 +70,7 @@ function storeReducer(state = {
 
         case "NEW_ACCOUNT_DATA":
             newState.account = action.account;
+            newState.calls = action.calls;
 
             Cookies.remove('email');
             Cookies.set('email', action.account.email);
@@ -88,7 +96,7 @@ if (cookieEmail !== undefined && cookieApiKey !== undefined) {
             if (response.data.status === "ok") {
                 // Instant view-change looks laggy rather than fast -> 1.0 second delay
                 setTimeout(() => {
-                    store.dispatch(handleLogin(response.data.api_key, response.data.account));
+                    store.dispatch(handleLogin(response));
                 }, 1000);
             } else {
                 store.dispatch(abortAutoLogin());

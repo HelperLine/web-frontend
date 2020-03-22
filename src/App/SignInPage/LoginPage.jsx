@@ -129,7 +129,7 @@ export function LoginPageComponent(props) {
 
                 setTimeout(() => {
                     if (response.data.status === "ok") {
-                        props.handleLogin(response.data.api_key, response.data.account);
+                        props.handleLogin(response);
                     } else {
                         errorSnackbar(response.data.status);
                     }
@@ -247,7 +247,7 @@ export function LoginPageComponent(props) {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-    handleLogin: (email, api_key) => dispatch(handleLogin(email, api_key)),
+    handleLogin: (response) => dispatch(handleLogin(response)),
 });
 
 export const LoginPage = connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);

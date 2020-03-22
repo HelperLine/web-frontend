@@ -195,8 +195,7 @@ function NavbarComponent(props) {
                                 disabled={props.autoLogin}
 
                                 startIcon={props.autoLogin ?
-                                    <CircularProgress size={20} className={classes.CircularProgress}
-                                                      color="disabled"/> :
+                                    <CircularProgress size={20} className={classes.CircularProgress} disabled/> :
                                     <PersonIcon alt="Login Icon"/>}
                                 className={clsx(classes.button, classes.topButton)}>Login</Button>
                     </div>
