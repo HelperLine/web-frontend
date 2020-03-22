@@ -13,6 +13,7 @@ import {LoginPage} from '../App/SignInPage/LoginPage';
 import {RegisterPage} from "../App/SignInPage/RegisterPage";
 import {AccountPage} from "../App/AccountPage/AccountPage";
 import {CallsPage} from "../App/CallsPage/CallsPage";
+import {GuidePage} from "../App/GuidePage/GuidePage";
 // import {Footer} from "../App/Footer/Footer";
 
 
@@ -61,7 +62,7 @@ const RouterComponent = (props) => (
                 <Route exact strict path="/guide">
                     <Navbar/>
                     <Content>
-                        <p>Guide</p>
+                        <GuidePage/>
                     </Content>
                 </Route>
 
