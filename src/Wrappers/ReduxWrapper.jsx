@@ -10,6 +10,8 @@ import Cookies from 'js-cookie';
 import axios from "axios";
 import {handleLogin, abortAutoLogin, startAutoLogin} from "../ReduxActions";
 
+import {BACKEND_URL} from "../secrets";
+
 
 var cloneDeep = require('lodash.clonedeep');
 
@@ -81,7 +83,7 @@ let cookieApiKey =  Cookies.get('api_key');
 
 if (cookieEmail !== undefined && cookieApiKey !== undefined) {
     store.dispatch(startAutoLogin());
-    axios.post("http://localhost:5000/backend/login", {email: cookieEmail, api_key: cookieApiKey})
+    axios.post(BACKEND_URL + "backend/login", {email: cookieEmail, api_key: cookieApiKey})
         .then(response => {
             if (response.data.status === "ok") {
                 // Instant view-change looks laggy rather than fast -> 1.0 second delay

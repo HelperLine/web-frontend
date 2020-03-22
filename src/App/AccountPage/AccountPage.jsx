@@ -15,6 +15,8 @@ import {CustomTextField} from "../../Components/CustomTextField";
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 
+import {BACKEND_URL} from "../../secrets";
+
 import axios from 'axios';
 
 import './AccountPage.scss';
@@ -171,7 +173,7 @@ export function AccountPageComponent(props) {
 
     function handleChange() {
         if (formValidation()) {
-            axios.put("http://localhost:5000/backend/database/account", {
+            axios.put(BACKEND_URL + "backend/database/account", {
                 email: props.account.email,
                 api_key: props.api_key,
 
@@ -197,7 +199,7 @@ export function AccountPageComponent(props) {
     function handleResend() {
         startResending();
 
-        axios.post("http://localhost:5000/backend/email/resend", {
+        axios.post(BACKEND_URL + "backend/email/resend", {
             email: props.account.email,
             api_key: props.api_key,
         })

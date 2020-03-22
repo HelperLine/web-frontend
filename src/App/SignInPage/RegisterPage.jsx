@@ -20,6 +20,8 @@ import axios from 'axios';
 
 import './SignInPage.scss';
 
+import {BACKEND_URL} from "../../secrets";
+
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Tabs from "@material-ui/core/Tabs";
@@ -168,7 +170,7 @@ export function RegisterPageComponent(props) {
         startLoading();
 
         if (formValidation()) {
-            axios.post("http://localhost:5000/backend/database/account", {
+            axios.post(BACKEND_URL + "backend/database/account", {
                 account_email: state.formData.email,
 
                 account_password: state.formData.password,

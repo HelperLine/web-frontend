@@ -16,6 +16,8 @@ import {CustomTextField} from "../../Components/CustomTextField";
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 
+import {BACKEND_URL} from "../../secrets";
+
 import axios from 'axios';
 
 import './SignInPage.scss';
@@ -122,7 +124,7 @@ export function LoginPageComponent(props) {
     function handleLogin() {
         startLoading();
 
-        axios.post("http://localhost:5000/backend/login", {email: state.email, password: state.password})
+        axios.post(BACKEND_URL + "backend/login", {email: state.email, password: state.password})
             .then(response => {
 
                 setTimeout(() => {
