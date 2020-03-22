@@ -23,6 +23,11 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import CallIcon from '@material-ui/icons/Call';
 import {CircularProgress} from "@material-ui/core";
 
+import MenuIcon from '@material-ui/icons/Menu';
+
+import {Breakpoint} from 'react-socks';
+
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -90,6 +95,13 @@ const useStyles = makeStyles(theme => ({
         marginLeft: 0,
         marginRight: 4,
     },
+    drawerBox: {
+        height: "100vh",
+        position: "relative",
+    },
+    drawerScrollBox: {
+        paddingBottom: theme.spacing(10),
+    },
 }));
 
 function NavbarComponent(props) {
@@ -107,94 +119,147 @@ function NavbarComponent(props) {
 
     const [pageTitle, setPageTitle] = useState(initialPageTitle);
 
-    return (
-        <div className="navbar">
-            <CssBaseline/>
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap className={classes.title}>{pageTitle}</Typography>
+    const [drawerIsOpen, toggleDrawer] = useState(false);
 
-                    <Link edge="end"
-                          to="/guide"
-                          onClick={() => setPageTitle("Guide")}>
-                        <IconButton aria-label="index"
-                                    className={classes.HeaderIconButton}
-                                    disableRipple={true}>
-                            <CallIcon alt="Phone Icon" style={{fill: "white"}} fontSize="large"/>
-                        </IconButton>
-                    </Link>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <div className={classes.toolbar}/>
-                <Link to="/guide"
-                      className={classes.link}
-                      onClick={() => setPageTitle("Guide")}>
-                    <Button size="large"
-                            color={path.startsWith("/guide") ? "secondary" : "primary"}
-                            startIcon={<AssignmentIcon alt="Guide Icon"/>}
-                            className={clsx(classes.button, classes.topButton)}>Guide</Button>
-                </Link>
+    const pageTitleComponent = (
+        <Typography variant="h6" noWrap className={classes.title}>{pageTitle}</Typography>
+    );
 
-                {props.loggedIn && (
-                    <React.Fragment>
-                        <Link to="/calls"
-                              className={classes.link}
-                              onClick={() => setPageTitle("Calls")}>
-                            <Button size="large"
-                                    color={path.startsWith("/calls") ? "secondary" : "primary"}
-                                    startIcon={<CallIcon alt="Phone Icon"/>}
-                                    className={clsx(classes.button, classes.topButton)}>Calls</Button>
-                        </Link>
-                        <Link to="/account"
-                              className={classes.link}
-                              onClick={() => setPageTitle("Account")}>
-                            <Button size="large"
-                                    color={path.startsWith("/account") ? "secondary" : "primary"}
-                                    startIcon={<SettingsIcon alt="Account Icon"/>}
-                                    className={clsx(classes.button, classes.topButton)}>Account</Button>
-                        </Link>
-                    </React.Fragment>
-                )}
+    const pageLogoComponent = (
+        <Link edge="end"
+              to="/guide"
+              onClick={() => setPageTitle("Guide")}>
+            <IconButton aria-label="index"
+                        className={classes.HeaderIconButton}
+                        disableRipple={true}>
+                <CallIcon alt="Phone Icon" style={{fill: "white"}} fontSize="large"/>
+            </IconButton>
+        </Link>
+    );
 
-                <Divider className={classes.divider}/>
+    const pageButtons = (
+        <React.Fragment>
+            <Link to="/guide"
+                  className={classes.link}
+                  onClick={() => setPageTitle("Guide")}>
+                <Button size="large"
+                        color={path.startsWith("/guide") ? "secondary" : "primary"}
+                        startIcon={<AssignmentIcon alt="Guide Icon"/>}
+                        className={clsx(classes.button, classes.topButton)}>Guide</Button>
+            </Link>
 
-                {props.loggedIn && (
-                    <Link to="/logout"
+            {props.loggedIn && (
+                <React.Fragment>
+                    <Link to="/calls"
                           className={classes.link}
-                          onClick={() => {
-                              props.handleLogout();
-                              setPageTitle("Guide");
-                          }}>
+                          onClick={() => setPageTitle("Calls")}>
+                        <Button size="large"
+                                color={path.startsWith("/calls") ? "secondary" : "primary"}
+                                startIcon={<CallIcon alt="Phone Icon"/>}
+                                className={clsx(classes.button, classes.topButton)}>Calls</Button>
+                    </Link>
+                    <Link to="/account"
+                          className={classes.link}
+                          onClick={() => setPageTitle("Account")}>
+                        <Button size="large"
+                                color={path.startsWith("/account") ? "secondary" : "primary"}
+                                startIcon={<SettingsIcon alt="Account Icon"/>}
+                                className={clsx(classes.button, classes.topButton)}>Account</Button>
+                    </Link>
+                </React.Fragment>
+            )}
+        </React.Fragment>
+    );
+
+    const loginButton = (
+        <React.Fragment>
+            {props.loggedIn && (
+                <Link to="/logout"
+                      className={classes.link}
+                      onClick={() => {
+                          props.handleLogout();
+                          setPageTitle("Guide");
+                      }}>
+                    <Button size="large"
+                            color="primary"
+                            startIcon={<PersonIcon alt="Logout Icon"/>}
+                            className={clsx(classes.button, classes.topButton)}>Logout</Button>
+                </Link>
+            )}
+            {!props.loggedIn && (
+                <Link to="/login"
+                      className={classes.link}>
+                    <div className={classes.wrapper}>
                         <Button size="large"
                                 color="primary"
-                                startIcon={<PersonIcon alt="Logout Icon"/>}
-                                className={clsx(classes.button, classes.topButton)}>Logout</Button>
-                    </Link>
-                )}
-                {!props.loggedIn && (
-                    <Link to="/login"
-                          className={classes.link}>
-                        <div className={classes.wrapper}>
-                            <Button size="large"
-                                    color="primary"
-                                    disabled={props.autoLogin}
+                                disabled={props.autoLogin}
 
-                                    startIcon={props.autoLogin ?
-                                        <CircularProgress size={20} className={classes.CircularProgress} color="disabled"/> :
-                                        <PersonIcon alt="Login Icon"/>}
-                                    className={clsx(classes.button, classes.topButton)}>Login</Button>
+                                startIcon={props.autoLogin ?
+                                    <CircularProgress size={20} className={classes.CircularProgress}
+                                                      color="disabled"/> :
+                                    <PersonIcon alt="Login Icon"/>}
+                                className={clsx(classes.button, classes.topButton)}>Login</Button>
+                    </div>
+                </Link>
+            )}
+        </React.Fragment>
+    );
+
+    return (
+        <React.Fragment>
+
+            <Breakpoint small down>
+                <AppBar position="fixed" className={classes.navBar}>
+                    <Toolbar>
+                        <IconButton edge="start"
+                                    color="inherit"
+                                    aria-label="menu"
+                                    className={classes.menuButton}
+                                    onClick={() => toggleDrawer(true)}>
+                            <MenuIcon alt="Menu Icon"/>
+                        </IconButton>
+                        {pageTitleComponent}
+                        {pageLogoComponent}
+                    </Toolbar>
+                </AppBar>
+                <Drawer open={drawerIsOpen}
+                        onClose={() => toggleDrawer(false)}
+                        onClick={() => toggleDrawer(false)}
+                        onKeyDown={() => toggleDrawer(false)}>
+                    <div role="presentation" className={classes.drawerBox}>
+                        <div className={classes.drawerScrollBox}>
+                            {pageButtons}
+                            <Divider className={classes.divider}/>
+                            {loginButton}
                         </div>
-                    </Link>
-                )}
-            </Drawer>
-        </div>
+                    </div>
+                </Drawer>
+            </Breakpoint>
+
+            <Breakpoint large up>
+                <CssBaseline/>
+                <AppBar position="fixed" className={classes.appBar}>
+                    <Toolbar>
+                        {pageTitleComponent}
+                        {pageLogoComponent}
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    className={classes.drawer}
+                    variant="permanent"
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}>
+
+                    <div className={classes.toolbar}/>
+                    {pageButtons}
+                    <Divider className={classes.divider}/>
+                    {loginButton}
+
+                </Drawer>
+            </Breakpoint>
+
+        </React.Fragment>
     );
 }
 
