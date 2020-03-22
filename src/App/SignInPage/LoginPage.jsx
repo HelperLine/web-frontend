@@ -127,7 +127,7 @@ export function LoginPageComponent(props) {
 
                 setTimeout(() => {
                     if (response.data.status === "ok") {
-                        props.handleLogin(response.data.email, response.data.api_key);
+                        props.handleLogin(response.data.api_key, response.data.account);
                     } else {
                         errorSnackbar(response.data.status);
                     }

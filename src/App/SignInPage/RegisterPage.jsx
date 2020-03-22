@@ -104,7 +104,6 @@ export function RegisterPageComponent(props) {
             city: "",
             country: "Germany",
         },
-        tabValue: 0,
         loading: false,
         errorMessageVisible: false,
         errorMessageText: "",
@@ -183,7 +182,7 @@ export function RegisterPageComponent(props) {
 
                     setTimeout(() => {
                         if (response.data.status === "ok") {
-                            props.handleLogin(response.data.email, response.data.api_key);
+                            props.handleLogin(response.data.api_key, response.data.account);
                         } else {
                             errorSnackbar(response.data.status);
                         }
@@ -305,7 +304,7 @@ export function RegisterPageComponent(props) {
                     <Grid item xs={12} sm={6} md={4}>
                         <CustomTextField
                             required
-                            ref={cityInputRef} onTab={focusCountry} onEnter={focusCountry} onEscape={blurCity}
+                            ref={cityInputRef} onTab={focusEmail} onEnter={handleLogin} onEscape={blurCity}
                             className={classes.textField} variant="outlined" label="City" fullWidth
                             value={state.formData.city} onChange={(city) => handleFormChange({city: city})}/>
                     </Grid>
@@ -313,10 +312,9 @@ export function RegisterPageComponent(props) {
                     <Grid item xs={12} sm={6} md={4}>
                         <CustomTextField
                             required disabled
-                            ref={countryInputRef} onTab={focusEmail} onEnter={handleLogin} onEscape={blurCountry}
+                            ref={countryInputRef}
                             className={classes.textField} variant="outlined" label="Country" fullWidth
-                            value={state.formData.country}
-                            onChange={(country) => handleFormChange({country: country})}/>
+                            value={state.formData.country}/>
                     </Grid>
 
                 </Grid>

@@ -11,6 +11,7 @@ import {Switch, Route, BrowserRouter, Redirect, Link} from 'react-router-dom';
 import {Navbar, ReducedNavbar} from "../App/Navbar/Navbar";
 import {LoginPage} from '../App/SignInPage/LoginPage';
 import {RegisterPage} from "../App/SignInPage/RegisterPage";
+import {AccountPage} from "../App/AccountPage/AccountPage";
 // import {Footer} from "../App/Footer/Footer";
 
 
@@ -81,7 +82,7 @@ const RouterComponent = (props) => (
                         <React.Fragment>
                             <Navbar/>
                             <Content>
-                                <p>Account</p>
+                                <AccountPage/>
                             </Content>
                         </React.Fragment>
                     )}

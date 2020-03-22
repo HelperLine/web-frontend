@@ -18,7 +18,8 @@ function storeReducer(state = {
     loggedIn: false,
     autoLogin: false,
 
-    accountData: {}
+    account: {},
+    api_key: "",
 }, action) {
 
     let newState = cloneDeep(state);
@@ -29,6 +30,7 @@ function storeReducer(state = {
             newState.autoLogin = false;
             newState.email = action.email;
             newState.api_key = action.api_key;
+            newState.account = action.account;
 
             Cookies.set('email', action.email, {expires: 7});
             Cookies.set('api_key', action.api_key, {expires: 7});
@@ -57,6 +59,13 @@ function storeReducer(state = {
 
             return newState;
 
+        case "NEW_ACCOUNT_DATA":
+            newState.account = action.account;
+
+            Cookies.remove('email');
+            Cookies.set('email', action.account.email);
+            return newState;
+
         default:
             return newState;
     }
@@ -77,7 +86,7 @@ if (cookieEmail !== undefined && cookieApiKey !== undefined) {
             if (response.data.status === "ok") {
                 // Instant view-change looks laggy rather than fast -> 1.0 second delay
                 setTimeout(() => {
-                    store.dispatch(handleLogin(response.data.email, response.data.api_key));
+                    store.dispatch(handleLogin(response.data.api_key, response.data.account));
                 }, 1000);
             } else {
                 store.dispatch(abortAutoLogin());
