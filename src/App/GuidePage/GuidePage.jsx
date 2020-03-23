@@ -67,7 +67,9 @@ export const GuidePage = (props) => {
                 <ExpansionPanel disabled>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
-                        <Typography variant="subtitle1" className={classes.heading}>Einkaufen gehen</Typography>
+                        <Typography variant="subtitle1" className={classes.heading}>
+                            Grocery shopping
+                        </Typography>
                     </ExpansionPanelSummary>
 
                 </ExpansionPanel>
@@ -75,31 +77,36 @@ export const GuidePage = (props) => {
                 <ExpansionPanel disabled>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
-                        <Typography variant="subtitle1" className={classes.heading}>Pakete von der Post
-                            abholen</Typography>
+                        <Typography variant="subtitle1" className={classes.heading}>
+                            Picking up parcels from the post office
+                        </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
 
                 <ExpansionPanel disabled>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
-                        <Typography variant="subtitle1" className={classes.heading}>Geschäfte zu/problematisch: Hilfe
-                            beim Internetkauf</Typography>
+                        <Typography variant="subtitle1" className={classes.heading}>
+                            Stores are closed/risky: Helping with internet shopping
+                        </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
 
                 <ExpansionPanel disabled>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
-                        <Typography variant="subtitle1" className={classes.heading}>Ein Rezept beim Arzt abholen,
-                            Medikamente besorgen</Typography>
+                        <Typography variant="subtitle1" className={classes.heading}>
+                            Picking up prescription/medication
+                        </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
 
                 <ExpansionPanel disabled>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
-                        <Typography variant="subtitle1" className={classes.heading}>Vermittlung bei Seelsorge</Typography>
+                        <Typography variant="subtitle1" className={classes.heading}>
+                            Dealing with mental health
+                        </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
 
@@ -110,6 +117,12 @@ export const GuidePage = (props) => {
                     If you want to <strong>help us in the process</strong> feel free to contact us via:
                     <br/>
                     <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+
+                    <br/><br/>
+
+                    If you want to <strong>contribute by translating this page</strong> into more languages:
+                    <br/>
+                    <a href="mailto:languages@hilfe-am-ohr.de">languages@hilfe-am-ohr.de</a>
                 </Typography>
             </Container>
         </Container>
