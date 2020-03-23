@@ -127,7 +127,7 @@ function NavbarComponent(props) {
 
     const pageLogoComponent = (
         <Link edge="end"
-              to="/guide"
+              to="/"
               onClick={() => setPageTitle("Guide")}>
             <IconButton aria-label="index"
                         className={classes.HeaderIconButton}
@@ -291,7 +291,7 @@ export const ReducedNavbar = (props) => {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" noWrap className={classes.title}></Typography>
-                    <Link to="/guide"
+                    <Link to="/"
                           edge="end">
                         <IconButton disableRipple={true} className={classes.HeaderIconButton}>
                             <CallIcon alt="Phone Icon" style={{fill: "white"}} fontSize="large"/>

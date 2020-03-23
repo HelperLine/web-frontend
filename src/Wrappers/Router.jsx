@@ -14,6 +14,7 @@ import {RegisterPage} from "../App/SignInPage/RegisterPage";
 import {AccountPage} from "../App/AccountPage/AccountPage";
 import {CallsPage} from "../App/CallsPage/CallsPage";
 import {GuidePage} from "../App/GuidePage/GuidePage";
+import {IndexPage} from "../App/IndexPage/IndexPage";
 // import {Footer} from "../App/Footer/Footer";
 
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         minHeight: "100vh",
     },
     children: {
-        padding: theme.spacing(4),
+        padding: theme.spacing(1),
     },
     toolbar: theme.mixins.toolbar,
 }));
@@ -56,7 +57,8 @@ const RouterComponent = (props) => (
         <Route>
             <Switch>
                 <Route exact strict path="/">
-                    <Redirect to="/guide"/>
+                    <ReducedNavbar/>
+                    <IndexPage/>
                 </Route>
 
                 <Route exact strict path="/guide">
