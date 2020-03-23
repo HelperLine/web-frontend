@@ -33,6 +33,12 @@ const useStyles = makeStyles(theme => ({
         textAlign: "center",
         marginBottom: theme.spacing(3),
     },
+    links: {
+        display: "block",
+        textAlign: "center",
+        marginBottom: theme.spacing(3),
+        lineHeight: theme.spacing(0.3),
+    },
     link: {
         textDecoration: "none",
         display: "block"
@@ -61,6 +67,16 @@ export const IndexPage = (props) => {
                 </div>
                 <Typography variant="body1" className={classes.description}>
                     <em>Showcase coming soon!</em>
+                </Typography>
+
+                <Typography variant="body1" className={classes.links}>
+                    Webapp Frontend Repository on <a target="_blank" href="https://github.com/dostuffthatmatters/callcenter-frontend">GitHub</a>
+                    <br/>
+                    Webapp Backend Repository on <a target="_blank" href="https://github.com/dostuffthatmatters/callcenter-backend">GitHub</a>
+                    <br/>
+                    Telegram Bot Repository: <em>sharing soon</em>
+                    <br/>
+                    Hub Backend Repository: <em>sharing soon</em>
                 </Typography>
             </Container>
 

@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         minHeight: "100vh",
     },
     children: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(0),
     },
     toolbar: theme.mixins.toolbar,
 }));

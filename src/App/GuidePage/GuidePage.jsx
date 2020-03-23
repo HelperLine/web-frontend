@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
         display: "block",
         textAlign: "center",
         marginTop: theme.spacing(6),
+        marginBottom: theme.spacing(6),
     },
     root: {
         width: '100%',
@@ -50,10 +51,14 @@ export const GuidePage = (props) => {
 
                     <br/><br/>
 
-                    Since we do not want to share "truths" specified by only a small number of people we are
+                    Since we do not want to share "truth's" specified by only a small number of people we are
                     <strong> not yet ready to share</strong> these tips.
 
-                    We already <strong>crowdsourcing the best strategies</strong> which people broadly agreed on.
+                    We're already <strong>crowdsourcing the best strategies</strong> which people broadly agreed on.
+
+                    <br/><br/>
+
+                    Stay tuned!
                 </Typography>
             </Container>
 
