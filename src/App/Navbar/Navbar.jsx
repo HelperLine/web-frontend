@@ -26,6 +26,9 @@ import {CircularProgress} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 
 import {Breakpoint} from 'react-socks';
+import Grid from "@material-ui/core/Grid";
+import {CustomTextField} from "../../Components/CustomTextField";
+import Dialog from "@material-ui/core/Dialog";
 
 
 const drawerWidth = 240;
@@ -102,6 +105,31 @@ const useStyles = makeStyles(theme => ({
     drawerScrollBox: {
         paddingBottom: theme.spacing(10),
     },
+
+    logoutDialog: {
+        boxSizing: "border-box",
+        overflowX: "hidden",
+    },
+    logoutDialogContainer: {
+        position: "relative",
+        display: "block",
+        scroll: "disabled",
+        padding: theme.spacing(2),
+        margin: -3.5,
+    },
+    logoutDialogButton: {
+        color: "white",
+    },
+    logoutDialogWrapper: {
+        marginTop: theme.spacing(1),
+        marginLeft: theme.spacing(0.5),
+        marginRight: theme.spacing(0.5),
+        position: 'relative',
+        display: "inline-flex"
+    },
+    logoutDialogTitle: {
+        textAlign: "center",
+    },
 }));
 
 function NavbarComponent(props) {
@@ -118,6 +146,7 @@ function NavbarComponent(props) {
     }
 
     const [pageTitle, setPageTitle] = useState(initialPageTitle);
+    const [logoutDialog, setLogoutDialogState] = useState({open: false});
 
     const [drawerIsOpen, toggleDrawer] = useState(false);
 
@@ -174,17 +203,11 @@ function NavbarComponent(props) {
     const loginButton = (
         <React.Fragment>
             {props.loggedIn && (
-                <Link to="/logout"
-                      className={classes.link}
-                      onClick={() => {
-                          props.handleLogout();
-                          setPageTitle("Guide");
-                      }}>
-                    <Button size="large"
-                            color="primary"
-                            startIcon={<PersonIcon alt="Logout Icon"/>}
-                            className={clsx(classes.button, classes.topButton)}>Logout</Button>
-                </Link>
+                <Button onClick={() => {setLogoutDialogState({open: true});}}
+                        size="large"
+                        color="primary"
+                        startIcon={<PersonIcon alt="Logout Icon"/>}
+                        className={clsx(classes.button, classes.topButton)}>Logout</Button>
             )}
             {!props.loggedIn && (
                 <Link to="/login"
@@ -257,6 +280,44 @@ function NavbarComponent(props) {
 
                 </Drawer>
             </Breakpoint>
+
+            <Dialog onClose={() => setLogoutDialogState({open: false})}
+                    aria-labelledby="logout-dialog"
+                    open={logoutDialog.open}
+                    className={classes.logoutDialog}
+                    maxWidth="xs">
+
+                <Grid container spacing={1} className={classes.logoutDialogContainer}>
+
+                    <Grid item xs={12}>
+                        <Typography variant="h6" className={classes.logoutDialogTitle}>Are you sure?</Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <div className={clsx("ButtonBox", classes.buttonBox)}>
+                            <div className={classes.logoutDialogWrapper}>
+                                <Button variant="contained"
+                                        color="secondary"
+                                        onClick={() => setLogoutDialogState({open: false})}
+                                        className={classes.logoutDialogButton}>Cancel</Button>
+                            </div>
+                            <div className={classes.logoutDialogWrapper}>
+                                <Link to="/logout"
+                                      className={classes.link}
+                                      onClick={() => {
+                                          props.handleLogout();
+                                          setPageTitle("Guide");
+                                      }}>
+                                    <Button variant="contained"
+                                            color="secondary"
+                                            className={classes.logoutDialogButton}>Logout</Button>
+                                </Link>
+                            </div>
+                        </div>
+                    </Grid>
+
+                </Grid>
+            </Dialog>
 
         </React.Fragment>
     );
