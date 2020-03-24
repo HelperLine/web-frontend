@@ -43,13 +43,13 @@ const useStyles = makeStyles(theme => ({
         color: "white",
     },
     textField: {
-        marginBottom: theme.spacing(1)
+        marginTop: theme.spacing(0.5),
+        marginBottom: theme.spacing(0.5),
     },
     passwordTextField: {},
     wrapper: {
-        marginTop: theme.spacing(1),
-        marginLeft: theme.spacing(0.5),
-        marginRight: theme.spacing(0.5),
+        margin: theme.spacing(0.5),
+
         position: 'relative',
         display: "inline-flex"
     },
@@ -78,8 +78,10 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(2),
     },
     form2Container: {
-        padding: theme.spacing(2),
-        width: 400,
+        paddingTop: theme.spacing(1.5),
+        paddingRight: theme.spacing(2),
+        paddingBottom: theme.spacing(1.5),
+        paddingLeft: theme.spacing(2),
     },
     divider: {
         marginTop: theme.spacing(3),
@@ -561,72 +563,74 @@ export function AccountPageComponent(props) {
 
             <Dialog onClose={closeForm2} aria-labelledby="simple-dialog-title" open={state.form2Open}>
 
-                <Grid container spacing={1} className={classes.form2Container}>
+                <Container maxWidth="xs" className={classes.form2Container}>
+                    <Grid container spacing={1}>
 
-                    <Grid item xs={12}>
-                        <CustomTextField
-                            type="password"
-                            required disabled={state.form2Submitting}
-                            ref={password1InputRef} onTab={focusPassword2} onEnter={focusPassword2}
-                            onEscape={blurPassword1}
-                            className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
-                            label="Old Password" fullWidth
-                            value={state.account.oldPassword}
-                            onChange={(oldPassword) =>
-                                handleFormChange({oldPassword: oldPassword})}/>
-                    </Grid>
+                        <Grid item xs={12}>
+                            <CustomTextField
+                                type="password"
+                                required disabled={state.form2Submitting}
+                                ref={password1InputRef} onTab={focusPassword2} onEnter={focusPassword2}
+                                onEscape={blurPassword1}
+                                className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
+                                label="Old Password" fullWidth
+                                value={state.account.oldPassword}
+                                onChange={(oldPassword) =>
+                                    handleFormChange({oldPassword: oldPassword})}/>
+                        </Grid>
 
-                    <Grid item xs={12}>
-                        <CustomTextField
-                            type="password"
-                            required disabled={state.form2Submitting}
-                            ref={password2InputRef} onTab={focusPassword3} onEnter={focusPassword3}
-                            onEscape={blurPassword2}
-                            className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
-                            label="New Password" fullWidth
-                            value={state.account.newPassword}
-                            onChange={(newPassword) =>
-                                handleFormChange({newPassword: newPassword})}/>
-                    </Grid>
+                        <Grid item xs={12}>
+                            <CustomTextField
+                                type="password"
+                                required disabled={state.form2Submitting}
+                                ref={password2InputRef} onTab={focusPassword3} onEnter={focusPassword3}
+                                onEscape={blurPassword2}
+                                className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
+                                label="New Password" fullWidth
+                                value={state.account.newPassword}
+                                onChange={(newPassword) =>
+                                    handleFormChange({newPassword: newPassword})}/>
+                        </Grid>
 
-                    <Grid item xs={12}>
-                        <CustomTextField
-                            type="password"
-                            required disabled={state.form2Submitting}
-                            ref={password3InputRef} onTab={focusPassword1} onEnter={submitForm2Change}
-                            onEscape={blurPassword3}
-                            className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
-                            label="New Password Confirmation" fullWidth
-                            value={state.account.newPasswordConfirmation}
-                            onChange={(newPasswordConfirmation) =>
-                                handleFormChange({newPasswordConfirmation: newPasswordConfirmation})}/>
-                    </Grid>
+                        <Grid item xs={12}>
+                            <CustomTextField
+                                type="password"
+                                required disabled={state.form2Submitting}
+                                ref={password3InputRef} onTab={focusPassword1} onEnter={submitForm2Change}
+                                onEscape={blurPassword3}
+                                className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
+                                label="New Password Confirmation" fullWidth
+                                value={state.account.newPasswordConfirmation}
+                                onChange={(newPasswordConfirmation) =>
+                                    handleFormChange({newPasswordConfirmation: newPasswordConfirmation})}/>
+                        </Grid>
 
-                    <Grid item xs={12}>
-                        <div className={clsx("ButtonBox", classes.buttonBox)}>
-                            <div className={classes.wrapper}>
-                                <Button variant="contained"
-                                        disabled={state.form2Submitting}
-                                        color="secondary"
-                                        onClick={closeForm2}
-                                        className={classes.button}>Cancel</Button>
+                        <Grid item xs={12}>
+                            <div className={clsx("ButtonBox", classes.buttonBox)}>
+                                <div className={classes.wrapper}>
+                                    <Button variant="contained"
+                                            disabled={state.form2Submitting}
+                                            color="secondary"
+                                            onClick={closeForm2}
+                                            className={classes.button}>Cancel</Button>
+                                </div>
+                                <div className={classes.wrapper}>
+                                    <Button variant="contained"
+                                            disabled={state.form2Submitting}
+                                            color="secondary"
+                                            onClick={submitForm2Change}
+                                            className={classes.button}>Submit</Button>
+                                    {state.form2Submitting && (
+                                        <CircularProgress size={24}
+                                                          className={classes.buttonProgress}
+                                                          color="secondary"/>
+                                    )}
+                                </div>
                             </div>
-                            <div className={classes.wrapper}>
-                                <Button variant="contained"
-                                        disabled={state.form2Submitting}
-                                        color="secondary"
-                                        onClick={submitForm2Change}
-                                        className={classes.button}>Submit</Button>
-                                {state.form2Submitting && (
-                                    <CircularProgress size={24}
-                                                      className={classes.buttonProgress}
-                                                      color="secondary"/>
-                                )}
-                            </div>
-                        </div>
-                    </Grid>
+                        </Grid>
 
-                </Grid>
+                    </Grid>
+                </Container>
             </Dialog>
         </Container>
     );
