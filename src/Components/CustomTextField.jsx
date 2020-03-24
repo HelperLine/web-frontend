@@ -36,10 +36,10 @@ export const CustomTextField = React.forwardRef((props, ref) => {
 
     */
 
-    const [value, setValue] = React.useState("value" in props ? props["value"] : "");
+    //const [value, setValue] = React.useState("value" in props ? props["value"] : "");
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        //setValue(event.target.value);
         if ("onChange" in props) {
             props.onChange(event.target.value);
         }
@@ -75,12 +75,10 @@ export const CustomTextField = React.forwardRef((props, ref) => {
                    helperText={("helperText" in props) ? props["helperText"] : ""}
 
                    variant={("variant" in props) ? props["variant"] : "standard"}
-
-                   disabled={"disabled" in props ? props["disabled"] : false}
                    multiline={("multiline" in props) ? props["multiline"] : false}
                    rowsMax={("rowsMax" in props) ? props["rowsMax"] : "1"}
 
-                   value={value}
+                   value={props.value}
                    inputRef={ref}
                    onChange={handleChange}
                    onKeyDown={handleKeyDown}

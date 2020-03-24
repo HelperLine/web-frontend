@@ -6,6 +6,7 @@ import {handleNewAccountData} from '../../ReduxActions';
 
 import {Container} from "@material-ui/core";
 import {Typography} from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 
 import {Button} from "@material-ui/core";
 import {CircularProgress} from "@material-ui/core";
@@ -22,6 +23,7 @@ import axios from 'axios';
 import './AccountPage.scss';
 
 import Grid from "@material-ui/core/Grid";
+import clsx from "clsx";
 
 
 var cloneDeep = require('lodash.clonedeep');
@@ -38,16 +40,18 @@ const useStyles = makeStyles(theme => ({
         display: "block"
     },
     button: {
-        color: "white"
+        color: "white",
     },
     textField: {
         marginBottom: theme.spacing(1)
     },
+    passwordTextField: {},
     wrapper: {
         marginTop: theme.spacing(1),
         marginLeft: theme.spacing(0.5),
         marginRight: theme.spacing(0.5),
         position: 'relative',
+        display: "inline-flex"
     },
     buttonProgress: {
         position: 'absolute',
@@ -73,6 +77,10 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),
     },
+    form2Container: {
+        padding: theme.spacing(2),
+        width: 400,
+    },
     divider: {
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(3),
@@ -87,9 +95,12 @@ export function AccountPageComponent(props) {
     const emailInputRef = useRef(null);
     const zipInputRef = useRef(null);
     const cityInputRef = useRef(null);
-    const countryInputRef = useRef(null);
 
-    let [state, changeState] = useState({
+    const password1InputRef = useRef(null);
+    const password2InputRef = useRef(null);
+    const password3InputRef = useRef(null);
+
+    const initialState = {
         account: {
             email: props.account.email,
 
@@ -105,49 +116,107 @@ export function AccountPageComponent(props) {
         errorMessageText: "",
 
         resending: false,
-        resend: false,
-    });
+        resendPossible: true,
+
+        form1Modified: false,
+
+        form1Submitting: false,
+        form2Submitting: false,
+
+        form2Open: false,
+    };
+
+    let [state, changeState] = useState(initialState);
+
+    const resetForm1Change = () => {
+        changeState({...initialState});
+    };
+
+    // form1 = email, zip & city
+    // form2 = password fields
 
     function handleFormChange(newFormData) {
         let newState = cloneDeep(state);
 
-        ["email", "oldPassword", "newPassword", "newPasswordConfirmation", "zip", "city", "country"].forEach(key => {
-            newState.account[key] = key in newFormData ? newFormData[key] : newState.account[key];
+        let form1Modified = false;
+
+        if ("email" in newFormData) {
+            newState.account["email"] = newFormData["email"];
+            form1Modified = (newFormData["email"] !== props.account.address["email"]) || form1Modified;
+        }
+
+        ["zip", "city", "country"].forEach(key => {
+            if (key in newFormData) {
+                newState.account[key] = newFormData[key];
+                form1Modified = (newFormData[key] !== props.account.address[key]) || form1Modified;
+            }
         });
 
+        ["oldPassword", "newPassword", "newPasswordConfirmation"].forEach(key => {
+            if (key in newFormData) {
+                newState.account[key] = newFormData[key];
+            }
+        });
+
+        newState.form1Modified = form1Modified;
+
         newState.errorMessageVisible = false;
-        newState.errorMessageText = "";
         changeState(newState);
     }
 
-    function startResending() {
-        blurAll();
-
+    function startResendingEmailState() {
         let newState = cloneDeep(state);
         newState.resending = true;
         newState.errorMessageVisible = false;
-        newState.errorMessageText = "";
         changeState(newState);
     }
 
-    function stopResending() {
+    function stopResendingEmailState() {
         let newState = cloneDeep(state);
         newState.resending = false;
-        newState.resend = true;
         newState.errorMessageVisible = false;
-        newState.errorMessageText = "";
         changeState(newState);
     }
 
-    function errorSnackbar(text) {
+    function startForm1SubmittingState() {
         let newState = cloneDeep(state);
-        newState.loading = false;
+        newState.form1Submitting = true;
+        changeState(newState);
+    }
+
+    function stopForm1SubmittingState() {
+        let newState = cloneDeep(state);
+        newState.form1Modified = false;
+        newState.form1Submitting = false;
+        changeState(newState);
+    }
+
+    function startForm2SubmittingState() {
+        let newState = cloneDeep(state);
+        newState.form2Submitting = true;
+        changeState(newState);
+    }
+
+    function stopForm2SubmittingState() {
+        let newState = cloneDeep(state);
+        newState.form2Modified = false;
+        changeState(newState);
+    }
+
+    function showErrorSnackbar(text) {
+        let newState = cloneDeep(state);
         newState.errorMessageVisible = true;
         newState.errorMessageText = text;
         changeState(newState);
     }
 
-    function formValidation() {
+    function hideErrorSnackbar(text) {
+        let newState = cloneDeep(state);
+        newState.errorMessageVisible = false;
+        changeState(newState);
+    }
+
+    function form1Validation() {
 
         ["email", "zip", "city", "country"].forEach(key => {
             if (state.account[key] === "") {
@@ -158,46 +227,107 @@ export function AccountPageComponent(props) {
                     return str.toUpperCase();
                 });
 
-                errorSnackbar("\"" + formattedString + "\" is empty");
+                showErrorSnackbar("\"" + formattedString + "\" is empty");
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    function form2Validation() {
+
+        ["oldPassword", "newPassword", "newPasswordConfirmation"].forEach(key => {
+            if (state.account[key] === "") {
+
+                // 1. insert a space before all caps 2. uppercase all first characters
+                // Source: https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
+                let formattedString = key.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
+                    return str.toUpperCase();
+                });
+
+                showErrorSnackbar("\"" + formattedString + "\" is empty");
                 return false;
             }
         });
 
         if (state.account["newPassword"] !== state.account["newPasswordConfirmation"]) {
-            errorSnackbar("\"New Password\" and \"New Password Confirmation\" do not match");
+            showErrorSnackbar("\"New Password\" and \"New Password Confirmation\" do not match");
+            return false;
+        }
+
+        if (state.account["newPassword"].length < 8) {
+            showErrorSnackbar("\"New Password\" too short (at least 8 characters)");
             return false;
         }
 
         return true;
     }
 
-    function handleChange() {
-        if (formValidation()) {
-            axios.put(BACKEND_URL + "backend/database/account", {
-                email: props.account.email,
-                api_key: props.api_key,
+    function submitForm1Change() {
+        startForm1SubmittingState();
 
-                new_email: state.account.email,
+        if (form1Validation()) {
+            // Looks and feels better if the process actually takes some time
+            setTimeout(() => {
+                axios.put(BACKEND_URL + "backend/database/account", {
+                    email: props.account.email,
+                    api_key: props.api_key,
 
-                account_zip: state.account.zip,
-                account_city: state.account.city,
-            })
-                .then(response => {
-                    if (response.data.status === "ok") {
-                        props.handleNewAccountData(response);
-                    } else {
-                        errorSnackbar(response.data.status);
-                    }
-                }).catch(response => {
-                console.log("Axios promise rejected! Response:");
-                console.log(response);
-                errorSnackbar("The server seems to be offline. See console for details.");
-            });
+                    new_email: state.account.email,
+                    account_zip: state.account.zip,
+                    account_city: state.account.city,
+                })
+                    .then(response => {
+                        if (response.data.status === "ok") {
+                            stopForm1SubmittingState();
+                            props.handleNewAccountData(response);
+                        } else {
+                            showErrorSnackbar(response.data.status);
+                        }
+                    }).catch(response => {
+                    console.log("Axios promise rejected! Response:");
+                    console.log(response);
+                    stopForm1SubmittingState();
+                    showErrorSnackbar("The server seems to be offline. See console for details.");
+                });
+            }, 1000);
         }
     }
 
-    function handleResend() {
-        startResending();
+    function submitForm2Change() {
+        startForm2SubmittingState();
+
+        if (form2Validation()) {
+            // Looks and feels better if the process actually takes some time
+            setTimeout(() => {
+                axios.put(BACKEND_URL + "backend/database/account", {
+                    email: props.account.email,
+                    api_key: props.api_key,
+
+                    account_old_password: state.account.oldPassword,
+                    account_new_password: state.account.newPassword,
+                    account_new_password_confirmation: state.account.newPasswordConfirmation,
+                })
+                    .then(response => {
+                        if (response.data.status === "ok") {
+                            stopForm2SubmittingState();
+                            form2Success();
+                        } else {
+                            showErrorSnackbar(response.data.status);
+                        }
+                    }).catch(response => {
+                    console.log("Axios promise rejected! Response:");
+                    console.log(response);
+                    stopForm2SubmittingState();
+                    showErrorSnackbar("The server seems to be offline. See console for details.");
+                });
+            }, 1000);
+        }
+    }
+
+    function submitResendEmail() {
+        startResendingEmailState();
 
         axios.post(BACKEND_URL + "backend/email/resend", {
             email: props.account.email,
@@ -205,116 +335,299 @@ export function AccountPageComponent(props) {
         })
             .then(response => {
                 if (response.data.status === "ok") {
-                    setTimeout(stopResending, 1000);
+                    setTimeout(stopResendingEmailState, 1000);
                 } else {
-                    errorSnackbar(response.data.status);
+                    resetForm1Change();
+                    showErrorSnackbar(response.data.status);
                 }
             }).catch(response => {
             console.log("Axios promise rejected! Response:");
             console.log(response);
-            errorSnackbar("The server seems to be offline. See console for details.");
+            resetForm1Change();
+            showErrorSnackbar("The server seems to be offline. See console for details.");
         });
     }
 
+
+    function focusEmail() {
+        emailInputRef.current.focus()
+    }
+
     function blurEmail() {
-        handleChange();
-        emailInputRef.current.blur();
+        emailInputRef.current.blur()
+    }
+
+
+    function focusZip() {
+        zipInputRef.current.focus()
     }
 
     function blurZip() {
-        handleChange();
-        zipInputRef.current.blur();
+        zipInputRef.current.blur()
+    }
+
+
+    function focusCity() {
+        cityInputRef.current.focus()
     }
 
     function blurCity() {
-        handleChange();
-        cityInputRef.current.blur();
+        cityInputRef.current.blur()
     }
 
-    function blurAll() {
-        blurEmail();
-        blurZip();
-        blurCity();
+    function openForm2() {
+        let newState = cloneDeep(state);
+        newState.form2Open = true;
+        changeState(newState);
     }
+
+    function closeForm2() {
+        if (!state.form2Submitting) {
+            let newState = cloneDeep(state);
+            newState.form2Open = false;
+            newState.account.oldPassword = "";
+            newState.account.newPassword = "";
+            newState.account.newPasswordConfirmation = "";
+            newState.account.form2Modified = false;
+            newState.errorMessageVisible = false;
+            changeState(newState);
+        }
+    }
+
+    function form2Success() {
+        let newState = cloneDeep(state);
+        newState.form2Open = false;
+
+        newState.account.oldPassword = "";
+        newState.account.newPassword = "";
+        newState.account.newPasswordConfirmation = "";
+
+        newState.errorMessageVisible = true;
+        newState.errorMessageText = "Success!";
+        changeState(newState);
+
+        setTimeout(() => {
+            let newState = cloneDeep(state);
+            newState.form2Open = false;
+
+            newState.account.oldPassword = "";
+            newState.account.newPassword = "";
+            newState.account.newPasswordConfirmation = "";
+
+            newState.errorMessageVisible = false;
+            changeState(newState);
+        }, 1000);
+    }
+
+
+    function focusPassword1() {
+        password1InputRef.current.focus()
+    }
+
+    function blurPassword1() {
+        password1InputRef.current.blur()
+    }
+
+
+    function focusPassword2() {
+        password2InputRef.current.focus()
+    }
+
+    function blurPassword2() {
+        password2InputRef.current.blur()
+    }
+
+
+    function focusPassword3() {
+        password3InputRef.current.focus()
+    }
+
+    function blurPassword3() {
+        password3InputRef.current.blur()
+    }
+
 
     return (
         <Container maxWidth="md" className="AccountPage">
 
-                <Grid container spacing={1} className={classes.formContainer}>
+            <Grid container spacing={1} className={classes.formContainer}>
 
-                    <Grid item xs={12} md={props.account.email_verified ? 9 : 6}>
-                        <CustomTextField
-                            required disabled={props.account.email_verified}
-                            ref={emailInputRef} onTab={blurEmail} onEnter={blurEmail} onEscape={blurEmail}
-                            className={classes.textField} variant="outlined" label="Email" fullWidth
-                            value={state.account.email} onChange={(email) => handleFormChange({email: email})}/>
-                    </Grid>
+                <Grid item xs={12} md={props.account.email_verified ? 9 : 6}>
+                    <CustomTextField
+                        required disabled={props.account.email_verified || state.form1Submitting}
+                        ref={emailInputRef} onTab={focusZip} onEnter={blurEmail} onEscape={blurEmail}
+                        className={classes.textField} variant="outlined" label="Email" fullWidth
+                        value={state.account.email} onChange={(email) => handleFormChange({email: email})}/>
+                </Grid>
 
-                    <Grid item xs={12} md={props.account.email_verified ? 3 : 6}>
-                        <div className="ButtonBox">
-                            {!props.account.email_verified && (
-                                <div className={classes.wrapper}>
-                                    <Button variant="contained"
-                                            disabled={state.resending || state.resend || props.account.email !== state.account.email}
-                                            color="secondary"
-                                            onClick={handleResend}
-                                            className={classes.button}>Resend Verification</Button>
-                                    {state.resending && (
-                                        <CircularProgress size={24}
-                                                          className={classes.buttonProgress}
-                                                          color="secondary"/>
-                                    )}
-                                </div>
-                            )}
+                <Grid item xs={12} md={props.account.email_verified ? 3 : 6}>
+                    <div className="ButtonBox">
+                        {!props.account.email_verified && (
                             <div className={classes.wrapper}>
                                 <Button variant="contained"
-                                        disabled={state.resending || props.account.email !== state.account.email}
+                                        disabled={state.resending || !state.resendPossible || state.form1Modified}
                                         color="secondary"
-                                        className={classes.button}>Change Password</Button>
+                                        onClick={submitResendEmail}
+                                        className={classes.button}>Resend Verification</Button>
+                                {state.resending && (
+                                    <CircularProgress size={24}
+                                                      className={classes.buttonProgress}
+                                                      color="secondary"/>
+                                )}
+                            </div>
+                        )}
+                        <div className={classes.wrapper}>
+                            <Button variant="contained"
+                                    disabled={state.resending || state.form1Modified}
+                                    color="secondary"
+                                    onClick={openForm2}
+                                    className={classes.button}>Change Password</Button>
+                        </div>
+                    </div>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <div className={classes.divider}/>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <CustomTextField
+                        required
+                        disabled={state.form1Submitting}
+                        ref={zipInputRef} onTab={focusCity} onEnter={blurZip} onEscape={blurZip}
+                        className={classes.textField} variant="outlined" label="ZIP Code" fullWidth
+                        value={state.account.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <CustomTextField
+                        required
+                        disabled={state.form1Submitting}
+                        ref={cityInputRef} onTab={focusEmail} onEnter={blurCity} onEscape={blurCity}
+                        className={classes.textField} variant="outlined" label="City" fullWidth
+                        value={state.account.city} onChange={(city) => handleFormChange({city: city})}/>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <CustomTextField
+                        required disabled
+                        className={classes.textField} variant="outlined" label="Country" fullWidth
+                        value={state.account.country}/>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <div className={classes.divider}/>
+                </Grid>
+
+                {state.form1Modified && (
+                    <Grid item xs={12}>
+                        <div className="ButtonBox">
+                            <div className={classes.wrapper}>
+                                <Button variant="contained"
+                                        disabled={state.form1Submitting}
+                                        color="secondary"
+                                        onClick={resetForm1Change}
+                                        className={classes.button}>Cancel</Button>
+                            </div>
+                            <div className={classes.wrapper}>
+                                <Button variant="contained"
+                                        disabled={state.form1Submitting}
+                                        color="secondary"
+                                        onClick={submitForm1Change}
+                                        className={classes.button}>Submit</Button>
+                                {state.form1Submitting && (
+                                    <CircularProgress size={24}
+                                                      className={classes.buttonProgress}
+                                                      color="secondary"/>
+                                )}
+                            </div>
+                        </div>
+                    </Grid>
+                )}
+
+            </Grid>
+
+            {state.errorMessageVisible && (
+                <Snackbar className={classes.snackbar}
+                          open={true}
+                          anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
+                    <SnackbarContent
+                        className={classes.snackbarContentError}
+                        aria-describedby="message-id"
+                        message={<span id="message-id">{state.errorMessageText}</span>}
+                    />
+                </Snackbar>
+            )}
+
+            <Dialog onClose={closeForm2} aria-labelledby="simple-dialog-title" open={state.form2Open}>
+
+                <Grid container spacing={1} className={classes.form2Container}>
+
+                    <Grid item xs={12}>
+                        <CustomTextField
+                            type="password"
+                            required disabled={state.form2Submitting}
+                            ref={password1InputRef} onTab={focusPassword2} onEnter={focusPassword2}
+                            onEscape={blurPassword1}
+                            className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
+                            label="Old Password" fullWidth
+                            value={state.account.oldPassword}
+                            onChange={(oldPassword) =>
+                                handleFormChange({oldPassword: oldPassword})}/>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <CustomTextField
+                            type="password"
+                            required disabled={state.form2Submitting}
+                            ref={password2InputRef} onTab={focusPassword3} onEnter={focusPassword3}
+                            onEscape={blurPassword2}
+                            className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
+                            label="New Password" fullWidth
+                            value={state.account.newPassword}
+                            onChange={(newPassword) =>
+                                handleFormChange({newPassword: newPassword})}/>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <CustomTextField
+                            type="password"
+                            required disabled={state.form2Submitting}
+                            ref={password3InputRef} onTab={focusPassword1} onEnter={submitForm2Change}
+                            onEscape={blurPassword3}
+                            className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
+                            label="New Password Confirmation" fullWidth
+                            value={state.account.newPasswordConfirmation}
+                            onChange={(newPasswordConfirmation) =>
+                                handleFormChange({newPasswordConfirmation: newPasswordConfirmation})}/>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <div className={clsx("ButtonBox", classes.buttonBox)}>
+                            <div className={classes.wrapper}>
+                                <Button variant="contained"
+                                        disabled={state.form2Submitting}
+                                        color="secondary"
+                                        onClick={closeForm2}
+                                        className={classes.button}>Cancel</Button>
+                            </div>
+                            <div className={classes.wrapper}>
+                                <Button variant="contained"
+                                        disabled={state.form2Submitting}
+                                        color="secondary"
+                                        onClick={submitForm2Change}
+                                        className={classes.button}>Submit</Button>
+                                {state.form2Submitting && (
+                                    <CircularProgress size={24}
+                                                      className={classes.buttonProgress}
+                                                      color="secondary"/>
+                                )}
                             </div>
                         </div>
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <div className={classes.divider}/>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                        <CustomTextField
-                            required
-                            ref={zipInputRef} onTab={blurZip} onEnter={blurZip} onEscape={blurZip}
-                            className={classes.textField} variant="outlined" label="ZIP Code" fullWidth
-                            value={state.account.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                        <CustomTextField
-                            required
-                            ref={cityInputRef} onTab={blurCity} onEnter={blurCity} onEscape={blurCity}
-                            className={classes.textField} variant="outlined" label="City" fullWidth
-                            value={state.account.city} onChange={(city) => handleFormChange({city: city})}/>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                        <CustomTextField
-                            required disabled
-                            className={classes.textField} variant="outlined" label="Country" fullWidth
-                            value={state.account.country}/>
-                    </Grid>
-
                 </Grid>
-
-                {state.errorMessageVisible && (
-                    <Snackbar className={classes.snackbar}
-                              open={true}
-                              anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                        <SnackbarContent
-                            className={classes.snackbarContentError}
-                            aria-describedby="message-id"
-                            message={<span id="message-id">{state.errorMessageText}</span>}
-                        />
-                    </Snackbar>
-                )}
+            </Dialog>
         </Container>
     );
 }
