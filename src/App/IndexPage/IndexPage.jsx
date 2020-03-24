@@ -10,6 +10,7 @@ import clsx from "clsx";
 
 import './IndexPage.scss';
 import {Link} from "react-router-dom";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -26,12 +27,36 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(6),
     },
     description: {
         display: "block",
         textAlign: "center",
+    },
+    description1: {
+        marginBottom: theme.spacing(2),
+    },
+    description2: {
+        marginBottom: theme.spacing(2),
+    },
+    description3: {
+        marginBottom: theme.spacing(2),
+    },
+    buttonBox: {
+        marginBottom: theme.spacing(0),
+    },
+    divider1: {
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(5),
+    },
+    description4: {
         marginBottom: theme.spacing(3),
+    },
+    description5: {
+        marginBottom: theme.spacing(0),
+    },
+    description6: {
+        marginBottom: theme.spacing(5),
     },
     links: {
         display: "block",
@@ -65,22 +90,21 @@ export const IndexPage = (props) => {
                     <iframe src="https://www.youtube.com/embed/veRkcaPmV4g?rel=0" frameBorder="0"
                             allowFullScreen="allowfullscreen"/>
                 </div>
-                <Typography variant="body1" className={classes.description}>
+
+                <Typography variant="h5" className={clsx(classes.description, classes.description1)}>
+                    Call now: <strong>+49 (0) 30 2555 5305</strong>
+                </Typography>
+
+                <Typography variant="body1" className={clsx(classes.description, classes.description2)}>
                     <em>Showcase coming soon!</em>
                 </Typography>
 
-                <Typography variant="body1" className={classes.links}>
-                    Webapp Frontend Repository on <a target="_blank" href="https://github.com/dostuffthatmatters/callcenter-frontend">GitHub</a>
-                    <br/>
-                    Webapp Backend Repository on <a target="_blank" href="https://github.com/dostuffthatmatters/callcenter-backend">GitHub</a>
-                    <br/>
-                    Telegram Bot Repository: <em>sharing soon</em>
-                    <br/>
-                    Hub Backend Repository: <em>sharing soon</em>
+                <Typography variant="body1" className={clsx(classes.description, classes.description3)}>
+                    See all Repositories on <a rel="noopener noreferrer" target="_blank" href="https://github.com/Hilfe-am-Ohr">GitHub</a>
                 </Typography>
             </Container>
 
-            <div className="ButtonBox">
+            <div className={clsx("ButtonBox", classes.buttonBox)}>
                 <Button variant="contained"
                         color="secondary"
                         className={classes.button}>
@@ -92,6 +116,40 @@ export const IndexPage = (props) => {
                     <Link to={"/register"} className={classes.link}>Register</Link>
                 </Button>
             </div>
+
+            <Container maxWidth="sm">
+
+                <Divider className={classes.divider1}/>
+
+                <Typography variant="h5" className={clsx(classes.description, classes.description4)}>
+                    How can you support us?
+                </Typography>
+
+                <Typography variant="body1" className={clsx(classes.description, classes.description5)}>
+                    1. Like our pitch - you saw above - on&nbsp;
+                    <a href="https://www.youtube.com/watch?v=veRkcaPmV4g"
+                       rel="noopener noreferrer"
+                       target="_blank"><strong>YouTube</strong></a>
+
+                    <br/><br/>
+
+                    2. Like our project on&nbsp;
+                    <a href="https://devpost.com/software/hilfehotline-finde-einfach-helfende"
+                       rel="noopener noreferrer"
+                       target="_blank"><strong>DevPost</strong></a>
+
+                    <br/><br/>
+
+                    3. Take part in <strong>our survey</strong> by calling the hotline <em>(~ 1 minute)</em>
+                </Typography>
+
+                <Divider className={classes.divider1}/>
+
+                <Typography variant="body1" className={clsx(classes.description, classes.description2)}>
+                    <em>Job postings coming soon!</em>
+                </Typography>
+
+            </Container>
 
         </div>
     );
