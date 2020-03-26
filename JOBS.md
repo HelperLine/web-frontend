@@ -4,9 +4,9 @@ _* for all of our services_
 
 Contact us via: [**jobs@hilfe-am-ohr.de**](mailto:jobs@hilfe-am-ohr.de)
 
+<br/>
 
-
-#### 1. Translation
+### 1. Translation
 
 We want to translate our **website as well as our hotline** 
 into **as many languages as possible**!
@@ -14,9 +14,9 @@ into **as many languages as possible**!
 If you are a **native speaker or very fluent** in some language
 you might think we should include, contact us!
 
+<br/>
 
-
-#### 2. Voice-Synchronization
+### 2. Voice-Synchronization
 
 We don't want to have a robot voice on our hotline forever!
 
@@ -26,9 +26,9 @@ speakers**.
 
 Same as for translation: Hit us up for **additional languages**!
 
+<br/>
 
-
-#### 3. Gathering Service Strategies
+### 3. Gathering Service Strategies
 
 On our [**Guide Page**](https://www.hilfe-am-ohr.de/guide) we want to
 collect the **best tips and strategies for our volunteers**.
@@ -36,9 +36,9 @@ collect the **best tips and strategies for our volunteers**.
 If you want to help with one or more of the current categories or add more
 types of request: Contact us!
 
+<br/>
 
-
-#### 4. Software Engineering
+### 4. Software Engineering
 
 We are looking for Frontend as well as Backend Developers!
 
@@ -61,9 +61,9 @@ Possible areas of work:
 * Backend functionality & performance (webapp & hotline)
 * Admin Tool for us (map with all callers and volunteers)
 
+<br/>
 
-
-#### 5. UX Design
+### 5. UX Design
 
 Improving the User Experience of all of our products (webapp, hotline, 
 bots) is super important!
@@ -71,9 +71,9 @@ bots) is super important!
 Whether you are just a hobby enthusiast or untouchable expert in UX
 we'd definitely like to hear from you!
 
+<br/>
 
-
-#### 6. Refine our Vision
+### 6. Refine our Vision
 
 You can find our current vision and progress [**here**](https://devpost.com/software/hilfehotline-finde-einfach-helfende).
 If you want to use your creativity and expand our idea: Hit us up!
