@@ -23,3 +23,8 @@ export const handleNewAccountData = (response) => ({
     account: response.data.account,
     calls: response.data.calls,
 });
+
+export const switchLanguage = (language) => ({
+    type: "SWITCH_LANGUAGE",
+    language: language,
+});

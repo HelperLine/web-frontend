@@ -77,6 +77,10 @@ function storeReducer(state = {
             Cookies.set('email', action.account.email);
             return newState;
 
+        case "SWITCH_LANGUAGE":
+            newState.language = action.language;
+            return newState;
+
         default:
             return newState;
     }
