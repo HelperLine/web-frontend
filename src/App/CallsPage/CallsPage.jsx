@@ -34,6 +34,8 @@ import AddIcon from '@material-ui/icons/Add';
 
 import './CallsPage.scss';
 
+import {CallsPageTranslation} from "./CallsPageTranslation";
+
 var cloneDeep = require('lodash.clonedeep');
 
 
@@ -148,7 +150,7 @@ class CallsPageWrapper extends React.Component {
                 } else if (response.data.status === "no new calls") {
                     this.setState({
                         errorMessageVisible: true,
-                        errorMessageText: "Currently no new calls. Please try again in a few minutes.",
+                        errorMessageText: CallsPageTranslation.noNewCalls[this.props.language],
                     });
                     setTimeout(() => {
                         this.setState({
@@ -158,9 +160,18 @@ class CallsPageWrapper extends React.Component {
                 }
 
             }).catch(response => {
-            console.log("Axios promise rejected! Response:");
-            console.log(response);
-        });
+                console.log("Axios promise rejected! Response:");
+                console.log(response);
+                this.setState({
+                    errorMessageVisible: true,
+                    errorMessageText: CallsPageTranslation.serverOffline[this.props.language],
+                });
+                setTimeout(() => {
+                    this.setState({
+                        errorMessageVisible: false,
+                    })
+                }, 2500);
+            });
     }
 
     acceptNewCall() {
@@ -189,7 +200,8 @@ class CallsPageWrapper extends React.Component {
 
     render() {
         return (
-            <CallsPageComponent calls={this.props.calls}
+            <CallsPageComponent language={this.props.language}
+                                calls={this.props.calls}
 
                                 account={this.props.account}
                                 acceptNewCall={this.acceptNewCall}
@@ -226,7 +238,7 @@ export function CallsPageComponent(props) {
                                         <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
                                         <AddIcon className={classes.buttonIcon}/>
                                     }
-                                    className={classes.button}>Accept Call</Button>
+                                    className={classes.button}>{CallsPageTranslation.acceptCall[props.language]}</Button>
                         </div>
 
                         <div className={classes.wrapper}>
@@ -240,7 +252,7 @@ export function CallsPageComponent(props) {
                                             <WifiOffIcon className={classes.buttonIcon}/>
                                     )}
                                     onClick={props.account.online ? props.goOffline : props.goOnline}
-                                    className={classes.button}>{props.account.online ? "online" : "offline"}</Button>
+                                    className={classes.button}>{props.account.online ? CallsPageTranslation.online[props.language] : CallsPageTranslation.offline[props.language]}</Button>
                         </div>
                     </div>
                 </Grid>
@@ -249,14 +261,14 @@ export function CallsPageComponent(props) {
                     <Divider className={classes.divider}/>
                 </Grid>
 
-                <Typography variant="h6" className={classes.subheading}>Accepted Calls</Typography>
+                <Typography variant="h6" className={classes.subheading}>{CallsPageTranslation.acceptedCalls[props.language]}</Typography>
 
                 <Grid item xs={12}>
                     {props.calls.accepted.map((call, index) => (
                         <Call key={index} call={call}/>
                     ))}
                     {props.calls.accepted.length === 0 && (
-                        <Typography variant="body1" className={classes.placeholder}>No accepted Calls</Typography>
+                        <Typography variant="body1" className={classes.placeholder}>{CallsPageTranslation.noAcceptedCalls[props.language]}</Typography>
                     )}
                 </Grid>
 
@@ -264,14 +276,14 @@ export function CallsPageComponent(props) {
                     <Divider className={classes.divider}/>
                 </Grid>
 
-                <Typography variant="h6" className={classes.subheading}>Fulfilled Calls</Typography>
+                <Typography variant="h6" className={classes.subheading}>{CallsPageTranslation.fulfilledCalls[props.language]}</Typography>
 
                 <Grid item xs={12}>
                     {props.calls.fulfilled.map((call, index) => (
                         <Call key={index} call={call}/>
                     ))}
                     {props.calls.fulfilled.length === 0 && (
-                        <Typography variant="body1" className={classes.placeholder}>No fulfilled Calls</Typography>
+                        <Typography variant="body1" className={classes.placeholder}>{CallsPageTranslation.noFulfilledCalls[props.language]}</Typography>
                     )}
                 </Grid>
 
@@ -300,6 +312,7 @@ const mapStateToProps = state => ({
     calls: state.calls,
     account: state.account,
     api_key: state.api_key,
+    language: state.language,
 });
 
 const mapDispatchToProps = dispatch => ({

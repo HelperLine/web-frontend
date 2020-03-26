@@ -8,6 +8,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {Container} from "@material-ui/core";
 
 import './GuidePage.scss';
+import {handleNewAccountData} from "../../ReduxActions";
+import {connect} from "react-redux";
+
+import {GuidePageTranslation, guideTranslationTitle, guideTranslationText1, guideTranslationText2} from "./GuidePageTranslation";
+
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -34,31 +39,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const GuidePage = (props) => {
+const GuidePageComponent = (props) => {
     const classes = useStyles();
 
     return (
         <Container maxWidth="md" className="GuidePage">
-            <Typography variant="h4" className={classes.title}>Guide <em>(coming soon)</em></Typography>
+            <Typography variant="h4" className={classes.title}>{GuidePageTranslation.guideTitle[props.language]}</Typography>
 
             <Container maxWidth="sm">
                 <Typography variant="body1" className={classes.description}>
-                    Call-Center-Volunteers should not have to figure out everything by themselves.
-
-                    This page will contain a <strong>list of tips</strong> for <strong>all kinds of
-                    scenarios</strong> our
-                    volunteers might have to conquer.
-
-                    <br/><br/>
-
-                    Since we do not want to share "truth's" specified by only a small number of people we are
-                    <strong> not yet ready to share</strong> these tips.
-
-                    We're already <strong>crowdsourcing the best strategies</strong> which people broadly agreed on.
-
-                    <br/><br/>
-
-                    Stay tuned!
+                    {GuidePageTranslation.text1[props.language]}
                 </Typography>
             </Container>
 
@@ -68,7 +58,7 @@ export const GuidePage = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
                         <Typography variant="subtitle1" className={classes.heading}>
-                            Grocery shopping
+                            {GuidePageTranslation.groceryShopping[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
 
@@ -78,7 +68,7 @@ export const GuidePage = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
                         <Typography variant="subtitle1" className={classes.heading}>
-                            Picking up parcels from the post office
+                            {GuidePageTranslation.pickingUpParcels[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
@@ -87,7 +77,7 @@ export const GuidePage = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
                         <Typography variant="subtitle1" className={classes.heading}>
-                            Stores are closed/risky: Helping with internet shopping
+                            {GuidePageTranslation.storesAreClosed[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
@@ -96,7 +86,7 @@ export const GuidePage = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
                         <Typography variant="subtitle1" className={classes.heading}>
-                            Picking up prescription/medication
+                            {GuidePageTranslation.pickingUpMedication[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
@@ -105,7 +95,7 @@ export const GuidePage = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon/>}>
                         <Typography variant="subtitle1" className={classes.heading}>
-                            Dealing with mental health
+                            {GuidePageTranslation.mentalHealth[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
@@ -114,17 +104,21 @@ export const GuidePage = (props) => {
 
             <Container maxWidth="sm">
                 <Typography variant="body1" className={classes.crowdSource}>
-                    If you want to <strong>help us in the process</strong> feel free to contact us via:
-                    <br/>
-                    <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
-
-                    <br/><br/>
-
-                    If you want to <strong>contribute by translating this page</strong> into more languages:
-                    <br/>
-                    <a href="mailto:languages@hilfe-am-ohr.de">languages@hilfe-am-ohr.de</a>
+                    {GuidePageTranslation.text2[props.language]}
                 </Typography>
             </Container>
         </Container>
     );
 };
+
+
+const mapStateToProps = state => ({
+    language: state.language,
+});
+
+const mapDispatchToProps = dispatch => ({
+    handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+});
+
+export const GuidePage = connect(mapStateToProps, mapDispatchToProps)(GuidePageComponent);
+

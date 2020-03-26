@@ -25,6 +25,7 @@ import './AccountPage.scss';
 import Grid from "@material-ui/core/Grid";
 import clsx from "clsx";
 
+import {AccountPageTranslation} from "./AccountPageTranslation";
 
 var cloneDeep = require('lodash.clonedeep');
 
@@ -241,25 +242,18 @@ export function AccountPageComponent(props) {
 
         ["oldPassword", "newPassword", "newPasswordConfirmation"].forEach(key => {
             if (state.account[key] === "") {
-
-                // 1. insert a space before all caps 2. uppercase all first characters
-                // Source: https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
-                let formattedString = key.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
-                    return str.toUpperCase();
-                });
-
-                showErrorSnackbar("\"" + formattedString + "\" is empty");
+                showErrorSnackbar(AccountPageTranslation.passwordFieldEmpty[props.language]);
                 return false;
             }
         });
 
         if (state.account["newPassword"] !== state.account["newPasswordConfirmation"]) {
-            showErrorSnackbar("\"New Password\" and \"New Password Confirmation\" do not match");
+            showErrorSnackbar(AccountPageTranslation.passwordConfirmationMatch[props.language]);
             return false;
         }
 
         if (state.account["newPassword"].length < 8) {
-            showErrorSnackbar("\"New Password\" too short (at least 8 characters)");
+            showErrorSnackbar(AccountPageTranslation.passwordTooShort[props.language]);
             return false;
         }
 
@@ -288,10 +282,10 @@ export function AccountPageComponent(props) {
                             showErrorSnackbar(response.data.status);
                         }
                     }).catch(response => {
-                    console.log("Axios promise rejected! Response:");
+                    console.log("Axios promise rejected! Server response:");
                     console.log(response);
                     stopForm1SubmittingState();
-                    showErrorSnackbar("The server seems to be offline. See console for details.");
+                    showErrorSnackbar(AccountPageTranslation.serverOffline[props.language]);
                 });
             }, 1000);
         }
@@ -319,10 +313,10 @@ export function AccountPageComponent(props) {
                             showErrorSnackbar(response.data.status);
                         }
                     }).catch(response => {
-                    console.log("Axios promise rejected! Response:");
+                    console.log("Axios promise rejected! Server response:");
                     console.log(response);
                     stopForm2SubmittingState();
-                    showErrorSnackbar("The server seems to be offline. See console for details.");
+                    showErrorSnackbar(AccountPageTranslation.serverOffline[props.language]);
                 });
             }, 1000);
         }
@@ -343,10 +337,10 @@ export function AccountPageComponent(props) {
                     showErrorSnackbar(response.data.status);
                 }
             }).catch(response => {
-            console.log("Axios promise rejected! Response:");
+            console.log("Axios promise rejected! Server response:");
             console.log(response);
             resetForm1Change();
-            showErrorSnackbar("The server seems to be offline. See console for details.");
+            showErrorSnackbar(AccountPageTranslation.serverOffline[props.language]);
         });
     }
 
@@ -458,7 +452,7 @@ export function AccountPageComponent(props) {
                     <CustomTextField
                         required disabled={props.account.email_verified || state.form1Submitting}
                         ref={emailInputRef} onTab={focusZip} onEnter={blurEmail} onEscape={blurEmail}
-                        className={classes.textField} variant="outlined" label="Email" fullWidth
+                        className={classes.textField} variant="outlined" label={AccountPageTranslation.email[props.language]} fullWidth
                         value={state.account.email} onChange={(email) => handleFormChange({email: email})}/>
                 </Grid>
 
@@ -470,7 +464,7 @@ export function AccountPageComponent(props) {
                                         disabled={state.resending || !state.resendPossible || state.form1Modified}
                                         color="secondary"
                                         onClick={submitResendEmail}
-                                        className={classes.button}>Resend Verification</Button>
+                                        className={classes.button}>{AccountPageTranslation.resendVerification[props.language]}</Button>
                                 {state.resending && (
                                     <CircularProgress size={24}
                                                       className={classes.buttonProgress}
@@ -483,7 +477,7 @@ export function AccountPageComponent(props) {
                                     disabled={state.resending || state.form1Modified}
                                     color="secondary"
                                     onClick={openForm2}
-                                    className={classes.button}>Change Password</Button>
+                                    className={classes.button}>{AccountPageTranslation.changePassword[props.language]}</Button>
                         </div>
                     </div>
                 </Grid>
@@ -497,7 +491,7 @@ export function AccountPageComponent(props) {
                         required
                         disabled={state.form1Submitting}
                         ref={zipInputRef} onTab={focusCity} onEnter={blurZip} onEscape={blurZip}
-                        className={classes.textField} variant="outlined" label="ZIP Code" fullWidth
+                        className={classes.textField} variant="outlined" label={AccountPageTranslation.zipCode[props.language]} fullWidth
                         value={state.account.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
                 </Grid>
 
@@ -506,14 +500,14 @@ export function AccountPageComponent(props) {
                         required
                         disabled={state.form1Submitting}
                         ref={cityInputRef} onTab={focusEmail} onEnter={blurCity} onEscape={blurCity}
-                        className={classes.textField} variant="outlined" label="City" fullWidth
+                        className={classes.textField} variant="outlined" label={AccountPageTranslation.city[props.language]} fullWidth
                         value={state.account.city} onChange={(city) => handleFormChange({city: city})}/>
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={4}>
                     <CustomTextField
                         required disabled
-                        className={classes.textField} variant="outlined" label="Country" fullWidth
+                        className={classes.textField} variant="outlined" label={AccountPageTranslation.country[props.language]} fullWidth
                         value={state.account.country}/>
                 </Grid>
 
@@ -529,14 +523,14 @@ export function AccountPageComponent(props) {
                                         disabled={state.form1Submitting}
                                         color="secondary"
                                         onClick={resetForm1Change}
-                                        className={classes.button}>Cancel</Button>
+                                        className={classes.button}>{AccountPageTranslation.cancel[props.language]}</Button>
                             </div>
                             <div className={classes.wrapper}>
                                 <Button variant="contained"
                                         disabled={state.form1Submitting}
                                         color="secondary"
                                         onClick={submitForm1Change}
-                                        className={classes.button}>Submit</Button>
+                                        className={classes.button}>{AccountPageTranslation.submit[props.language]}</Button>
                                 {state.form1Submitting && (
                                     <CircularProgress size={24}
                                                       className={classes.buttonProgress}
@@ -573,7 +567,7 @@ export function AccountPageComponent(props) {
                                 ref={password1InputRef} onTab={focusPassword2} onEnter={focusPassword2}
                                 onEscape={blurPassword1}
                                 className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
-                                label="Old Password" fullWidth
+                                label={AccountPageTranslation.oldPassword[props.language]} fullWidth
                                 value={state.account.oldPassword}
                                 onChange={(oldPassword) =>
                                     handleFormChange({oldPassword: oldPassword})}/>
@@ -586,7 +580,7 @@ export function AccountPageComponent(props) {
                                 ref={password2InputRef} onTab={focusPassword3} onEnter={focusPassword3}
                                 onEscape={blurPassword2}
                                 className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
-                                label="New Password" fullWidth
+                                label={AccountPageTranslation.newPassword[props.language]} fullWidth
                                 value={state.account.newPassword}
                                 onChange={(newPassword) =>
                                     handleFormChange({newPassword: newPassword})}/>
@@ -599,7 +593,7 @@ export function AccountPageComponent(props) {
                                 ref={password3InputRef} onTab={focusPassword1} onEnter={submitForm2Change}
                                 onEscape={blurPassword3}
                                 className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
-                                label="New Password Confirmation" fullWidth
+                                label={AccountPageTranslation.newPasswordConfirmation[props.language]} fullWidth
                                 value={state.account.newPasswordConfirmation}
                                 onChange={(newPasswordConfirmation) =>
                                     handleFormChange({newPasswordConfirmation: newPasswordConfirmation})}/>
@@ -612,14 +606,14 @@ export function AccountPageComponent(props) {
                                             disabled={state.form2Submitting}
                                             color="secondary"
                                             onClick={closeForm2}
-                                            className={classes.button}>Cancel</Button>
+                                            className={classes.button}>{AccountPageTranslation.cancel[props.language]}</Button>
                                 </div>
                                 <div className={classes.wrapper}>
                                     <Button variant="contained"
                                             disabled={state.form2Submitting}
                                             color="secondary"
                                             onClick={submitForm2Change}
-                                            className={classes.button}>Submit</Button>
+                                            className={classes.button}>{AccountPageTranslation.submit[props.language]}</Button>
                                     {state.form2Submitting && (
                                         <CircularProgress size={24}
                                                           className={classes.buttonProgress}
@@ -644,6 +638,7 @@ export function AccountPageComponent(props) {
 const mapStateToProps = state => ({
     account: state.account,
     api_key: state.api_key,
+    language: state.language,
 });
 
 const mapDispatchToProps = dispatch => ({

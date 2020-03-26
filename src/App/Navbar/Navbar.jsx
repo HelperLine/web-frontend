@@ -30,6 +30,8 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 import Dialog from "@material-ui/core/Dialog";
 
+import {NavbarTranslation} from "./NavbarTranslation";
+
 
 const drawerWidth = 240;
 
@@ -138,11 +140,11 @@ function NavbarComponent(props) {
     const path = window.location.pathname;
     let initialPageTitle = "";
     if (path.startsWith("/guide")) {
-        initialPageTitle = "Guide";
+        initialPageTitle = NavbarTranslation.guide[props.language];
     } else if (path.startsWith("/calls")) {
-        initialPageTitle = "Calls";
+        initialPageTitle = NavbarTranslation.calls[props.language];
     } else if (path.startsWith("/account")) {
-        initialPageTitle = "Account";
+        initialPageTitle = NavbarTranslation.account[props.language];
     }
 
     const [pageTitle, setPageTitle] = useState(initialPageTitle);
@@ -157,11 +159,11 @@ function NavbarComponent(props) {
     const pageLogoComponent = (
         <Link edge="end"
               to="/"
-              onClick={() => setPageTitle("Guide")}>
+              onClick={() => setPageTitle(NavbarTranslation.guide[props.language])}>
             <IconButton aria-label="index"
                         className={classes.HeaderIconButton}
                         disableRipple={true}>
-                <CallIcon alt="Phone Icon" style={{fill: "white"}} fontSize="large"/>
+                <CallIcon alt={NavbarTranslation.calls[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
             </IconButton>
         </Link>
     );
@@ -170,30 +172,30 @@ function NavbarComponent(props) {
         <React.Fragment>
             <Link to="/guide"
                   className={classes.link}
-                  onClick={() => setPageTitle("Guide")}>
+                  onClick={() => setPageTitle(NavbarTranslation.guide[props.language])}>
                 <Button size="large"
                         color={path.startsWith("/guide") ? "secondary" : "primary"}
-                        startIcon={<AssignmentIcon alt="Guide Icon"/>}
-                        className={clsx(classes.button, classes.topButton)}>Guide</Button>
+                        startIcon={<AssignmentIcon alt={NavbarTranslation.guide[props.language] + " Icon"}/>}
+                        className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.guide[props.language]}</Button>
             </Link>
 
             {props.loggedIn && (
                 <React.Fragment>
                     <Link to="/calls"
                           className={classes.link}
-                          onClick={() => setPageTitle("Calls")}>
+                          onClick={() => setPageTitle(NavbarTranslation.calls[props.language])}>
                         <Button size="large"
                                 color={path.startsWith("/calls") ? "secondary" : "primary"}
-                                startIcon={<CallIcon alt="Phone Icon"/>}
-                                className={clsx(classes.button, classes.topButton)}>Calls</Button>
+                                startIcon={<CallIcon alt={NavbarTranslation.calls[props.language] + " Icon"}/>}
+                                className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.calls[props.language]}</Button>
                     </Link>
                     <Link to="/account"
                           className={classes.link}
-                          onClick={() => setPageTitle("Account")}>
+                          onClick={() => setPageTitle(NavbarTranslation.account[props.language])}>
                         <Button size="large"
                                 color={path.startsWith("/account") ? "secondary" : "primary"}
-                                startIcon={<SettingsIcon alt="Account Icon"/>}
-                                className={clsx(classes.button, classes.topButton)}>Account</Button>
+                                startIcon={<SettingsIcon alt={NavbarTranslation.account[props.language] + " Icon"}/>}
+                                className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.account[props.language]}</Button>
                     </Link>
                 </React.Fragment>
             )}
@@ -206,8 +208,8 @@ function NavbarComponent(props) {
                 <Button onClick={() => {setLogoutDialogState({open: true});}}
                         size="large"
                         color="primary"
-                        startIcon={<PersonIcon alt="Logout Icon"/>}
-                        className={clsx(classes.button, classes.topButton)}>Logout</Button>
+                        startIcon={<PersonIcon alt={NavbarTranslation.logout[props.language] + " Icon"}/>}
+                        className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.logout[props.language]}</Button>
             )}
             {!props.loggedIn && (
                 <Link to="/login"
@@ -219,8 +221,8 @@ function NavbarComponent(props) {
 
                                 startIcon={props.autoLogin ?
                                     <CircularProgress size={20} className={classes.CircularProgress} disabled/> :
-                                    <PersonIcon alt="Login Icon"/>}
-                                className={clsx(classes.button, classes.topButton)}>Login</Button>
+                                    <PersonIcon alt={NavbarTranslation.login[props.language] + " Icon"}/>}
+                                className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.login[props.language]}</Button>
                     </div>
                 </Link>
             )}
@@ -238,7 +240,7 @@ function NavbarComponent(props) {
                                     aria-label="menu"
                                     className={classes.menuButton}
                                     onClick={() => toggleDrawer(true)}>
-                            <MenuIcon alt="Menu Icon"/>
+                            <MenuIcon alt={NavbarTranslation.menu[props.language] + " Icon"}/>
                         </IconButton>
                         {pageTitleComponent}
                         {pageLogoComponent}
@@ -290,7 +292,7 @@ function NavbarComponent(props) {
                 <Grid container spacing={1} className={classes.logoutDialogContainer}>
 
                     <Grid item xs={12}>
-                        <Typography variant="h6" className={classes.logoutDialogTitle}>Are you sure?</Typography>
+                        <Typography variant="h6" className={classes.logoutDialogTitle}>{NavbarTranslation.logoutQuestion[props.language]}</Typography>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -299,18 +301,18 @@ function NavbarComponent(props) {
                                 <Button variant="contained"
                                         color="secondary"
                                         onClick={() => setLogoutDialogState({open: false})}
-                                        className={classes.logoutDialogButton}>Cancel</Button>
+                                        className={classes.logoutDialogButton}>{NavbarTranslation.cancel[props.language]}</Button>
                             </div>
                             <div className={classes.logoutDialogWrapper}>
                                 <Link to="/logout"
                                       className={classes.link}
                                       onClick={() => {
                                           props.handleLogout();
-                                          setPageTitle("Guide");
+                                          setPageTitle(NavbarTranslation.guide[props.language]);
                                       }}>
                                     <Button variant="contained"
                                             color="secondary"
-                                            className={classes.logoutDialogButton}>Logout</Button>
+                                            className={classes.logoutDialogButton}>{NavbarTranslation.logout[props.language]}</Button>
                                 </Link>
                             </div>
                         </div>
@@ -331,6 +333,7 @@ function NavbarComponent(props) {
 const mapStateToProps = state => ({
     loggedIn: state.loggedIn,
     autoLogin: state.autoLogin,
+    language: state.language,
 });
 
 const mapDispatchToProps = dispatch => ({

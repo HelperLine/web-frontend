@@ -24,6 +24,8 @@ import './SignInPage.scss';
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 
+import {SignInTranslation} from "./SignInTranslation";
+
 
 var cloneDeep = require('lodash.clonedeep');
 
@@ -131,13 +133,13 @@ export function LoginPageComponent(props) {
                     if (response.data.status === "ok") {
                         props.handleLogin(response);
                     } else {
-                        errorSnackbar(response.data.status);
+                        errorSnackbar(SignInTranslation.invalidEmailPassword[props.language]);
                     }
                 }, 1000);
             }).catch(response => {
             console.log("Axios promise rejected! Response:");
             console.log(response);
-            errorSnackbar("The server seems to be offline. See console for details.");
+            errorSnackbar(SignInTranslation.serverOffline[props.language]);
         });
     }
 
@@ -160,7 +162,7 @@ export function LoginPageComponent(props) {
     return (
         <Container maxWidth="xs" className={"SignInPage"}>
             <div className="SignInForm">
-                <Typography variant="h3" className={classes.title}>Login</Typography>
+                <Typography variant="h3" className={classes.title}>{SignInTranslation.login[props.language]}</Typography>
 
                 <Grid container spacing={1} className={classes.formContainer}>
                     <Grid item xs={12}>
@@ -173,7 +175,7 @@ export function LoginPageComponent(props) {
                             className={classes.textField}
                             variant="outlined"
 
-                            label="email"
+                            label={SignInTranslation.email[props.language]}
                             fullWidth
 
                             value={state.email}
@@ -189,7 +191,7 @@ export function LoginPageComponent(props) {
                             className={classes.textField}
                             variant="outlined"
 
-                            label="password"
+                            label={SignInTranslation.password[props.language]}
                             type="password"
                             fullWidth
 
@@ -204,7 +206,7 @@ export function LoginPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 className={classes.button}>
-                            <Link to={"/guide"} className={classes.link}>Cancel</Link>
+                            <Link to={"/guide"} className={classes.link}>{SignInTranslation.cancel[props.language]}</Link>
                         </Button>
                     </div>
                     <div className={classes.wrapper}>
@@ -212,7 +214,7 @@ export function LoginPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 onClick={handleLogin}
-                                className={classes.button}>Login</Button>
+                                className={classes.button}>{SignInTranslation.login[props.language]}</Button>
                         {state.loading && (
                             <CircularProgress size={24}
                                               className={classes.buttonProgress}
@@ -221,7 +223,7 @@ export function LoginPageComponent(props) {
                     </div>
                 </div>
 
-                <Link to={"/register"} className={classes.switchLink}>Don't have an account yet?</Link>
+                <Link to={"/register"} className={classes.switchLink}>{SignInTranslation.noAccountYet[props.language]}</Link>
 
                 {state.errorMessageVisible && (
                     <Snackbar className={classes.snackbar}
@@ -244,7 +246,9 @@ export function LoginPageComponent(props) {
 /* Making the RouterComponent watch the loggedIn property of the store */
 
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    language: state.language,
+});
 
 const mapDispatchToProps = dispatch => ({
     handleLogin: (response) => dispatch(handleLogin(response)),

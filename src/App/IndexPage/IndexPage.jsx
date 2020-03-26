@@ -12,6 +12,11 @@ import './IndexPage.scss';
 import {Link} from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 
+import {IndexPageTranslation} from "./IndexPageTranslation";
+import {handleNewAccountData} from "../../ReduxActions";
+import {connect} from "react-redux";
+
+
 const useStyles = makeStyles(theme => ({
     title: {
         display: "block",
@@ -77,13 +82,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const IndexPage = (props) => {
+export const IndexPageComponent = (props) => {
     const classes = useStyles();
 
     return (
         <div className="IndexPage">
             <Typography variant="h4" className={classes.title}>Hilfe am Ohr!</Typography>
-            <Typography variant="h6" className={classes.title2}>Eine Hotline für Menschen ohne Internetzugang</Typography>
+            <Typography variant="h6" className={classes.title2}>{IndexPageTranslation.indexSubtitle[props.language]}</Typography>
 
             <Container maxWidth="sm">
                 <div className={clsx(classes.videoContainer, "VideoContainer")}>
@@ -92,15 +97,15 @@ export const IndexPage = (props) => {
                 </div>
 
                 <Typography variant="h5" className={clsx(classes.description, classes.description1)}>
-                    Call now: <strong>+49 (0) 30 2555 5305</strong>
+                    {IndexPageTranslation.text1[props.language]}
                 </Typography>
 
                 <Typography variant="body1" className={clsx(classes.description, classes.description2)}>
-                    <em>Showcase coming soon!</em>
+                    {IndexPageTranslation.text2[props.language]}
                 </Typography>
 
                 <Typography variant="body1" className={clsx(classes.description, classes.description3)}>
-                    See all Repositories on <a rel="noopener noreferrer" target="_blank" href="https://github.com/Hilfe-am-Ohr">GitHub</a>
+                    {IndexPageTranslation.text3[props.language]}
                 </Typography>
             </Container>
 
@@ -108,12 +113,12 @@ export const IndexPage = (props) => {
                 <Button variant="contained"
                         color="secondary"
                         className={classes.button}>
-                    <Link to={"/guide"} className={classes.link}>Read our Guide</Link>
+                    <Link to={"/guide"} className={classes.link}>{IndexPageTranslation.readOurGuide[props.language]}</Link>
                 </Button>
                 <Button variant="contained"
                         color="secondary"
                         className={classes.button}>
-                    <Link to={"/register"} className={classes.link}>Register</Link>
+                    <Link to={"/register"} className={classes.link}>{IndexPageTranslation.register[props.language]}</Link>
                 </Button>
             </div>
 
@@ -122,31 +127,17 @@ export const IndexPage = (props) => {
                 <Divider className={classes.divider1}/>
 
                 <Typography variant="h5" className={clsx(classes.description, classes.description4)}>
-                    How can you support us?
+                    {IndexPageTranslation.text4[props.language]}
                 </Typography>
 
                 <Typography variant="body1" className={clsx(classes.description, classes.description5)}>
-                    1. Like our pitch - you saw above - on&nbsp;
-                    <a href="https://www.youtube.com/watch?v=veRkcaPmV4g"
-                       rel="noopener noreferrer"
-                       target="_blank"><strong>YouTube</strong></a>
-
-                    <br/><br/>
-
-                    2. Like our project on&nbsp;
-                    <a href="https://devpost.com/software/hilfehotline-finde-einfach-helfende"
-                       rel="noopener noreferrer"
-                       target="_blank"><strong>DevPost</strong></a>
-
-                    <br/><br/>
-
-                    3. Take part in <strong>our survey</strong> by calling the hotline <em>(~ 1 minute)</em>
+                    {IndexPageTranslation.text5[props.language]}
                 </Typography>
 
                 <Divider className={classes.divider1}/>
 
                 <Typography variant="body1" className={clsx(classes.description, classes.description2)}>
-                    <em>Job postings coming soon!</em>
+                    {IndexPageTranslation.text6[props.language]}
                 </Typography>
 
             </Container>
@@ -154,3 +145,14 @@ export const IndexPage = (props) => {
         </div>
     );
 };
+
+const mapStateToProps = state => ({
+    language: state.language,
+});
+
+const mapDispatchToProps = dispatch => ({
+    handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+});
+
+export const IndexPage = connect(mapStateToProps, mapDispatchToProps)(IndexPageComponent);
+

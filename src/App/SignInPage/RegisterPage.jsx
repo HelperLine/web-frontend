@@ -28,6 +28,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 
+import {SignInTranslation} from "./SignInTranslation";
+
+
 var cloneDeep = require('lodash.clonedeep');
 
 
@@ -104,7 +107,7 @@ export function RegisterPageComponent(props) {
 
             zip: "",
             city: "",
-            country: "Germany",
+            country: SignInTranslation.germany[props.language],
         },
         loading: false,
         errorMessageVisible: false,
@@ -146,20 +149,18 @@ export function RegisterPageComponent(props) {
 
         ["email", "password", "passwordConfirmation", "zip", "city", "country"].forEach(key => {
             if (state.formData[key] === "") {
-
-                // 1. insert a space before all caps 2. uppercase all first characters
-                // Source: https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
-                let formattedString = key.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
-                    return str.toUpperCase();
-                });
-
-                errorSnackbar("\"" + formattedString + "\" is empty");
+                errorSnackbar(SignInTranslation.fieldEmpty[props.language]);
                 return false;
             }
         });
 
         if (state.formData["password"] !== state.formData["passwordConfirmation"]) {
-            errorSnackbar("\"Password\" and \"Password Confirmation\" do not match");
+            errorSnackbar(SignInTranslation.passwordConfirmationMatch[props.language]);
+            return false;
+        }
+
+        if (state.formData["password"].length < 8) {
+            errorSnackbar(SignInTranslation.passwordTooShort[props.language]);
             return false;
         }
 
@@ -192,7 +193,7 @@ export function RegisterPageComponent(props) {
                 }).catch(response => {
                 console.log("Axios promise rejected! Response:");
                 console.log(response);
-                errorSnackbar("The server seems to be offline. See console for details.");
+                errorSnackbar(SignInTranslation.serverOffline[props.language]);
             });
         }
     }
@@ -259,7 +260,7 @@ export function RegisterPageComponent(props) {
     return (
         <Container maxWidth="md" className="SignInPage">
             <div className="SignInForm">
-                <Typography variant="h3" className={classes.title}>Register</Typography>
+                <Typography variant="h3" className={classes.title}>{SignInTranslation.register[props.language]}</Typography>
 
                 <Grid container spacing={1} className={classes.formContainer}>
 
@@ -267,7 +268,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required
                             ref={emailInputRef} onTab={focusPassword} onEnter={focusPassword} onEscape={blurEmail}
-                            className={classes.textField} variant="outlined" label="Email" fullWidth
+                            className={classes.textField} variant="outlined" label={SignInTranslation.email[props.language]} fullWidth
                             value={state.formData.email} onChange={(email) => handleFormChange({email: email})}/>
                     </Grid>
 
@@ -276,7 +277,7 @@ export function RegisterPageComponent(props) {
                             required type="password"
                             ref={passwordInputRef} onTab={focusPasswordConfirmation} onEnter={focusPasswordConfirmation}
                             onEscape={blurPassword}
-                            className={classes.textField} variant="outlined" label="Password" fullWidth
+                            className={classes.textField} variant="outlined" label={SignInTranslation.password[props.language]} fullWidth
                             value={state.formData.password}
                             onChange={(password) => handleFormChange({password: password})}/>
                     </Grid>
@@ -286,7 +287,7 @@ export function RegisterPageComponent(props) {
                             required type="password"
                             ref={passwordConfirmationInputRef} onTab={focusZip} onEnter={focusZip}
                             onEscape={blurPasswordConfirmation}
-                            className={classes.textField} variant="outlined" label="Confirm Password" fullWidth
+                            className={classes.textField} variant="outlined" label={SignInTranslation.confirmPassword[props.language]} fullWidth
                             value={state.formData.passwordConfirmation}
                             onChange={(passwordConfirmation) => handleFormChange({passwordConfirmation: passwordConfirmation})}/>
                     </Grid>
@@ -299,7 +300,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required
                             ref={zipInputRef} onTab={focusCity} onEnter={focusCity} onEscape={blurZip}
-                            className={classes.textField} variant="outlined" label="ZIP Code" fullWidth
+                            className={classes.textField} variant="outlined" label={SignInTranslation.zipCode[props.language]} fullWidth
                             value={state.formData.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
                     </Grid>
 
@@ -307,7 +308,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required
                             ref={cityInputRef} onTab={focusEmail} onEnter={handleLogin} onEscape={blurCity}
-                            className={classes.textField} variant="outlined" label="City" fullWidth
+                            className={classes.textField} variant="outlined" label={SignInTranslation.city[props.language]} fullWidth
                             value={state.formData.city} onChange={(city) => handleFormChange({city: city})}/>
                     </Grid>
 
@@ -315,7 +316,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required disabled
                             ref={countryInputRef}
-                            className={classes.textField} variant="outlined" label="Country" fullWidth
+                            className={classes.textField} variant="outlined" label={SignInTranslation.country[props.language]} fullWidth
                             value={state.formData.country}/>
                     </Grid>
 
@@ -327,7 +328,7 @@ export function RegisterPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 className={classes.button}>
-                            <Link to={"/guide"} className={classes.link}>Cancel</Link>
+                            <Link to={"/guide"} className={classes.link}>{SignInTranslation.cancel[props.language]}</Link>
                         </Button>
                     </div>
                     <div className={classes.wrapper}>
@@ -335,7 +336,7 @@ export function RegisterPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 onClick={handleLogin}
-                                className={classes.button}>Register</Button>
+                                className={classes.button}>{SignInTranslation.register[props.language]}</Button>
                         {state.loading && (
                             <CircularProgress size={24}
                                               className={classes.buttonProgress}
@@ -344,7 +345,7 @@ export function RegisterPageComponent(props) {
                     </div>
                 </div>
 
-                <Link to={"/login"} className={classes.switchLink}>Already have an account?</Link>
+                <Link to={"/login"} className={classes.switchLink}>{SignInTranslation.alreadyHaveAnAccount[props.language]}</Link>
 
                 {state.errorMessageVisible && (
                     <Snackbar className={classes.snackbar}
@@ -367,7 +368,9 @@ export function RegisterPageComponent(props) {
 /* Making the RouterComponent watch the loggedIn property of the store */
 
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    language: state.language,
+});
 
 const mapDispatchToProps = dispatch => ({
     handleLogin: (response) => dispatch(handleLogin(response)),

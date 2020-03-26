@@ -19,6 +19,7 @@ var cloneDeep = require('lodash.clonedeep');
 function storeReducer(state = {
     loggedIn: false,
     autoLogin: false,
+    language: "deutsch",
 
     account: {
         email: "",
