@@ -145,7 +145,7 @@ export function AccountPageComponent(props) {
 
         if ("email" in newFormData) {
             newState.account["email"] = newFormData["email"];
-            form1Modified = (newFormData["email"] !== props.account.address["email"]) || form1Modified;
+            form1Modified = (newFormData["email"] !== props.account["email"]);
         }
 
         ["zip", "city", "country"].forEach(key => {

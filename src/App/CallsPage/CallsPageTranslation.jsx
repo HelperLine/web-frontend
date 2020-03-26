@@ -1,6 +1,9 @@
 
 export const CallsPageTranslation = {
-
+    serverOffline: {
+        english: "Server currently offline. Please try again later.",
+        deutsch: "Server zurzeit offline. Bitte versuchen Sie es später noch einmal.",
+    },
     noNewCalls: {
         english: "Currently no new calls. Please try again in a few minutes.",
         deutsch: "Zurzeit keine neuen Anrufe. Bitte versuche es in ein paar Minuten nochmal.",
@@ -19,11 +22,11 @@ export const CallsPageTranslation = {
     },
     acceptedCalls: {
         english: "Accepted Calls",
-        deutsch: "Angenommen Anrufe",
+        deutsch: "Angenommene Anrufe",
     },
     noAcceptedCalls: {
         english: "No Accepted Calls",
-        deutsch: "Keine Angenommen Anrufe",
+        deutsch: "Keine Angenommenen Anrufe",
     },
     fulfilledCalls: {
         english: "Fulfilled Calls",
@@ -31,11 +34,7 @@ export const CallsPageTranslation = {
     },
     noFulfilledCalls: {
         english: "No Fulfilled Calls",
-        deutsch: "Keine Abgeschlossene Anrufe",
-    },
-    serverOffline: {
-        english: "Server currently offline. Please try again later.",
-        deutsch: "Server zurzeit offline. Bitte versuchen Sie es später noch einmal.",
+        deutsch: "Keine Abgeschlossenen Anrufe",
     },
 };
 

@@ -147,24 +147,30 @@ export function RegisterPageComponent(props) {
 
     function formValidation() {
 
+        let formValid = true;
+
         ["email", "password", "passwordConfirmation", "zip", "city", "country"].forEach(key => {
             if (state.formData[key] === "") {
                 errorSnackbar(SignInTranslation.fieldEmpty[props.language]);
-                return false;
+                formValid = false;
             }
         });
 
-        if (state.formData["password"] !== state.formData["passwordConfirmation"]) {
-            errorSnackbar(SignInTranslation.passwordConfirmationMatch[props.language]);
-            return false;
+        if (formValid) {
+            if (state.formData["password"] !== state.formData["passwordConfirmation"]) {
+                errorSnackbar(SignInTranslation.passwordConfirmationMatch[props.language]);
+                formValid = false;
+            }
         }
 
-        if (state.formData["password"].length < 8) {
-            errorSnackbar(SignInTranslation.passwordTooShort[props.language]);
-            return false;
+        if (formValid) {
+            if (state.formData["password"].length < 8) {
+                errorSnackbar(SignInTranslation.passwordTooShort[props.language]);
+                formValid = false;
+            }
         }
 
-        return true;
+        return formValid;
     }
 
     function handleLogin() {
@@ -184,10 +190,25 @@ export function RegisterPageComponent(props) {
                 .then(response => {
 
                     setTimeout(() => {
-                        if (response.data.status === "ok") {
-                            props.handleLogin(response);
-                        } else {
-                            errorSnackbar(response.data.status);
+                        switch (response.data.status) {
+                            case "ok":
+                                props.handleLogin(response);
+                                break;
+                            case "email is invalid":
+                                errorSnackbar(SignInTranslation.emailInvalid[props.language]);
+                                break;
+                            case "email already taken":
+                                errorSnackbar(SignInTranslation.emailTaken[props.language]);
+                                break;
+                            case "zip is invalid":
+                                errorSnackbar(SignInTranslation.zipInvalid[props.language]);
+                                break;
+                            case "city is invalid":
+                                errorSnackbar(SignInTranslation.cityInvalid[props.language]);
+                                break;
+                            default:
+                                errorSnackbar(SignInTranslation.defaultError[props.language]);
+                                break;
                         }
                     }, 1000);
                 }).catch(response => {

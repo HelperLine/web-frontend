@@ -18,10 +18,10 @@ export const GuidePageTranslation = {
 
                 <br/><br/>
 
-                Since we do not want to share "truth's" specified by only a small number of people we are
+                Since we do not want to share "semi-truth's" specified by only a small number of people we are
                 <strong> not yet ready to share</strong> these tips.
 
-                We're already <strong>crowdsourcing the best strategies</strong> which people broadly agreed on.
+                We're already <strong>crowdsourcing the best strategies</strong> which people can broadly agreed on.
 
                 <br/><br/>
 
@@ -38,8 +38,8 @@ export const GuidePageTranslation = {
 
                 <br/><br/>
 
-                Da wir keine Halbwahrheiten, insbesondere im Umgang bei den Verbleibenden Kontaktpunkten beim
-                Einkaufen und ungewöhnlichem mentalen Zustand verbreiten möchten haben wir diese Seite noch nicht
+                Da wir <strong>keine Halbwahrheiten</strong>, insbesondere im Verhalten bei den verbleibenden Kontaktpunkten beim
+                Einkaufen und bei ungewöhnlichem mentalen Zustand verbreiten möchten, haben wir diese Seite noch nicht
                 freigeschaltet.
 
                 Wir arbeiten bereits an den besten Strategien und Tipps, die auf breite Zustimmung treffen.
@@ -52,7 +52,7 @@ export const GuidePageTranslation = {
     },
     groceryShopping: {
         english: (<React.Fragment>Buying groceries/everyday things</React.Fragment>),
-        deutsch: (<React.Fragment>Lebensmittel/Alltägliches Einkaufen</React.Fragment>),
+        deutsch: (<React.Fragment>Lebensmittel/Alltägliches einkaufen</React.Fragment>),
     },
     pickingUpParcels: {
         english: (<React.Fragment>Picking up parcels from the post office</React.Fragment>),
@@ -60,7 +60,7 @@ export const GuidePageTranslation = {
     },
     storesAreClosed: {
         english: (<React.Fragment>Stores are closed/risky: Helping with internet shopping</React.Fragment>),
-        deutsch: (<React.Fragment>Fachgeschäft geschlossen/riskant: Hilfe beim Internetkauf</React.Fragment>),
+        deutsch: (<React.Fragment>Fachgeschäfte geschlossen/riskant: Hilfe beim Internetkauf</React.Fragment>),
     },
     pickingUpMedication: {
         english: (<React.Fragment>Picking up prescription/medication</React.Fragment>),
@@ -68,14 +68,14 @@ export const GuidePageTranslation = {
     },
     mentalHealth: {
         english: (<React.Fragment>Dealing with mental health</React.Fragment>),
-        deutsch: (<React.Fragment>Tipps und Vermittlung für Seelsorge</React.Fragment>),
+        deutsch: (<React.Fragment>Tipps und Vermittlung bei Seelsorge</React.Fragment>),
     },
     text2: {
         english: (
             <React.Fragment>
                 If you want to <strong>actively help us on our journey</strong> feel free to contact us via:
                 <br/>
-                <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+                <a href="mailto:jobs@hilfe-am-ohr.de">jobs@hilfe-am-ohr.de</a>
 
                 <br/><br/>
 
@@ -86,7 +86,7 @@ export const GuidePageTranslation = {
             <React.Fragment>
                 Wenn du uns <strong>aktiv auf unserem Weg unterstützen möchtest</strong> dann kontaktiere uns gerne unter:
                 <br/>
-                <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+                <a href="mailto:jobs@hilfe-am-ohr.de">jobs@hilfe-am-ohr.de</a>
 
                 <br/><br/>
 

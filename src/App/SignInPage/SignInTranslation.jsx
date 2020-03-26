@@ -41,12 +41,12 @@ export const SignInTranslation = {
         deutsch: "Bitte füllen Sie alle Felder aus.",
     },
     passwordConfirmationMatch: {
-        english: "\"New Password\" and \"New Password Confirmation\" do not match.",
-        deutsch: "\"Neues Passwort\" und \"Bestätigung Neues Passwort\" sind unterschiedlich.",
+        english: "\"Password\" and \"Password Confirmation\" do not match.",
+        deutsch: "\"Passwort\" und \"Passwort Bestätigung\" sind unterschiedlich.",
     },
     passwordTooShort: {
-        english: "\"New Password\" too short (at least 8 characters).",
-        deutsch: "\"Neues Passwort\" zu kurz (mindestens 8 Zeichen).",
+        english: "\"Password\" too short (at least 8 characters).",
+        deutsch: "\"Passwort\" zu kurz (mindestens 8 Zeichen).",
     },
     register: {
         english: "Register",
@@ -69,17 +69,25 @@ export const SignInTranslation = {
         english: "Already have an account?",
         deutsch: "Sie besitzen schon ein Benutzerkonto?",
     },
-    germany3: {
-        english: "Germany",
-        deutsch: "Deutschland",
+    emailInvalid: {
+        english: "Email invalid",
+        deutsch: "Email ungültig",
     },
-    germany4: {
-        english: "Germany",
-        deutsch: "Deutschland",
+    emailTaken: {
+        english: "This Email is already taken",
+        deutsch: "Zu dieser Email Adresse gibt es schon einen Account",
     },
-    germany5: {
-        english: "Germany",
-        deutsch: "Deutschland",
+    zipInvalid: {
+        english: "Zip invalid",
+        deutsch: "Postleitzahl undgültig",
+    },
+    cityInvalid: {
+        english: "City invalid",
+        deutsch: "Stadt ungültig",
+    },
+    defaultError: {
+        english: "Something went wrong. Please try again later.",
+        deutsch: "Irgendetwas lief schief. Bitte versuchen Sie es später erneut",
     },
 };
 

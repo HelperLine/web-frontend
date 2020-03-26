@@ -4,7 +4,7 @@ import React from 'react';
 
 export const IndexPageTranslation = {
     indexSubtitle: {
-        english: (<React.Fragment>A Hotline for people without internet access</React.Fragment>),
+        english: (<React.Fragment>A hotline for people without internet access</React.Fragment>),
         deutsch: (<React.Fragment>Eine Hotline für Menschen ohne Internetzugang</React.Fragment>),
     },
     text1: {
@@ -72,7 +72,7 @@ export const IndexPageTranslation = {
 
                 <br/><br/>
 
-                3. Register as a volunteer on this page
+                3. <strong>Register as a volunteer</strong> on this page
 
                 <br/><br/>
 
@@ -95,7 +95,7 @@ export const IndexPageTranslation = {
 
                 <br/><br/>
 
-                3. Registriert euch als Helfer auf dieser Seite
+                3. <strong>Registriert euch als Helfer</strong> auf dieser Seite
 
                 <br/><br/>
 
@@ -107,13 +107,13 @@ export const IndexPageTranslation = {
         english: (
             <React.Fragment>
                 <em>Job-Wall coming soon!</em>&nbsp;
-                Contact us via <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+                Contact us via <a href="mailto:jobs@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
             </React.Fragment>
         ),
         deutsch: (
             <React.Fragment>
                 <em>Job-Pinnwand kommt bald!</em>&nbsp;
-                Kontaktiert uns über <a href="mailto:info@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+                Kontaktiert uns über <a href="mailto:jobs@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
             </React.Fragment>
         ),
     },
