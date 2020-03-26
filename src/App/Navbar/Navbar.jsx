@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {handleLogout} from '../../ReduxActions';
+import {handleLogout, switchLanguage} from '../../ReduxActions';
 
 import clsx from 'clsx';
 import './Navbar.scss';
@@ -30,8 +30,12 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 import Dialog from "@material-ui/core/Dialog";
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import {NavbarTranslation} from "./NavbarTranslation";
 
+import LanguageIcon from '@material-ui/icons/Language';
 
 const drawerWidth = 240;
 
@@ -56,7 +60,14 @@ const useStyles = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
-    HeaderIconButton: {
+    HeaderLanguageButton: {
+        marginRight: theme.spacing(3),
+        padding: 0,
+        backgroundColor: "transparent !important",
+        overflow: "visible",
+        borderRadius: "0",
+    },
+    HeaderLogoButton: {
         margin: 0,
         padding: 0,
         backgroundColor: "transparent !important",
@@ -152,8 +163,28 @@ function NavbarComponent(props) {
 
     const [drawerIsOpen, toggleDrawer] = useState(false);
 
+    const [languageMenuAnchor, toggleLanguageMenuAnchor] = useState(null);
+
+    const openLanguageMenu = (event) => {
+        toggleLanguageMenuAnchor(event.currentTarget);
+    };
+    const closeLanguageMenu = () => {
+        toggleLanguageMenuAnchor(null);
+    };
+
+
     const pageTitleComponent = (
         <Typography variant="h6" noWrap className={classes.title}>{pageTitle}</Typography>
+    );
+
+    const languageMenuComponent = (
+        <IconButton aria-label="index"
+                    edge="end"
+                    onClick={openLanguageMenu}
+                    className={classes.HeaderLanguageButton}
+                    disableRipple={true}>
+            <LanguageIcon alt={NavbarTranslation.language[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
+        </IconButton>
     );
 
     const pageLogoComponent = (
@@ -161,7 +192,7 @@ function NavbarComponent(props) {
               to="/"
               onClick={() => setPageTitle(NavbarTranslation.guide[props.language])}>
             <IconButton aria-label="index"
-                        className={classes.HeaderIconButton}
+                        className={classes.HeaderLogoButton}
                         disableRipple={true}>
                 <CallIcon alt={NavbarTranslation.calls[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
             </IconButton>
@@ -243,6 +274,7 @@ function NavbarComponent(props) {
                             <MenuIcon alt={NavbarTranslation.menu[props.language] + " Icon"}/>
                         </IconButton>
                         {pageTitleComponent}
+                        {languageMenuComponent}
                         {pageLogoComponent}
                     </Toolbar>
                 </AppBar>
@@ -265,6 +297,7 @@ function NavbarComponent(props) {
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
                         {pageTitleComponent}
+                        {languageMenuComponent}
                         {pageLogoComponent}
                     </Toolbar>
                 </AppBar>
@@ -321,6 +354,10 @@ function NavbarComponent(props) {
                 </Grid>
             </Dialog>
 
+            <LanguageMenu anchorElement={languageMenuAnchor}
+                          handleClose={closeLanguageMenu}
+                          switchLanguage={props.switchLanguage}/>
+
         </React.Fragment>
     );
 }
@@ -337,7 +374,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleLogout: () => dispatch(handleLogout())
+    handleLogout: () => dispatch(handleLogout()),
+    switchLanguage: (language) => dispatch(switchLanguage(language)),
 });
 
 export const Navbar = connect(mapStateToProps, mapDispatchToProps)(NavbarComponent);
@@ -346,24 +384,76 @@ export const Navbar = connect(mapStateToProps, mapDispatchToProps)(NavbarCompone
 /* Reduced Navbar (login, register, 404) ----------------------------------------- */
 
 
-export const ReducedNavbar = (props) => {
+export const ReducedNavbarComponent = (props) => {
     const classes = useStyles();
+
+    const [languageMenuAnchor, toggleLanguageMenuAnchor] = useState(null);
+
+    const openLanguageMenu = (event) => {
+        toggleLanguageMenuAnchor(event.currentTarget);
+    };
+    const closeLanguageMenu = () => {
+        toggleLanguageMenuAnchor(null);
+    };
 
     return (
         <div className="navbar">
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <Typography variant="h6" noWrap className={classes.title}></Typography>
+                    <Typography variant="h6" noWrap className={classes.title}/>
+                    <IconButton aria-label="index"
+                                edge="end"
+                                onClick={openLanguageMenu}
+                                className={classes.HeaderLanguageButton}
+                                disableRipple={true}>
+                        <LanguageIcon alt={NavbarTranslation.language[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
+                    </IconButton>
                     <Link to="/"
                           edge="end">
-                        <IconButton disableRipple={true} className={classes.HeaderIconButton}>
+                        <IconButton disableRipple={true} className={classes.HeaderLogoButton}>
                             <CallIcon alt="Phone Icon" style={{fill: "white"}} fontSize="large"/>
                         </IconButton>
                     </Link>
                 </Toolbar>
             </AppBar>
+
+            <LanguageMenu anchorElement={languageMenuAnchor}
+                          handleClose={closeLanguageMenu}
+                          switchLanguage={props.switchLanguage}/>
         </div>
+    );
+};
+
+const mapStateToPropsReduced = state => ({
+});
+
+const mapDispatchToPropsReduced = dispatch => ({
+    switchLanguage: (language) => dispatch(switchLanguage(language)),
+});
+
+export const ReducedNavbar = connect(mapStateToPropsReduced, mapDispatchToPropsReduced)(ReducedNavbarComponent);
+
+
+/* Language Menu */
+
+const LanguageMenu = (props) => {
+    return (
+        <Menu
+            id="simple-menu"
+            anchorEl={props.anchorElement}
+            keepMounted
+            open={Boolean(props.anchorElement)}
+            onClose={props.handleClose}>
+            <MenuItem onClick={() => {
+                props.switchLanguage("english");
+                props.handleClose();
+            }}>English</MenuItem>
+            <MenuItem onClick={() => {
+                props.switchLanguage("deutsch");
+                props.handleClose();
+            }}>Deutsch</MenuItem>
+        </Menu>
     );
 };
 

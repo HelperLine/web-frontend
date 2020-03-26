@@ -31,6 +31,10 @@ export const NavbarTranslation = {
     menu: {
         english: "Menu",
         deutsch: "Menü",
+    },
+    language: {
+        english: "Language",
+        deutsch: "Sprache"
     }
 };
 
