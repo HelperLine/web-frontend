@@ -40,6 +40,11 @@ const useStyles = makeStyles(theme => ({
         textDecoration: "none",
         display: "block"
     },
+    flexButtonBox: {
+        display: "flex",
+        alignItems: "center",
+        verticalAlign: "center",
+    },
     button: {
         color: "white",
     },
@@ -105,15 +110,17 @@ export function AccountPageComponent(props) {
 
     const initialState = {
         account: {
-            email: props.account.email,
+            // All variables in here are in snake case
+            // because the python api accepts snake case
 
-            oldPassword: "",
-            newPassword: "",
-            newPasswordConfirmation: "",
+            email: props.email,
 
-            zip: props.account.address.zip,
-            city: props.account.address.city,
-            country: props.account.address.country,
+            old_password: "",
+            new_password: "",
+            new_password_confirmation: "",
+
+            zip_code: props.account.zip_code,
+            country: props.account.country,
         },
         errorMessageVisible: false,
         errorMessageText: "",
@@ -145,17 +152,17 @@ export function AccountPageComponent(props) {
 
         if ("email" in newFormData) {
             newState.account["email"] = newFormData["email"];
-            form1Modified = (newFormData["email"] !== props.account["email"]);
+            form1Modified = (newFormData["email"] !== props["email"]);
         }
 
-        ["zip", "city", "country"].forEach(key => {
+        ["zip_code", "country"].forEach(key => {
             if (key in newFormData) {
                 newState.account[key] = newFormData[key];
-                form1Modified = (newFormData[key] !== props.account.address[key]) || form1Modified;
+                form1Modified = (newFormData[key] !== props.account[key]) || form1Modified;
             }
         });
 
-        ["oldPassword", "newPassword", "newPasswordConfirmation"].forEach(key => {
+        ["old_password", "new_password", "new_password_confirmation"].forEach(key => {
             if (key in newFormData) {
                 newState.account[key] = newFormData[key];
             }
@@ -221,16 +228,9 @@ export function AccountPageComponent(props) {
 
     function form1Validation() {
 
-        ["email", "zip", "city", "country"].forEach(key => {
+        ["email", "zip_code", "country"].forEach(key => {
             if (state.account[key] === "") {
-
-                // 1. insert a space before all caps 2. uppercase all first characters
-                // Source: https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
-                let formattedString = key.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
-                    return str.toUpperCase();
-                });
-
-                showErrorSnackbar("\"" + formattedString + "\" is empty");
+                showErrorSnackbar(AccountPageTranslation.fieldEmpty[props.language]);
                 return false;
             }
         });
@@ -240,19 +240,19 @@ export function AccountPageComponent(props) {
 
     function form2Validation() {
 
-        ["oldPassword", "newPassword", "newPasswordConfirmation"].forEach(key => {
+        ["old_password", "new_password", "new_password_confirmation"].forEach(key => {
             if (state.account[key] === "") {
                 showErrorSnackbar(AccountPageTranslation.passwordFieldEmpty[props.language]);
                 return false;
             }
         });
 
-        if (state.account["newPassword"] !== state.account["newPasswordConfirmation"]) {
+        if (state.account["new_password"] !== state.account["new_password_confirmation"]) {
             showErrorSnackbar(AccountPageTranslation.passwordConfirmationMatch[props.language]);
             return false;
         }
 
-        if (state.account["newPassword"].length < 8) {
+        if (state.account["new_password"].length < 8) {
             showErrorSnackbar(AccountPageTranslation.passwordTooShort[props.language]);
             return false;
         }
@@ -267,12 +267,12 @@ export function AccountPageComponent(props) {
             // Looks and feels better if the process actually takes some time
             setTimeout(() => {
                 axios.put(BACKEND_URL + "backend/database/account", {
-                    email: props.account.email,
+                    email: props.email,
                     api_key: props.api_key,
 
                     new_email: state.account.email,
-                    account_zip: state.account.zip,
-                    account_city: state.account.city,
+                    zip_code: state.account.zip_code,
+                    country: state.account.country,
                 })
                     .then(response => {
                         if (response.data.status === "ok") {
@@ -298,19 +298,22 @@ export function AccountPageComponent(props) {
             // Looks and feels better if the process actually takes some time
             setTimeout(() => {
                 axios.put(BACKEND_URL + "backend/database/account", {
-                    email: props.account.email,
+                    email: props.email,
                     api_key: props.api_key,
 
-                    account_old_password: state.account.oldPassword,
-                    account_new_password: state.account.newPassword,
-                    account_new_password_confirmation: state.account.newPasswordConfirmation,
+                    old_password: state.account.old_password,
+                    new_password: state.account.new_password,
                 })
                     .then(response => {
                         if (response.data.status === "ok") {
                             stopForm2SubmittingState();
                             form2Success();
                         } else {
-                            showErrorSnackbar(response.data.status);
+                            if (response.data.status === "password format invalid") {
+                                showErrorSnackbar(AccountPageTranslation.passwordInvalid[props.language]);
+                            } else {
+                                showErrorSnackbar(AccountPageTranslation.defaultError[props.language]);
+                            }
                         }
                     }).catch(response => {
                     console.log("Axios promise rejected! Server response:");
@@ -326,7 +329,7 @@ export function AccountPageComponent(props) {
         startResendingEmailState();
 
         axios.post(BACKEND_URL + "backend/email/resend", {
-            email: props.account.email,
+            email: props.email,
             api_key: props.api_key,
         })
             .then(response => {
@@ -381,9 +384,9 @@ export function AccountPageComponent(props) {
         if (!state.form2Submitting) {
             let newState = cloneDeep(state);
             newState.form2Open = false;
-            newState.account.oldPassword = "";
-            newState.account.newPassword = "";
-            newState.account.newPasswordConfirmation = "";
+            newState.account.old_password = "";
+            newState.account.new_password = "";
+            newState.account.new_password_confirmation = "";
             newState.account.form2Modified = false;
             newState.errorMessageVisible = false;
             changeState(newState);
@@ -394,9 +397,9 @@ export function AccountPageComponent(props) {
         let newState = cloneDeep(state);
         newState.form2Open = false;
 
-        newState.account.oldPassword = "";
-        newState.account.newPassword = "";
-        newState.account.newPasswordConfirmation = "";
+        newState.account.old_password = "";
+        newState.account.new_password = "";
+        newState.account.new_password_confirmation = "";
 
         newState.errorMessageVisible = true;
         newState.errorMessageText = "Success!";
@@ -456,7 +459,7 @@ export function AccountPageComponent(props) {
                         value={state.account.email} onChange={(email) => handleFormChange({email: email})}/>
                 </Grid>
 
-                <Grid item xs={12} md={props.account.email_verified ? 3 : 6}>
+                <Grid item xs={12} md={props.account.email_verified ? 3 : 6} className={classes.flexButtonBox}>
                     <div className="ButtonBox">
                         {!props.account.email_verified && (
                             <div className={classes.wrapper}>
@@ -486,25 +489,16 @@ export function AccountPageComponent(props) {
                     <div className={classes.divider}/>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6}>
                     <CustomTextField
                         required
                         disabled={state.form1Submitting}
-                        ref={zipInputRef} onTab={focusCity} onEnter={blurZip} onEscape={blurZip}
+                        ref={zipInputRef} onTab={focusEmail} onEnter={blurZip} onEscape={blurZip}
                         className={classes.textField} variant="outlined" label={AccountPageTranslation.zipCode[props.language]} fullWidth
-                        value={state.account.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
+                        value={state.account.zip_code} onChange={(zip_code) => handleFormChange({zip_code: zip_code})}/>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4}>
-                    <CustomTextField
-                        required
-                        disabled={state.form1Submitting}
-                        ref={cityInputRef} onTab={focusEmail} onEnter={blurCity} onEscape={blurCity}
-                        className={classes.textField} variant="outlined" label={AccountPageTranslation.city[props.language]} fullWidth
-                        value={state.account.city} onChange={(city) => handleFormChange({city: city})}/>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6}>
                     <CustomTextField
                         required disabled
                         className={classes.textField} variant="outlined" label={AccountPageTranslation.country[props.language]} fullWidth
@@ -568,9 +562,9 @@ export function AccountPageComponent(props) {
                                 onEscape={blurPassword1}
                                 className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
                                 label={AccountPageTranslation.oldPassword[props.language]} fullWidth
-                                value={state.account.oldPassword}
-                                onChange={(oldPassword) =>
-                                    handleFormChange({oldPassword: oldPassword})}/>
+                                value={state.account.old_password}
+                                onChange={(old_password) =>
+                                    handleFormChange({old_password: old_password})}/>
                         </Grid>
 
                         <Grid item xs={12}>
@@ -581,9 +575,9 @@ export function AccountPageComponent(props) {
                                 onEscape={blurPassword2}
                                 className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
                                 label={AccountPageTranslation.newPassword[props.language]} fullWidth
-                                value={state.account.newPassword}
-                                onChange={(newPassword) =>
-                                    handleFormChange({newPassword: newPassword})}/>
+                                value={state.account.new_password}
+                                onChange={(new_password) =>
+                                    handleFormChange({new_password: new_password})}/>
                         </Grid>
 
                         <Grid item xs={12}>
@@ -594,9 +588,9 @@ export function AccountPageComponent(props) {
                                 onEscape={blurPassword3}
                                 className={clsx(classes.textField, classes.passwordTextField)} variant="outlined"
                                 label={AccountPageTranslation.newPasswordConfirmation[props.language]} fullWidth
-                                value={state.account.newPasswordConfirmation}
-                                onChange={(newPasswordConfirmation) =>
-                                    handleFormChange({newPasswordConfirmation: newPasswordConfirmation})}/>
+                                value={state.account.new_password_confirmation}
+                                onChange={(new_password_confirmation) =>
+                                    handleFormChange({new_password_confirmation: new_password_confirmation})}/>
                         </Grid>
 
                         <Grid item xs={12}>
@@ -636,9 +630,12 @@ export function AccountPageComponent(props) {
 
 
 const mapStateToProps = state => ({
-    account: state.account,
+    email: state.email,
     api_key: state.api_key,
     language: state.language,
+
+    account: state.account,
+
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -95,7 +95,6 @@ export function RegisterPageComponent(props) {
     const passwordInputRef = useRef(null);
     const passwordConfirmationInputRef = useRef(null);
     const zipInputRef = useRef(null);
-    const cityInputRef = useRef(null);
     const countryInputRef = useRef(null);
 
     let [state, changeState] = useState({
@@ -106,7 +105,6 @@ export function RegisterPageComponent(props) {
             passwordConfirmation: "",
 
             zip: "",
-            city: "",
             country: SignInTranslation.germany[props.language],
         },
         loading: false,
@@ -117,7 +115,7 @@ export function RegisterPageComponent(props) {
     function handleFormChange(newFormData) {
         let newState = cloneDeep(state);
 
-        ["email", "password", "passwordConfirmation", "zip", "city", "country"].forEach(key => {
+        ["email", "password", "passwordConfirmation", "zip", "country"].forEach(key => {
             newState.formData[key] = key in newFormData ? newFormData[key] : newState.formData[key];
         });
 
@@ -149,7 +147,7 @@ export function RegisterPageComponent(props) {
 
         let formValid = true;
 
-        ["email", "password", "passwordConfirmation", "zip", "city", "country"].forEach(key => {
+        ["email", "password", "passwordConfirmation", "zip", "country"].forEach(key => {
             if (state.formData[key] === "") {
                 errorSnackbar(SignInTranslation.fieldEmpty[props.language]);
                 formValid = false;
@@ -178,14 +176,11 @@ export function RegisterPageComponent(props) {
 
         if (formValidation()) {
             axios.post(BACKEND_URL + "backend/database/account", {
-                account_email: state.formData.email,
+                email: state.formData.email,
+                password: state.formData.password,
 
-                account_password: state.formData.password,
-                account_passwordConfirmation: state.formData.passwordConfirmation,
-
-                account_zip: state.formData.zip,
-                account_city: state.formData.city,
-                account_country: state.formData.country,
+                zip_code: state.formData.zip,
+                country: SignInTranslation.germany[props.language],
             })
                 .then(response => {
 
@@ -194,19 +189,23 @@ export function RegisterPageComponent(props) {
                             case "ok":
                                 props.handleLogin(response);
                                 break;
-                            case "email is invalid":
+                            case "email format invalid":
                                 errorSnackbar(SignInTranslation.emailInvalid[props.language]);
+                                break;
+                            case "password format invalid":
+                                errorSnackbar(SignInTranslation.passwordInvalid[props.language]);
+                                break;
+                            case "zip code format invalid":
+                                errorSnackbar(SignInTranslation.zipCodeInvalid[props.language]);
+                                break;
+                            case "country invalid":
+                                errorSnackbar(SignInTranslation.countryInvalid[props.language]);
                                 break;
                             case "email already taken":
                                 errorSnackbar(SignInTranslation.emailTaken[props.language]);
                                 break;
-                            case "zip is invalid":
-                                errorSnackbar(SignInTranslation.zipInvalid[props.language]);
-                                break;
-                            case "city is invalid":
-                                errorSnackbar(SignInTranslation.cityInvalid[props.language]);
-                                break;
                             default:
+                                console.log(response.data);
                                 errorSnackbar(SignInTranslation.defaultError[props.language]);
                                 break;
                         }
@@ -236,10 +235,6 @@ export function RegisterPageComponent(props) {
         zipInputRef.current.focus();
     }
 
-    function focusCity() {
-        cityInputRef.current.focus();
-    }
-
     function focusCountry() {
         countryInputRef.current.focus();
     }
@@ -261,10 +256,6 @@ export function RegisterPageComponent(props) {
         zipInputRef.current.blur();
     }
 
-    function blurCity() {
-        cityInputRef.current.blur();
-    }
-
     function blurCountry() {
         countryInputRef.current.blur();
     }
@@ -274,7 +265,6 @@ export function RegisterPageComponent(props) {
         blurPassword();
         blurPasswordConfirmation();
         blurZip();
-        blurCity();
         blurCountry();
     }
 
@@ -317,23 +307,15 @@ export function RegisterPageComponent(props) {
                         <div className={classes.divider}/>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6}>
                         <CustomTextField
                             required
-                            ref={zipInputRef} onTab={focusCity} onEnter={focusCity} onEscape={blurZip}
+                            ref={zipInputRef} onTab={focusEmail} onEnter={handleLogin} onEscape={blurZip}
                             className={classes.textField} variant="outlined" label={SignInTranslation.zipCode[props.language]} fullWidth
                             value={state.formData.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} md={4}>
-                        <CustomTextField
-                            required
-                            ref={cityInputRef} onTab={focusEmail} onEnter={handleLogin} onEscape={blurCity}
-                            className={classes.textField} variant="outlined" label={SignInTranslation.city[props.language]} fullWidth
-                            value={state.formData.city} onChange={(city) => handleFormChange({city: city})}/>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6}>
                         <CustomTextField
                             required disabled
                             ref={countryInputRef}

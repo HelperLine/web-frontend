@@ -21,15 +21,15 @@ function storeReducer(state = {
     autoLogin: false,
     language: "deutsch",
 
-    account: {
-        email: "",
-        online: false,
-    },
+    email: "",
+    api_key: "",
+
+    account: {}
+    ,
     calls: {
         accepted: [],
         fulfilled: []
     },
-    api_key: "",
 }, action) {
 
     let newState = cloneDeep(state);
@@ -38,18 +38,21 @@ function storeReducer(state = {
         case "LOGIN":
             newState.loggedIn = true;
             newState.autoLogin = false;
+
+            newState.email = action.email;
             newState.api_key = action.api_key;
+
             newState.account = action.account;
             newState.calls = action.calls;
 
-            Cookies.set('email', action.account.email, {expires: 7});
+            Cookies.set('email', action.email, {expires: 7});
             Cookies.set('api_key', action.api_key, {expires: 7});
 
             return newState;
 
         case "LOGOUT":
             newState.loggedIn = false;
-            delete newState.account.email;
+            delete newState.email;
             delete newState.api_key;
 
             Cookies.remove('email');
@@ -70,16 +73,18 @@ function storeReducer(state = {
             return newState;
 
         case "NEW_ACCOUNT_DATA":
+            newState.email = action.email;
+
             newState.account = action.account;
             newState.calls = action.calls;
 
             Cookies.remove('email');
-            Cookies.set('email', action.account.email);
+            Cookies.set('email', action.email);
             return newState;
 
         case "SWITCH_LANGUAGE":
             newState.language = action.language;
-            Cookies.set('language', action.language);
+            Cookies.set('language', action.language, {expires: 365});
             return newState;
 
         default:
@@ -97,7 +102,7 @@ let cookieApiKey =  Cookies.get('api_key');
 
 if (cookieEmail !== undefined && cookieApiKey !== undefined) {
     store.dispatch(startAutoLogin());
-    axios.post(BACKEND_URL + "backend/login", {email: cookieEmail, api_key: cookieApiKey})
+    axios.post(BACKEND_URL + "backend/login/helper", {email: cookieEmail, api_key: cookieApiKey})
         .then(response => {
             if (response.data.status === "ok") {
                 // Instant view-change looks laggy rather than fast -> 1.0 second delay

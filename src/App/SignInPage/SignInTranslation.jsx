@@ -73,6 +73,18 @@ export const SignInTranslation = {
         english: "Email invalid",
         deutsch: "Email ungültig",
     },
+    passwordInvalid: {
+        english: "Password invalid (At least 8 characters, and both numbers and letters)",
+        deutsch: "Passwort ungültig (Mindestens 8 Zeichen und sowohl Zahlen als auch Buchstaben)",
+    },
+    zipCodeInvalid: {
+        english: "Zip code invalid",
+        deutsch: "Postleitzahl ungültig",
+    },
+    countryInvalid: {
+        english: "Country invalid (we currently only offer our services in germany)",
+        deutsch: "Land ungültig (zurzeit bieten wir unseren Service nur in Deutschland an)",
+    },
     emailTaken: {
         english: "This Email is already taken",
         deutsch: "Zu dieser Email Adresse gibt es schon einen Account",
@@ -80,10 +92,6 @@ export const SignInTranslation = {
     zipInvalid: {
         english: "Zip invalid",
         deutsch: "Postleitzahl undgültig",
-    },
-    cityInvalid: {
-        english: "City invalid",
-        deutsch: "Stadt ungültig",
     },
     defaultError: {
         english: "Something went wrong. Please try again later.",

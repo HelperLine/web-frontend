@@ -126,7 +126,7 @@ export function LoginPageComponent(props) {
     function handleLogin() {
         startLoading();
 
-        axios.post(BACKEND_URL + "backend/login", {email: state.email, password: state.password})
+        axios.post(BACKEND_URL + "backend/login/helper", {email: state.email, password: state.password})
             .then(response => {
 
                 setTimeout(() => {

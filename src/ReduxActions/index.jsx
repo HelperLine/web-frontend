@@ -5,7 +5,10 @@ export const handleLogout = () => ({
 
 export const handleLogin = (response) => ({
     type: "LOGIN",
+
+    email: response.data.email,
     api_key: response.data.api_key,
+
     account: response.data.account,
     calls: response.data.calls,
 });
@@ -20,6 +23,9 @@ export const abortAutoLogin = () => ({
 
 export const handleNewAccountData = (response) => ({
     type: "NEW_ACCOUNT_DATA",
+
+    email: response.data.email,
+
     account: response.data.account,
     calls: response.data.calls,
 });

@@ -1,6 +1,11 @@
 
 export const AccountPageTranslation = {
 
+    fieldEmpty: {
+        english: "Please fill in all thefields.",
+        deutsch: "Bitte füllen Sie alle Felder aus.",
+    },
+
     passwordConfirmationMatch: {
         english: "\"New Password\" and \"New Password Confirmation\" do not match.",
         deutsch: "\"Neues Passwort\" und \"Bestätigung Neues Passwort\" sind unterschiedlich.",
@@ -12,6 +17,14 @@ export const AccountPageTranslation = {
     passwordFieldEmpty: {
         english: "Please fill in all three password fields.",
         deutsch: "Bitte füllen Sie alle drei Passwort Felder aus.",
+    },
+    passwordInvalid: {
+        english: "Password invalid (At least 8 characters, and both numbers and letters)",
+        deutsch: "Passwort ungültig (Mindestens 8 Zeichen und sowohl Zahlen als auch Buchstaben)",
+    },
+    defaultError: {
+        english: "Something went wrong. Please try again later.",
+        deutsch: "Irgendetwas lief schief. Bitte versuchen Sie es später erneut",
     },
     serverOffline: {
         english: "Server currently offline. Please try again later.",
