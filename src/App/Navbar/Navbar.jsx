@@ -37,6 +37,12 @@ import {NavbarTranslation} from "./NavbarTranslation";
 
 import LanguageIcon from '@material-ui/icons/Language';
 
+
+
+
+import Logo128 from './logos/Drawing_Logo_128px.png';
+import Logo256 from './logos/Drawing_Logo_256px.png';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     },
     toolbar: theme.mixins.toolbar,
     navBar: {
-        backgroundColor: theme.palette.gunmetalGray.main,
+        backgroundColor: theme.palette.primary.main,
     },
     menuButton: {
         marginRight: theme.spacing(1),
@@ -60,25 +66,36 @@ const useStyles = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
-    HeaderLanguageButton: {
-        marginRight: theme.spacing(3),
+
+    languageButton: {
+        position: "fixed",
+        right: theme.spacing(2),
+        top: theme.spacing(2),
+
         padding: 0,
-        backgroundColor: "transparent !important",
-        overflow: "visible",
-        borderRadius: "0",
     },
-    HeaderLogoButton: {
-        margin: 0,
+    languageIcon: {
+        fill: theme.palette.primary.transparent40,
+    },
+
+    languageButtonMobile: {
+        marginRight: theme.spacing(0),
         padding: 0,
-        backgroundColor: "transparent !important",
-        overflow: "visible",
-        borderRadius: "0",
     },
-    HeaderIcon: {
-        backgroundColor: "transparent !important",
-        height: theme.spacing(4),
-        margin: "-6px",
+    languageIconMobile: {
+        fill: "white",
     },
+
+    logoIcon: {
+        position: "fixed",
+        left: theme.spacing(2),
+        top: theme.spacing(2),
+
+        padding: 0,
+        maxWidth: 64,
+    },
+
+
     button: {
         margin: theme.spacing(1),
         marginBottom: 0,
@@ -119,6 +136,18 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: theme.spacing(10),
     },
 
+
+    drawerLogoBox: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "start",
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+    },
+    drawerLogoIcon: {
+        maxWidth: 64,
+    },
+
     logoutDialog: {
         boxSizing: "border-box",
         overflowX: "hidden",
@@ -143,6 +172,7 @@ const useStyles = makeStyles(theme => ({
     logoutDialogTitle: {
         textAlign: "center",
     },
+
 }));
 
 function NavbarComponent(props) {
@@ -178,24 +208,25 @@ function NavbarComponent(props) {
     );
 
     const languageMenuComponent = (
-        <IconButton aria-label="index"
-                    edge="end"
-                    onClick={openLanguageMenu}
-                    className={classes.HeaderLanguageButton}
-                    disableRipple={true}>
-            <LanguageIcon alt={NavbarTranslation.language[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
-        </IconButton>
+        <React.Fragment>
+            <IconButton onClick={openLanguageMenu}
+                        className={classes.languageButton}
+                        disableRipple={true}>
+                <LanguageIcon
+                    className={classes.languageIcon}
+                    alt={NavbarTranslation.language[props.language] + " Icon"}
+                    fontSize="large"/>
+            </IconButton>
+
+            <LanguageMenu anchorElement={languageMenuAnchor}
+                          handleClose={closeLanguageMenu}
+                          switchLanguage={props.switchLanguage}/>
+        </React.Fragment>
     );
 
     const pageLogoComponent = (
-        <Link edge="end"
-              to="/"
-              onClick={() => setPageTitle(NavbarTranslation.guide[props.language])}>
-            <IconButton aria-label="index"
-                        className={classes.HeaderLogoButton}
-                        disableRipple={true}>
-                <CallIcon alt={NavbarTranslation.calls[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
-            </IconButton>
+        <Link to="/">
+            <img src={Logo256}/>
         </Link>
     );
 
@@ -236,7 +267,9 @@ function NavbarComponent(props) {
     const loginButton = (
         <React.Fragment>
             {props.loggedIn && (
-                <Button onClick={() => {setLogoutDialogState({open: true});}}
+                <Button onClick={() => {
+                    setLogoutDialogState({open: true});
+                }}
                         size="large"
                         color="primary"
                         startIcon={<PersonIcon alt={NavbarTranslation.logout[props.language] + " Icon"}/>}
@@ -262,6 +295,7 @@ function NavbarComponent(props) {
 
     return (
         <React.Fragment>
+            <CssBaseline/>
 
             <Breakpoint small down>
                 <AppBar position="fixed" className={classes.navBar}>
@@ -273,9 +307,22 @@ function NavbarComponent(props) {
                                     onClick={() => toggleDrawer(true)}>
                             <MenuIcon alt={NavbarTranslation.menu[props.language] + " Icon"}/>
                         </IconButton>
+
                         {pageTitleComponent}
                         {languageMenuComponent}
-                        {pageLogoComponent}
+
+                        <IconButton edge="end"
+                                    onClick={openLanguageMenu}
+                                    className={classes.languageButtonMobile}
+                                    disableRipple={true}>
+                            <LanguageIcon
+                                className={classes.languageIconMobile}
+                                alt={NavbarTranslation.language[props.language] + " Icon"}/>
+                        </IconButton>
+
+                        <LanguageMenu anchorElement={languageMenuAnchor}
+                                      handleClose={closeLanguageMenu}
+                                      switchLanguage={props.switchLanguage}/>
                     </Toolbar>
                 </AppBar>
                 <Drawer open={drawerIsOpen}
@@ -293,14 +340,6 @@ function NavbarComponent(props) {
             </Breakpoint>
 
             <Breakpoint large up>
-                <CssBaseline/>
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
-                        {pageTitleComponent}
-                        {languageMenuComponent}
-                        {pageLogoComponent}
-                    </Toolbar>
-                </AppBar>
                 <Drawer
                     className={classes.drawer}
                     variant="permanent"
@@ -308,12 +347,31 @@ function NavbarComponent(props) {
                         paper: classes.drawerPaper,
                     }}>
 
-                    <div className={classes.toolbar}/>
+                    <div className={classes.drawerLogoBox}>
+                        <Link to="/">
+                            <img src={Logo256} className={classes.drawerLogoIcon}/>
+                        </Link>
+                    </div>
+
+                    <Divider className={classes.divider}/>
                     {pageButtons}
                     <Divider className={classes.divider}/>
                     {loginButton}
 
                 </Drawer>
+
+                <IconButton onClick={openLanguageMenu}
+                            className={classes.languageButton}
+                            disableRipple={true}>
+                    <LanguageIcon
+                        className={classes.languageIcon}
+                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        fontSize="large"/>
+                </IconButton>
+
+                <LanguageMenu anchorElement={languageMenuAnchor}
+                              handleClose={closeLanguageMenu}
+                              switchLanguage={props.switchLanguage}/>
             </Breakpoint>
 
             <Dialog onClose={() => setLogoutDialogState({open: false})}
@@ -325,7 +383,8 @@ function NavbarComponent(props) {
                 <Grid container spacing={1} className={classes.logoutDialogContainer}>
 
                     <Grid item xs={12}>
-                        <Typography variant="h6" className={classes.logoutDialogTitle}>{NavbarTranslation.logoutQuestion[props.language]}</Typography>
+                        <Typography variant="h6"
+                                    className={classes.logoutDialogTitle}>{NavbarTranslation.logoutQuestion[props.language]}</Typography>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -353,10 +412,6 @@ function NavbarComponent(props) {
 
                 </Grid>
             </Dialog>
-
-            <LanguageMenu anchorElement={languageMenuAnchor}
-                          handleClose={closeLanguageMenu}
-                          switchLanguage={props.switchLanguage}/>
 
         </React.Fragment>
     );
@@ -399,24 +454,19 @@ export const ReducedNavbarComponent = (props) => {
     return (
         <div className="navbar">
             <CssBaseline/>
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap className={classes.title}/>
-                    <IconButton aria-label="index"
-                                edge="end"
-                                onClick={openLanguageMenu}
-                                className={classes.HeaderLanguageButton}
-                                disableRipple={true}>
-                        <LanguageIcon alt={NavbarTranslation.language[props.language] + " Icon"} style={{fill: "white"}} fontSize="large"/>
-                    </IconButton>
-                    <Link to="/"
-                          edge="end">
-                        <IconButton disableRipple={true} className={classes.HeaderLogoButton}>
-                            <CallIcon alt="Phone Icon" style={{fill: "white"}} fontSize="large"/>
-                        </IconButton>
-                    </Link>
-                </Toolbar>
-            </AppBar>
+
+            <Link to="/">
+                <img src={Logo256} className={classes.logoIcon}/>
+            </Link>
+
+            <IconButton onClick={openLanguageMenu}
+                        className={classes.languageButton}
+                        disableRipple={true}>
+                <LanguageIcon
+                    className={classes.languageIcon}
+                    alt={NavbarTranslation.language[props.language] + " Icon"}
+                    fontSize="large"/>
+            </IconButton>
 
             <LanguageMenu anchorElement={languageMenuAnchor}
                           handleClose={closeLanguageMenu}
@@ -425,8 +475,7 @@ export const ReducedNavbarComponent = (props) => {
     );
 };
 
-const mapStateToPropsReduced = state => ({
-});
+const mapStateToPropsReduced = state => ({});
 
 const mapDispatchToPropsReduced = dispatch => ({
     switchLanguage: (language) => dispatch(switchLanguage(language)),
