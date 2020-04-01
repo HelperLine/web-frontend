@@ -72,6 +72,8 @@ const useStyles = makeStyles(theme => ({
         right: theme.spacing(2),
         top: theme.spacing(2),
 
+        zIndex: "1000",
+
         padding: 0,
     },
     languageIcon: {
@@ -90,6 +92,8 @@ const useStyles = makeStyles(theme => ({
         position: "fixed",
         left: theme.spacing(2),
         top: theme.spacing(2),
+
+        zIndex: "1000",
 
         padding: 0,
         maxWidth: 64,
