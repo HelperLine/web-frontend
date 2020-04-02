@@ -11,8 +11,6 @@ import {Button} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 
-import {CircularProgress} from "@material-ui/core";
-
 import {CustomTextField} from "../../Components/CustomTextField";
 
 import Snackbar from '@material-ui/core/Snackbar';
@@ -36,6 +34,7 @@ import './CallsPage.scss';
 
 import {CallsPageTranslation} from "./CallsPageTranslation";
 import {Performance} from "./Performance";
+import {Filter} from "./Filter";
 
 var cloneDeep = require('lodash.clonedeep');
 
@@ -92,7 +91,7 @@ const useStyles = makeStyles(theme => ({
     },
     divider: {
         marginTop: theme.spacing(6),
-        marginBottom: theme.spacing(1),
+        marginBottom: theme.spacing(6),
     },
     subheading: {
         marginBottom: theme.spacing(1),
@@ -118,8 +117,6 @@ class CallsPageWrapper extends React.Component {
         this.axiosPutAction = this.axiosPutAction.bind(this);
 
         this.acceptNewCall = this.acceptNewCall.bind(this);
-        this.goOnline = this.goOnline.bind(this);
-        this.goOffline = this.goOffline.bind(this);
     }
 
     componentDidMount() {
@@ -183,22 +180,6 @@ class CallsPageWrapper extends React.Component {
         }, 1000);
     }
 
-    goOnline() {
-        this.setState({loadingGoOnline: true});
-        setTimeout(() => {
-            this.axiosPutAction("go_online");
-            this.setState({loadingGoOnline: false});
-        }, 1000);
-    }
-
-    goOffline() {
-        this.setState({loadingGoOnline: true});
-        setTimeout(() => {
-            this.axiosPutAction("go_offline");
-            this.setState({loadingGoOnline: false});
-        }, 1000);
-    }
-
     render() {
         return (
             <CallsPageComponent language={this.props.language}
@@ -226,39 +207,13 @@ export function CallsPageComponent(props) {
     return (
         <Container maxWidth="md" className="CallsPage">
 
+            <Performance/>
+
+            <Divider className={classes.divider}/>
+
+            <Filter/>
+
             <Grid container spacing={2} className={classes.formContainer}>
-
-                <Performance/>
-
-                <Grid item xs={12}>
-                    <div className="ButtonBox">
-                        <div className={classes.wrapper}>
-                            <Button variant="contained"
-                                    disabled={props.loadingNewCall || !props.account.online}
-                                    color="secondary"
-                                    onClick={props.acceptNewCall}
-                                    startIcon={props.loadingNewCall ?
-                                        <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
-                                        <AddIcon className={classes.buttonIcon}/>
-                                    }
-                                    className={classes.button}>{CallsPageTranslation.acceptCall[props.language]}</Button>
-                        </div>
-
-                        <div className={classes.wrapper}>
-                            <Button variant="contained"
-                                    disabled={props.loadingGoOnline}
-                                    color="secondary"
-                                    startIcon={props.loadingGoOnline ?
-                                        <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> : (
-                                            props.account.online ?
-                                            <WifiIcon className={classes.buttonIcon}/> :
-                                            <WifiOffIcon className={classes.buttonIcon}/>
-                                    )}
-                                    onClick={props.account.online ? props.goOffline : props.goOnline}
-                                    className={classes.button}>{props.account.online ? CallsPageTranslation.online[props.language] : CallsPageTranslation.offline[props.language]}</Button>
-                        </div>
-                    </div>
-                </Grid>
 
                 <Grid item xs={12}>
                     <Divider className={classes.divider}/>

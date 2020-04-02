@@ -51,7 +51,6 @@ export function Performance(props) {
         account: {
             registered: "21.03.20",
             calls: 7,
-            avgCalls: 3,
         }
     };
 
@@ -84,7 +83,6 @@ export function Performance(props) {
                         </Grid>
                         <PerformanceRow text="Registered since" value={performance.account.registered}/>
                         <PerformanceRow text="Fulfilled calls" value={performance.account.calls}/>
-                        <PerformanceRow text="Avg. calls per week" value={performance.account.avgCalls}/>
                     </Grid>
                 </Grid>
             </Grid>
