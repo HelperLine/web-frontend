@@ -29,7 +29,7 @@ import DrawingMedication from './images/Drawing_Medication_600px.png';
 import DrawingCoffee from './images/Drawing_Coffee_600px.png';
 
 import DrawingMediation from './images/Drawing_Mediation_600px.png';
-import DrawingCollaborate from './images/Drawing_Collaborate_1200px.png';
+import DrawingCollab from './images/Drawing_Collab_1200px.png';
 
 import PersonIcon from '@material-ui/icons/Person';
 import TuneIcon from '@material-ui/icons/Tune';
@@ -37,10 +37,12 @@ import AddIcon from '@material-ui/icons/Add';
 
 import {CollaborateChecklists} from "./CollaborateChecklists";
 
-import {GuidePageTranslation} from "../GuidePage/GuidePageTranslation";
 
 
 const useStyles = makeStyles(theme => ({
+    pageStart: {
+        marginTop: 100,
+    },
     centerText: {
         display: "block",
         textAlign: "center",
@@ -137,6 +139,23 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "start",
         flexDirection: "row",
     },
+    colorPanel1: {
+        marginTop: theme.spacing(6),
+        paddingTop: theme.spacing(6),
+
+        paddingBottom: theme.spacing(6),
+
+        backgroundColor: theme.palette.primary.transparent10,
+        width: "100vw",
+    },
+    colorPanel2: {
+        paddingTop: theme.spacing(6),
+
+        paddingBottom: 100,
+
+        backgroundColor: theme.palette.primary.transparent20,
+        width: "100vw",
+    },
 }));
 
 export const IndexPageComponent = (props) => {
@@ -146,7 +165,7 @@ export const IndexPageComponent = (props) => {
         <div className="IndexPage">
             <Container maxWidth="md">
 
-                <Typography variant="h3" className={clsx(classes.centerText, classes.margin1)}>
+                <Typography variant="h3" className={clsx(classes.centerText, classes.margin1, classes.pageStart)}>
                     Hilfe am Ohr!
                 </Typography>
                 <Typography variant="h5" className={clsx(classes.centerText)}>
@@ -174,7 +193,8 @@ export const IndexPageComponent = (props) => {
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.centerBox}>
                         <div className={classes.centerBox}>
-                            <img alt="Server Drawing" src={DrawingServer} className={classes.cardImage} style={{maxWidth: "30%"}}/>
+                            <img alt="Server Drawing" src={DrawingServer} className={classes.cardImage}
+                                 style={{maxWidth: "30%"}}/>
                         </div>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
                             ... with ...
@@ -229,86 +249,98 @@ export const IndexPageComponent = (props) => {
                     </Grid>
                 </Grid>
 
-                <Divider className={classes.divider}/>
-
-                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                    "Hello sir, how may I help you?"
-                </Typography>
-
-                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
-                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img alt="Groceries Drawing" src={DrawingGroceries} className={classes.actionImage}/>
-                    </div>
-                    <div className={clsx(classes.centerBox, classes.actionText)}>
-                        <Typography variant="h5">
-                            "Can you help me with <br/> buying groceries?"
-                        </Typography>
-                    </div>
-                </Paper>
-
-                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
-                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img alt="Postal Drawing" src={DrawingPostal} className={classes.actionImage}/>
-                    </div>
-                    <div className={clsx(classes.centerBox, classes.actionText)}>
-                        <Typography variant="h5">
-                            "... going to the post office?"
-                        </Typography>
-                    </div>
-                </Paper>
-
-                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
-                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img alt="Medication Drawing" src={DrawingMedication} className={classes.actionImage}/>
-                    </div>
-                    <div className={clsx(classes.centerBox, classes.actionText)}>
-                        <Typography variant="h5">
-                            "... picking up medication?"
-                        </Typography>
-                    </div>
-                </Paper>
-
-                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
-                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img alt="Coffee Drawing" src={DrawingCoffee} className={classes.actionImage} style={{maxHeight: "85%"}}/>
-                    </div>
-                    <div className={clsx(classes.centerBox, classes.actionText)}>
-                        <Typography variant="h5">
-                            "... getting over the day <br/> with a coffee break?"
-                        </Typography>
-                    </div>
-                </Paper>
-
-                <Divider className={classes.divider}/>
-
-                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                    However, sometimes <strong>there might not be a volunteer in that area!</strong>
-                </Typography>
-
-                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
-                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img alt="Mediation Drawing" src={DrawingMediation} className={classes.actionImage} style={{maxHeight: "85%"}}/>
-                    </div>
-                    <div className={clsx(classes.centerBox, classes.actionText)}>
-                        <Typography variant="h5">
-                            You can help them find one <br/> in <strong>tons of online forums!</strong>
-                        </Typography>
-                    </div>
-                </Paper>
-
-                <Divider className={classes.divider}/>
-
-                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                    <strong>Collaborate and connect!</strong>
-                </Typography>
-
-                <div className={clsx(classes.centerBox, classes.connectImageBox, classes.margin5)}>
-                    <img alt="Collaborate Drawing" src={DrawingCollaborate} className={classes.connectImage}/>
-                </div>
-
-                <CollaborateChecklists/>
-
             </Container>
+
+            <div className={classes.colorPanel1}>
+
+                <Container maxWidth="md">
+
+                    <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                        "Hello sir, how may I help you?"
+                    </Typography>
+
+                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                            <img alt="Groceries Drawing" src={DrawingGroceries} className={classes.actionImage}/>
+                        </div>
+                        <div className={clsx(classes.centerBox, classes.actionText)}>
+                            <Typography variant="h5">
+                                "Can you help me with <br/> buying groceries?"
+                            </Typography>
+                        </div>
+                    </Paper>
+
+                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                            <img alt="Postal Drawing" src={DrawingPostal} className={classes.actionImage}/>
+                        </div>
+                        <div className={clsx(classes.centerBox, classes.actionText)}>
+                            <Typography variant="h5">
+                                "... going to the post office?"
+                            </Typography>
+                        </div>
+                    </Paper>
+
+                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                            <img alt="Medication Drawing" src={DrawingMedication} className={classes.actionImage}/>
+                        </div>
+                        <div className={clsx(classes.centerBox, classes.actionText)}>
+                            <Typography variant="h5">
+                                "... picking up medication?"
+                            </Typography>
+                        </div>
+                    </Paper>
+
+                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                            <img alt="Coffee Drawing" src={DrawingCoffee} className={classes.actionImage}
+                                 style={{maxHeight: "85%"}}/>
+                        </div>
+                        <div className={clsx(classes.centerBox, classes.actionText)}>
+                            <Typography variant="h5">
+                                "... getting over the day <br/> with a coffee break?"
+                            </Typography>
+                        </div>
+                    </Paper>
+
+                    <Divider className={classes.divider}/>
+
+                    <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                        However, sometimes <strong>there might not be a volunteer in that area!</strong>
+                    </Typography>
+
+                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                            <img alt="Mediation Drawing" src={DrawingMediation} className={classes.actionImage}
+                                 style={{maxHeight: "85%"}}/>
+                        </div>
+                        <div className={clsx(classes.centerBox, classes.actionText)}>
+                            <Typography variant="h5">
+                                You can help them find one <br/> in <strong>tons of online forums!</strong>
+                            </Typography>
+                        </div>
+                    </Paper>
+
+                </Container>
+            </div>
+
+            <div className={classes.colorPanel2}>
+                <Container maxWidth="md">
+
+                    <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                        <strong>Collaborate and connect!</strong>
+                    </Typography>
+
+                    <div className={clsx(classes.centerBox, classes.connectImageBox, classes.margin5)}>
+                        <img alt="Collaborate Drawing" src={DrawingCollab} className={classes.connectImage}/>
+                    </div>
+
+                    <CollaborateChecklists/>
+
+                </Container>
+            </div>
+
         </div>
     );
 };

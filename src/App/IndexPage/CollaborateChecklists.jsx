@@ -12,6 +12,10 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 
+import {Link, Element, Events, animateScroll as scroll, scrollSpy, scroller} from 'react-scroll'
+import Paper from "@material-ui/core/Paper";
+
+
 var cloneDeep = require('lodash.clonedeep');
 
 const useStyles = makeStyles(theme => ({
@@ -49,7 +53,17 @@ const useStyles = makeStyles(theme => ({
         fill: theme.palette.secondary.main,
         margin: theme.spacing(1),
         cursor: "pointer",
-    }
+    },
+    collabPaper: {
+        padding: theme.spacing(1.25),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    pinkLink: {
+        color: theme.palette.secondary.main,
+        textDecoration: "none",
+    },
 }));
 
 
@@ -60,16 +74,20 @@ export const CollaborateChecklists = (props) => {
     let [hotlineState, setHotlineState] = useState({0: false, 1: false, 2: false});
     let [forumState, setForumState] = useState({0: false, 1: false, 2: false});
 
-    function toggleHotline (checkboxNo) {
+    let [collab, setCollab] = useState({visible: false});
+
+    function toggleHotline(checkboxNo) {
         let newHotlineState = cloneDeep(hotlineState);
         newHotlineState[checkboxNo] = !hotlineState[checkboxNo];
         setHotlineState(newHotlineState);
+        evalChecklist(newHotlineState, forumState);
     }
 
-    function toggleForum (checkboxNo) {
+    function toggleForum(checkboxNo) {
         let newForumState = cloneDeep(forumState);
         newForumState[checkboxNo] = !forumState[checkboxNo];
         setForumState(newForumState);
+        evalChecklist(hotlineState, newForumState);
     }
 
     const checkboxComponent = (column, checkboxNo) => {
@@ -89,15 +107,47 @@ export const CollaborateChecklists = (props) => {
     };
 
 
+    function scrollToBottomHotline() {
+        scroller.scrollTo('ExpansionPanelHotline', {
+            duration: 300,
+            delay: 0,
+            smooth: true,
+            offset: 100, // Scrolls to element + 50 pixels down the page
+        })
+    }
+
+    function scrollToBottomForum() {
+        scroller.scrollTo('ExpansionPanelForum', {
+            duration: 300,
+            delay: 0,
+            smooth: true,
+            offset: 100, // Scrolls to element + 50 pixels down the page
+        })
+    }
+
+    function evalChecklist(hotlineState, forumState) {
+        if ((hotlineState[0] && hotlineState[1] && hotlineState[2]) || (forumState[0] && forumState[1] && forumState[2])) {
+            setCollab({visible: true});
+            scroller.scrollTo('CollabBox', {
+                duration: 300,
+                delay: 0,
+                smooth: true,
+                offset: 100, // Scrolls to element + 50 pixels down the page
+            })
+        } else {
+            setCollab({visible: false});
+        }
+    }
+
 
     return (
         <Grid container justify="center" spacing={2}>
             <Grid item xs={12} md={6}>
-                <ExpansionPanel>
+                <ExpansionPanel elevation={3} id="ExpansionPanelHotline">
                     <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon/>}>
+                        expandIcon={<ExpandMoreIcon onClick={scrollToBottomHotline}/>}>
                         <Typography variant="h5">
-                            Already have a <strong>phone service?</strong>
+                            Already offer a <strong>phone service?</strong>
                         </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.collaborateDetails}>
@@ -126,11 +176,11 @@ export const CollaborateChecklists = (props) => {
                 </ExpansionPanel>
             </Grid>
             <Grid item xs={12} md={6}>
-                <ExpansionPanel>
+                <ExpansionPanel elevation={3} id="ExpansionPanelForum">
                     <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon/>}>
+                        expandIcon={<ExpandMoreIcon onClick={scrollToBottomForum}/>}>
                         <Typography variant="h5">
-                            Already have an <strong>online forum?</strong>
+                            Already built an <strong>online forum?</strong>
                         </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.collaborateDetails}>
@@ -157,6 +207,14 @@ export const CollaborateChecklists = (props) => {
                         </div>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
+            </Grid>
+            <Grid item xs={12} id="CollabBox" className={clsx("CollabBox", collab.visible ? "CollabBoxVisible" : "CollabBoxInvisible")}>
+                <Paper elevation={3} className={clsx(classes.collabPaper)}>
+                    <Typography variant="h5">
+                        Bingo! Contact us via <a className={classes.pinkLink}
+                                                 href="mailto:collab@helferline.io"><strong>collab@helferline.io</strong></a>
+                    </Typography>
+                </Paper>
             </Grid>
         </Grid>
     );
