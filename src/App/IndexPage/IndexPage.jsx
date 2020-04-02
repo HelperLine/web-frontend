@@ -38,6 +38,9 @@ import AddIcon from '@material-ui/icons/Add';
 import {CollaborateChecklists} from "./CollaborateChecklists";
 
 
+import {animateScroll as scroll} from 'react-scroll'
+
+
 
 const useStyles = makeStyles(theme => ({
     pageStart: {
@@ -46,6 +49,9 @@ const useStyles = makeStyles(theme => ({
     centerText: {
         display: "block",
         textAlign: "center",
+    },
+    nameReferenceText: {
+        color: theme.palette.primary.transparent20,
     },
     margin1: {
         marginBottom: theme.spacing(1),
@@ -72,6 +78,15 @@ const useStyles = makeStyles(theme => ({
     pinkLink: {
         color: theme.palette.secondary.main,
         textDecoration: "none",
+    },
+    paper: {
+        backgroundColor: "transparent",
+    },
+    withBox: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        flexDirection: "column"
     },
     padding2: {
         padding: theme.spacing(2),
@@ -166,8 +181,12 @@ export const IndexPageComponent = (props) => {
             <Container maxWidth="md">
 
                 <Typography variant="h3" className={clsx(classes.centerText, classes.margin1, classes.pageStart)}>
-                    Hilfe am Ohr!
+                    HelperLine
                 </Typography>
+                <Typography variant="h5" className={clsx(classes.centerText,classes.margin3, classes.nameReferenceText)}>
+                    <em>(formerly known as "Hilfe am Ohr")</em>
+                </Typography>
+
                 <Typography variant="h5" className={clsx(classes.centerText)}>
                     A <strong>hotline</strong> for people without internet. <strong>
                     <a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555 5305</a></strong>
@@ -176,45 +195,39 @@ export const IndexPageComponent = (props) => {
                 <Divider className={classes.divider}/>
 
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                    Due to Covid-19 we are <strong>matching</strong> ...
+                    Due to Covid-19 we <br/>are <strong>matching</strong> ...
                 </Typography>
 
                 <Grid container justify="center" spacing={2} className={classes.margin2}>
-                    <Grid item xs={12} md={4}>
-                        <Paper elevation={3}>
+                    <Grid item xs={12} md={5}>
+                        <Paper elevation={0} className={clsx(classes.paper, "LeftTranslateCard")}>
+                            <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
+                                ... People in Need ...
+                            </Typography>
                             <div className={classes.centerBox}>
                                 <img alt="Caller Drawing" src={DrawingCaller} className={classes.cardImage}/>
                             </div>
-
-                            <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                                People in Need
-                            </Typography>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} md={4} className={classes.centerBox}>
-                        <div className={classes.centerBox}>
-                            <img alt="Server Drawing" src={DrawingServer} className={classes.cardImage}
-                                 style={{maxWidth: "30%"}}/>
-                        </div>
+                    <Grid item xs={12} md={2} className={classes.withBox}>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
                             ... with ...
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Paper elevation={3}>
+                    <Grid item xs={12} md={5}>
+                        <Paper elevation={0} className={clsx(classes.paper, "RightTranslateCard")}>
+                            <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
+                                ... Digital Volunteers ...
+                            </Typography>
                             <div className={classes.centerBox}>
                                 <img alt="Helper Drawing" src={DrawingHelper} className={classes.cardImage}/>
                             </div>
-
-                            <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                                Digital Volunteers
-                            </Typography>
                         </Paper>
                     </Grid>
                 </Grid>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    ... because most of the <strong>people in need of assist do not use the internet!</strong>
+                    ... because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
                 </Typography>
 
                 <Divider className={classes.divider}/>
@@ -228,24 +241,30 @@ export const IndexPageComponent = (props) => {
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             1. Sign up
                         </Typography>
-                        <Button color="secondary" variant="contained"
-                                startIcon={<PersonIcon className={classes.buttonStartIcon}/>}>Sign Up</Button>
+                        <Link to="/register">
+                            <Button color="secondary" variant="contained"
+                                    startIcon={<PersonIcon className={classes.buttonStartIcon}/>}>Sign Up</Button>
+                        </Link>
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.centerBox}>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             2. Set Call Filters
                         </Typography>
-                        <Button color="secondary" variant="contained"
-                                startIcon={<TuneIcon className={classes.buttonStartIcon}/>}>
-                            Filter
-                        </Button>
+                        <Link to="/calls">
+                            <Button color="secondary" variant="contained"
+                                    startIcon={<TuneIcon className={classes.buttonStartIcon}/>}>
+                                Filter
+                            </Button>
+                        </Link>
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.centerBox}>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             3. Start Helping
                         </Typography>
-                        <Button color="secondary" variant="contained"
-                                startIcon={<AddIcon className={classes.buttonStartIcon}/>}>Accept Call</Button>
+                        <Link to="/calls">
+                            <Button color="secondary" variant="contained"
+                                    startIcon={<AddIcon className={classes.buttonStartIcon}/>}>Accept Call</Button>
+                        </Link>
                     </Grid>
                 </Grid>
 

@@ -212,7 +212,7 @@ export const CollaborateChecklists = (props) => {
                 <Paper elevation={3} className={clsx(classes.collabPaper)}>
                     <Typography variant="h5">
                         Bingo! Contact us via <a className={classes.pinkLink}
-                                                 href="mailto:collab@helferline.io"><strong>collab@helferline.io</strong></a>
+                        href="mailto:collab@helferline.io"><strong>collab@helperline.io</strong></a>
                     </Typography>
                 </Paper>
             </Grid>

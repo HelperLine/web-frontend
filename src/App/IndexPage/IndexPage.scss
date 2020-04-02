@@ -12,7 +12,38 @@
 
     flex-direction: column;
 
+    background-color: white;
+
 }
+
+a {
+    text-decoration: none;
+}
+
+
+@keyframes slideInFromLeft {
+    0% {transform: translateX(-800px);}
+    100% {transform: translateX(0);}
+}
+
+@keyframes slideInFromRight {
+    0% {transform: translateX(800px);}
+    100% {transform: translateX(0);}
+}
+
+.LeftTranslateCard {
+    animation-delay: 0.5s;
+    animation: slideInFromLeft ease-out 1.5s;
+}
+
+.RightTranslateCard {
+    animation-delay: 0.5s;
+    animation: slideInFromRight ease-out 1.5s;
+}
+
+
+
+
 
 .CollabBox {
     transition: transform ease-out 0.3s;
