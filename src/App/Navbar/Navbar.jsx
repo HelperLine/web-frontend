@@ -42,6 +42,8 @@ import LanguageIcon from '@material-ui/icons/Language';
 
 import Logo128 from './logos/Drawing_Logo_128px.png';
 import Logo256 from './logos/Drawing_Logo_256px.png';
+import LogoText512 from './logos/Drawing_Logo_Text_512px.png';
+
 
 const drawerWidth = 240;
 
@@ -96,7 +98,7 @@ const useStyles = makeStyles(theme => ({
         zIndex: "1000",
 
         padding: 0,
-        maxWidth: 64,
+        maxWidth: 192,
     },
 
 
@@ -149,7 +151,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
     },
     drawerLogoIcon: {
-        maxWidth: 64,
+        maxWidth: 192,
     },
 
     logoutDialog: {
@@ -353,7 +355,7 @@ function NavbarComponent(props) {
 
                     <div className={classes.drawerLogoBox}>
                         <Link to="/">
-                            <img src={Logo256} className={classes.drawerLogoIcon}/>
+                            <img src={LogoText512} className={classes.drawerLogoIcon}/>
                         </Link>
                     </div>
 
@@ -460,7 +462,7 @@ export const ReducedNavbarComponent = (props) => {
             <CssBaseline/>
 
             <Link to="/">
-                <img src={Logo256} className={classes.logoIcon}/>
+                <img src={LogoText512} className={classes.logoIcon}/>
             </Link>
 
             <IconButton onClick={openLanguageMenu}
