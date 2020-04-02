@@ -31,7 +31,7 @@ import DrawingCoffee from './images/Drawing_Coffee_600px.png';
 import DrawingMediation from './images/Drawing_Mediation_600px.png';
 import DrawingCollab from './images/Drawing_Collab_1200px.png';
 
-import PersonIcon from '@material-ui/icons/Person';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 import TuneIcon from '@material-ui/icons/Tune';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: "center",
     },
     nameReferenceText: {
-        color: theme.palette.primary.transparent20,
+        color: theme.palette.primary.transparent40,
     },
     margin1: {
         marginBottom: theme.spacing(1),
@@ -82,6 +82,13 @@ const useStyles = makeStyles(theme => ({
     paper: {
         backgroundColor: "transparent",
     },
+    reducedLoginButton: {
+        position: "fixed",
+        top: theme.spacing(2),
+        right: theme.spacing(10),
+        color: "white",
+        backgroundColor: theme.palette.primary.transparent40,
+    },
     withBox: {
         display: "flex",
         alignItems: "center",
@@ -98,7 +105,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
     },
     cardImage: {
-        maxWidth: "100%",
+        maxWidth: "80%",
 
     },
     centerBoxTop: {
@@ -111,7 +118,6 @@ const useStyles = makeStyles(theme => ({
         marginLeft: -8,
         marginRight: -4,
     },
-
     actionPaper: {
         display: "flex",
         alignItems: "center",
@@ -180,44 +186,67 @@ export const IndexPageComponent = (props) => {
         <div className="IndexPage">
             <Container maxWidth="md">
 
-                <Typography variant="h3" className={clsx(classes.centerText, classes.margin1, classes.pageStart)}>
+                <Typography variant="h3" className={clsx(classes.centerText, classes.margin6, classes.pageStart)}>
                     HelperLine
                 </Typography>
-                <Typography variant="h5" className={clsx(classes.centerText,classes.margin3, classes.nameReferenceText)}>
+
+                <Typography variant="h5" className={clsx(classes.centerText,classes.margin1, classes.nameReferenceText)}>
                     <em>(formerly known as "Hilfe am Ohr")</em>
                 </Typography>
 
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin1)}>
+                    A <strong>hotline</strong> for people without internet.<br/>
+                </Typography>
+
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    A <strong>hotline</strong> for people without internet. <strong>
-                    <a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555 5305</a></strong>
+                    <strong><a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555 5305</a></strong>
                 </Typography>
 
                 <Divider className={classes.divider}/>
 
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                    Due to Covid-19 we <br/>are <strong>matching</strong> ...
+                    <strong>Start helping now!</strong>
+                </Typography>
+
+                <Grid container justify="center" spacing={2}>
+                    <Grid item className={classes.centerBoxTop}>
+                        <Link to="/register">
+                            <Button color="secondary" variant="contained"
+                                    startIcon={<HowToRegIcon className={classes.buttonStartIcon}/>}>Register</Button>
+                        </Link>
+                    </Grid>
+                </Grid>
+
+                <Link to="/login">
+                    <Button className={classes.reducedLoginButton} disableElevation variant="contained">Login</Button>
+                </Link>
+
+                <Divider className={classes.divider}/>
+
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
+                    Due to Covid-19 we are <strong>matching</strong>
                 </Typography>
 
                 <Grid container justify="center" spacing={2} className={classes.margin2}>
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={12} md={4}>
                         <Paper elevation={0} className={clsx(classes.paper, "LeftTranslateCard")}>
                             <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                                ... People in Need ...
+                                <strong>People in Need</strong>
                             </Typography>
                             <div className={classes.centerBox}>
                                 <img alt="Caller Drawing" src={DrawingCaller} className={classes.cardImage}/>
                             </div>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} md={2} className={classes.withBox}>
+                    <Grid item xs={12} md={1} className={classes.withBox}>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                            ... with ...
+                            with
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={12} md={4}>
                         <Paper elevation={0} className={clsx(classes.paper, "RightTranslateCard")}>
                             <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                                ... Digital Volunteers ...
+                                <strong>Digital Volunteers</strong>
                             </Typography>
                             <div className={classes.centerBox}>
                                 <img alt="Helper Drawing" src={DrawingHelper} className={classes.cardImage}/>
@@ -227,46 +256,8 @@ export const IndexPageComponent = (props) => {
                 </Grid>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    ... because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
+                    because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
                 </Typography>
-
-                <Divider className={classes.divider}/>
-
-                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                    How to <strong>start helping now?</strong>
-                </Typography>
-
-                <Grid container justify="center" spacing={2} className={classes.margin2}>
-                    <Grid item xs={12} md={4} className={classes.centerBoxTop}>
-                        <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                            1. Sign up
-                        </Typography>
-                        <Link to="/register">
-                            <Button color="secondary" variant="contained"
-                                    startIcon={<PersonIcon className={classes.buttonStartIcon}/>}>Sign Up</Button>
-                        </Link>
-                    </Grid>
-                    <Grid item xs={12} md={4} className={classes.centerBox}>
-                        <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                            2. Set Call Filters
-                        </Typography>
-                        <Link to="/calls">
-                            <Button color="secondary" variant="contained"
-                                    startIcon={<TuneIcon className={classes.buttonStartIcon}/>}>
-                                Filter
-                            </Button>
-                        </Link>
-                    </Grid>
-                    <Grid item xs={12} md={4} className={classes.centerBox}>
-                        <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                            3. Start Helping
-                        </Typography>
-                        <Link to="/calls">
-                            <Button color="secondary" variant="contained"
-                                    startIcon={<AddIcon className={classes.buttonStartIcon}/>}>Accept Call</Button>
-                        </Link>
-                    </Grid>
-                </Grid>
 
             </Container>
 
@@ -278,7 +269,7 @@ export const IndexPageComponent = (props) => {
                         "Hello sir, how may I help you?"
                     </Typography>
 
-                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
                         <div className={clsx(classes.centerBox, classes.actionImageBox)}>
                             <img alt="Groceries Drawing" src={DrawingGroceries} className={classes.actionImage}/>
                         </div>
@@ -289,7 +280,7 @@ export const IndexPageComponent = (props) => {
                         </div>
                     </Paper>
 
-                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
                         <div className={clsx(classes.centerBox, classes.actionImageBox)}>
                             <img alt="Postal Drawing" src={DrawingPostal} className={classes.actionImage}/>
                         </div>
@@ -300,7 +291,7 @@ export const IndexPageComponent = (props) => {
                         </div>
                     </Paper>
 
-                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
                         <div className={clsx(classes.centerBox, classes.actionImageBox)}>
                             <img alt="Medication Drawing" src={DrawingMedication} className={classes.actionImage}/>
                         </div>
@@ -311,14 +302,14 @@ export const IndexPageComponent = (props) => {
                         </div>
                     </Paper>
 
-                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
                         <div className={clsx(classes.centerBox, classes.actionImageBox)}>
                             <img alt="Coffee Drawing" src={DrawingCoffee} className={classes.actionImage}
                                  style={{maxHeight: "85%"}}/>
                         </div>
                         <div className={clsx(classes.centerBox, classes.actionText)}>
                             <Typography variant="h5">
-                                "... getting over the day <br/> with a coffee break?"
+                                "... dealing with isolation mentally?
                             </Typography>
                         </div>
                     </Paper>
@@ -329,7 +320,7 @@ export const IndexPageComponent = (props) => {
                         However, sometimes <strong>there might not be a volunteer in that area!</strong>
                     </Typography>
 
-                    <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
                         <div className={clsx(classes.centerBox, classes.actionImageBox)}>
                             <img alt="Mediation Drawing" src={DrawingMediation} className={classes.actionImage}
                                  style={{maxHeight: "85%"}}/>

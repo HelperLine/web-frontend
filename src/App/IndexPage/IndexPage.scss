@@ -22,12 +22,12 @@ a {
 
 
 @keyframes slideInFromLeft {
-    0% {transform: translateX(-800px);}
+    0% {transform: translateX(-1000px);}
     100% {transform: translateX(0);}
 }
 
 @keyframes slideInFromRight {
-    0% {transform: translateX(800px);}
+    0% {transform: translateX(1000px);}
     100% {transform: translateX(0);}
 }
 

@@ -143,7 +143,7 @@ export const CollaborateChecklists = (props) => {
     return (
         <Grid container justify="center" spacing={2}>
             <Grid item xs={12} md={6}>
-                <ExpansionPanel elevation={3} id="ExpansionPanelHotline">
+                <ExpansionPanel elevation={2} id="ExpansionPanelHotline">
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon onClick={scrollToBottomHotline}/>}>
                         <Typography variant="h5">
@@ -176,7 +176,7 @@ export const CollaborateChecklists = (props) => {
                 </ExpansionPanel>
             </Grid>
             <Grid item xs={12} md={6}>
-                <ExpansionPanel elevation={3} id="ExpansionPanelForum">
+                <ExpansionPanel elevation={2} id="ExpansionPanelForum">
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon onClick={scrollToBottomForum}/>}>
                         <Typography variant="h5">
@@ -209,7 +209,7 @@ export const CollaborateChecklists = (props) => {
                 </ExpansionPanel>
             </Grid>
             <Grid item xs={12} id="CollabBox" className={clsx("CollabBox", collab.visible ? "CollabBoxVisible" : "CollabBoxInvisible")}>
-                <Paper elevation={3} className={clsx(classes.collabPaper)}>
+                <Paper elevation={2} className={clsx(classes.collabPaper)}>
                     <Typography variant="h5">
                         Bingo! Contact us via <a className={classes.pinkLink}
                         href="mailto:collab@helferline.io"><strong>collab@helperline.io</strong></a>
