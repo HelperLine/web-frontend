@@ -11,12 +11,13 @@ import {makeStyles} from "@material-ui/core/styles";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-
 import {Link, Element, Events, animateScroll as scroll, scrollSpy, scroller} from 'react-scroll'
 import Paper from "@material-ui/core/Paper";
 
+import {IndexPageTranslation} from './IndexPageTranslation';
 
-var cloneDeep = require('lodash.clonedeep');
+let cloneDeep = require('lodash.clonedeep');
+
 
 const useStyles = makeStyles(theme => ({
     margin1: {
@@ -147,29 +148,29 @@ export const CollaborateChecklists = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon onClick={scrollToBottomHotline}/>}>
                         <Typography variant="h5">
-                            Already offer a <strong>phone service?</strong>
+                            {IndexPageTranslation.collab2[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.collaborateDetails}>
                         <Typography variant="h6" className={clsx(classes.margin1)}>
-                            Great Job! Do you want to ...
+                            {IndexPageTranslation.collab3[props.language]}
                         </Typography>
                         <div className={clsx(classes.margin1, classes.collaborateCheckboxLine)}>
                             {checkboxComponent(0, 0)}
                             <Typography variant="subtitle1">
-                                ... have more flexibility with your office hours?
+                                {IndexPageTranslation.collab4[props.language]}
                             </Typography>
                         </div>
                         <div className={clsx(classes.margin1, classes.collaborateCheckboxLine)}>
                             {checkboxComponent(0, 1)}
                             <Typography variant="subtitle1">
-                                ... while also making it available 24/7?
+                                {IndexPageTranslation.collab5[props.language]}
                             </Typography>
                         </div>
                         <div className={clsx(classes.margin1, classes.collaborateCheckboxLine)}>
                             {checkboxComponent(0, 2)}
                             <Typography variant="subtitle1">
-                                ... including a fallback for concurrent calls?
+                                {IndexPageTranslation.collab6[props.language]}
                             </Typography>
                         </div>
                     </ExpansionPanelDetails>
@@ -180,29 +181,29 @@ export const CollaborateChecklists = (props) => {
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon onClick={scrollToBottomForum}/>}>
                         <Typography variant="h5">
-                            Already built an <strong>online forum?</strong>
+                            {IndexPageTranslation.collab7[props.language]}
                         </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.collaborateDetails}>
                         <Typography variant="h6" className={clsx(classes.margin1)}>
-                            Great Job! Do you want to ...
+                            {IndexPageTranslation.collab3[props.language]}
                         </Typography>
                         <div className={clsx(classes.margin1, classes.collaborateCheckboxLine)}>
                             {checkboxComponent(1, 0)}
                             <Typography variant="subtitle1">
-                                ... reach the offline world as well?
+                                {IndexPageTranslation.collab8[props.language]}
                             </Typography>
                         </div>
                         <div className={clsx(classes.margin1, classes.collaborateCheckboxLine)}>
                             {checkboxComponent(1, 1)}
                             <Typography variant="subtitle1">
-                                ... without having to leave your app?
+                                {IndexPageTranslation.collab9[props.language]}
                             </Typography>
                         </div>
                         <div className={clsx(classes.margin1, classes.collaborateCheckboxLine)}>
                             {checkboxComponent(1, 2)}
                             <Typography variant="subtitle1">
-                                ... by using our API's and developers?
+                                {IndexPageTranslation.collab10[props.language]}
                             </Typography>
                         </div>
                     </ExpansionPanelDetails>
@@ -210,8 +211,8 @@ export const CollaborateChecklists = (props) => {
             </Grid>
             <Grid item xs={12} id="CollabBox" className={clsx("CollabBox", collab.visible ? "CollabBoxVisible" : "CollabBoxInvisible")}>
                 <Paper elevation={2} className={clsx(classes.collabPaper)}>
-                    <Typography variant="h5">
-                        Bingo! Contact us via <a className={classes.pinkLink}
+                    <Typography variant="h6">
+                        {IndexPageTranslation.collab11[props.language]} <a className={classes.pinkLink}
                         href="mailto:collab@helferline.io"><strong>collab@helperline.io</strong></a>
                     </Typography>
                 </Paper>

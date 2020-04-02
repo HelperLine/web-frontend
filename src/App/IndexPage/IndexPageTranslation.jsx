@@ -1,121 +1,158 @@
-
 import React from 'react';
 
 
 export const IndexPageTranslation = {
-    indexSubtitle: {
-        english: (<React.Fragment>A hotline for people without internet access</React.Fragment>),
-        deutsch: (<React.Fragment>Eine Hotline für Menschen ohne Internetzugang</React.Fragment>),
+
+    title1: {
+        english: "Hilfe am Ohr",
+        deutsch: "Hilfe am Ohr",
     },
-    text1: {
-        english: (
-            <React.Fragment>
-                Call now: <a href="tel:+49-30-2555-5305"><strong>+49 30 2555 5305</strong></a>
-            </React.Fragment>
-        ),
-        deutsch: (
-            <React.Fragment>
-                Rufe jetzt an: <a href="tel:+49-30-2555-5305"><strong>+49 30 2555 5305</strong></a>
-            </React.Fragment>
-        ),
+    title2: {
+        english: <React.Fragment>A <strong>hotline</strong> for people without internet.</React.Fragment>,
+        deutsch: <React.Fragment>Eine <strong>Hotline</strong> für Menschen ohne einen Internet-Zugang.</React.Fragment>,
     },
-    text2: {
-        english: (
-            <React.Fragment>
-                <em>Showcase coming soon!</em>
-            </React.Fragment>
-        ),
-        deutsch: (
-            <React.Fragment>
-                <em>Showcase kommt bald!</em>
-            </React.Fragment>
-        ),
+    title3: {
+        english: "Call +49 30 2555 5305",
+        deutsch: "Rufe +49 30 2555 5305 an",
     },
-    text3: {
-        english: (
-            <React.Fragment>
-                See all Code Repositories on <a rel="noopener noreferrer" target="_blank" href="https://github.com/Hilfe-am-Ohr">GitHub</a>
-            </React.Fragment>
-        ),
-        deutsch: (
-            <React.Fragment>
-                Schaut euch alle Code Repositories auf <a rel="noopener noreferrer" target="_blank" href="https://github.com/Hilfe-am-Ohr">GitHub</a> an
-            </React.Fragment>
-        ),
-    },
-    readOurGuide: {
-        english: "Read our Guide",
-        deutsch: "Lest unseren Guide",
+    title4: {
+        english: "Start helping now!",
+        deutsch: "Beginne jetzt zu helfen!",
     },
     register: {
         english: "Register",
         deutsch: "Registrieren",
     },
-    text4: {
-        english: "How can you support us?",
-        deutsch: "Wie könnt ihr uns unterstützen?",
+    login: {
+        english: "Login",
+        deutsch: "Anmelden",
     },
-    text5: {
+
+
+
+    pitch1: {
+        english: <React.Fragment>Due to Covid-19 we are <strong>matching</strong></React.Fragment>,
+        deutsch: <React.Fragment>Aufgrund von Covid-19 <strong>matchen</strong> wir</React.Fragment>,
+    },
+    pitch2: {
+        english: "People in Need",
+        deutsch: "Hilfsbedürftige",
+    },
+    pitch3: {
+        english: "with",
+        deutsch: "mit",
+    },
+    pitch4: {
+        english: "Digital Volunteers",
+        deutsch: "Digitalen Freiwilligen",
+    },
+    pitch5: {
         english: (
             <React.Fragment>
-                1. Like our pitch - you saw above - on&nbsp;
-                <a href="https://www.youtube.com/watch?v=veRkcaPmV4g"
-                   rel="noopener noreferrer"
-                   target="_blank"><strong>YouTube</strong></a>
-
-                <br/><br/>
-
-                2. Like our project on&nbsp;
-                <a href="https://devpost.com/software/hilfehotline-finde-einfach-helfende"
-                   rel="noopener noreferrer"
-                   target="_blank"><strong>DevPost</strong></a>
-
-                <br/><br/>
-
-                3. <strong>Register as a volunteer</strong> on this page
-
-                <br/><br/>
-
-                4. Take part in <strong>our survey</strong> by calling the hotline <em>(~ 1 minute)</em>
+                because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
             </React.Fragment>
         ),
         deutsch: (
             <React.Fragment>
-                1. Liked unseren Pitch - den ihr oben gesehen habt - auf&nbsp;
-                <a href="https://www.youtube.com/watch?v=veRkcaPmV4g"
-                   rel="noopener noreferrer"
-                   target="_blank"><strong>YouTube</strong></a>
-
-                <br/><br/>
-
-                2. Liked unser Projekt auf&nbsp;
-                <a href="https://devpost.com/software/hilfehotline-finde-einfach-helfende"
-                   rel="noopener noreferrer"
-                   target="_blank"><strong>DevPost</strong></a>
-
-                <br/><br/>
-
-                3. <strong>Registriert euch als Helfer</strong> auf dieser Seite
-
-                <br/><br/>
-
-                4. Nehmt an unserer <strong>Umfrage</strong> teil, indem ihr die Hotline anruft <em>(~ 1 Minute)</em>
+                weil die meisten <strong>Personen, die zurzeit Hilfe benötigen, das Internet <u>nicht</u> benutzen!</strong>
             </React.Fragment>
         ),
     },
-    text6: {
+
+
+
+    scene1: {
+        english: "\"Hello sir, how may I help you?\"",
+        deutsch: "\"Guten Tag, womit kann ich Ihnen weiterhelfen?\"",
+    },
+    scene2: {
+        english: <React.Fragment>"Can you help me with<br/>buying groceries?"</React.Fragment>,
+        deutsch: <React.Fragment>"Könnten Sie für mich<br/>Einkaufen gehen?"</React.Fragment>,
+    },
+    scene3: {
+        english: <React.Fragment>"... going to the post office?"</React.Fragment>,
+        deutsch: <React.Fragment>"... ein Paket abholen?"</React.Fragment>,
+    },
+    scene4: {
+        english: <React.Fragment>"... picking up medication?"</React.Fragment>,
+        deutsch: <React.Fragment>"... Medikamente besorgen?"</React.Fragment>,
+    },
+    scene5: {
+        english: <React.Fragment>"... mentally dealing<br/>with isolation?"</React.Fragment>,
+        deutsch: <React.Fragment>"... mir mit einem Gespräche in<br/>der Isolation helfen?"</React.Fragment>,
+    },
+    scene6: {
         english: (
             <React.Fragment>
-                <em>Job-Wall coming soon!</em>&nbsp;
-                Contact us via <a href="mailto:jobs@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+                However, sometimes <strong>there might not be a Hilfe-am-Ohr-Volunteer in that area!</strong>
             </React.Fragment>
         ),
         deutsch: (
             <React.Fragment>
-                <em>Job-Pinnwand kommt bald!</em>&nbsp;
-                Kontaktiert uns über <a href="mailto:jobs@hilfe-am-ohr.de">info@hilfe-am-ohr.de</a>
+                Leider kann es passieren, dass es <strong>keinen Helfer unsere Hotline in der Gegend</strong> gibt!
             </React.Fragment>
         ),
     },
+    scene7: {
+        english: (
+            <React.Fragment>
+                You can help them find a volunteer in <br/>
+                <strong>tons of other online forums!</strong>
+            </React.Fragment>
+        ),
+        deutsch: (
+            <React.Fragment>
+                Du kannst dem Anrufer aber dabei helfen <br/>
+                <strong>in den zahlreichen Online-Foren <br/>
+                einen lokalen Helfer zu finden!</strong>
+            </React.Fragment>
+        ),
+    },
+
+
+    collab1: {
+        english: "Collaborate and Connect!",
+        deutsch: "Gemeinsam Großes Bewirken!",
+    },
+    collab2: {
+        english: <React.Fragment>Already offer a <strong>phone service?</strong></React.Fragment>,
+        deutsch: <React.Fragment>Selbst <strong>Telefon-Service</strong>-Betreiber?</React.Fragment>,
+    },
+    collab3: {
+        english: "Great Job! Do you want to ...",
+        deutsch: "Tolles Ding! Möchtet ihr ...",
+    },
+    collab4: {
+        english: "... have more flexibility with your office hours?",
+        deutsch: "...  mehr Flexibiliät in der Erreichbarkeit?",
+    },
+    collab5: {
+        english: "... while also making it available 24/7?",
+        deutsch: "... und trotzdem zu einer 24/7 Hotline werden?",
+    },
+    collab6: {
+        english: "... including a fallback for concurrent calls?",
+        deutsch: "... die auf hohe Parallelität ausgelegt ist?",
+    },
+    collab7: {
+        english: <React.Fragment>Already built an <strong>online forum?</strong></React.Fragment>,
+        deutsch: <React.Fragment>Selbst <strong>Online-Forum</strong>-Betreiber?</React.Fragment>,
+    },
+    collab8: {
+        english: "... reach the offline world as well?",
+        deutsch: "... mit diesem auch die Offline-Welt erreichen?",
+    },
+    collab9: {
+        english: "... without having to leave your app?",
+        deutsch: "... ohne, dass ihr eure App verlassen müsst?",
+    },
+    collab10: {
+        english: "... by using our API's and developers?",
+        deutsch: "... mithilfe von unseren API's und Entwicklern?",
+    },
+    collab11: {
+        english: "Bingo! Contact us via",
+        deutsch: "Bingo! Kontaktiert uns via",
+    },
+
 };
-

@@ -222,7 +222,7 @@ const FlyingCards = (props) => {
             <Grid item xs={8} md={4}>
                 <Paper elevation={0} className={clsx(classes.paper, "LeftTranslateCard")}>
                     <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                        <strong>People in Need</strong>
+                        <strong>{IndexPageTranslation.pitch2[props.language]}</strong>
                     </Typography>
                     <div className={classes.centerBox}>
                         <img alt="Caller Drawing" src={DrawingCaller} className={classes.cardImage}/>
@@ -232,19 +232,19 @@ const FlyingCards = (props) => {
             <Grid item xs={12} md={1} className={classes.withBox}>
                 <Breakpoint small down>
                     <Typography variant="h5" className={clsx(classes.centerText)}>
-                        with
+                        {IndexPageTranslation.pitch3[props.language]}
                     </Typography>
                 </Breakpoint>
                 <Breakpoint medium up>
                     <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                        with
+                        {IndexPageTranslation.pitch3[props.language]}
                     </Typography>
                 </Breakpoint>
             </Grid>
             <Grid item xs={8} md={4}>
                 <Paper elevation={0} className={clsx(classes.paper, "RightTranslateCard")}>
                     <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                        <strong>Digital Volunteers</strong>
+                        <strong>{IndexPageTranslation.pitch4[props.language]}</strong>
                     </Typography>
                     <div className={classes.centerBox}>
                         <img alt="Helper Drawing" src={DrawingHelper} className={classes.cardImage}/>
@@ -300,7 +300,7 @@ const CollabPanel = (props) => {
         <Container maxWidth="md">
 
             <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                <strong>Collaborate and connect!</strong>
+                <strong>{IndexPageTranslation.collab1[props.language]}</strong>
             </Typography>
 
             <Breakpoint small down>
@@ -314,7 +314,7 @@ const CollabPanel = (props) => {
                 </div>
             </Breakpoint>
 
-            <CollaborateChecklists/>
+            <CollaborateChecklists language={props.language}/>
 
         </Container>
     );
@@ -328,57 +328,57 @@ export const IndexPageComponent = (props) => {
             <Container maxWidth="md">
 
                 <Typography variant="h3" className={clsx(classes.centerText, classes.margin6, classes.pageStart)}>
-                    HelperLine
-                </Typography>
-
-                <Typography variant="h5"
-                            className={clsx(classes.centerText, classes.margin1, classes.nameReferenceText)}>
-                    <em>(formerly known as "Hilfe am Ohr")</em>
+                    {IndexPageTranslation.title1[props.language]}
                 </Typography>
 
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin1)}>
-                    A <strong>hotline</strong> for people without internet.<br/>
+                    {IndexPageTranslation.title2[props.language]}
                 </Typography>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    <strong><a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555
-                        5305</a></strong>
+                    <strong><a href="tel:+49-30-2555-5305" className={classes.pinkLink}>
+                        {IndexPageTranslation.title3[props.language]}
+                    </a></strong>
                 </Typography>
 
                 <Divider className={classes.divider}/>
 
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                    <strong>Start helping now!</strong>
+                    <strong>{IndexPageTranslation.title4[props.language]}</strong>
                 </Typography>
 
                 <Grid container justify="center" spacing={2}>
                     <Grid item className={classes.centerBoxTop}>
                         <Link to="/register">
                             <Button color="secondary" variant="contained"
-                                    startIcon={<HowToRegIcon className={classes.buttonStartIcon}/>}>Register</Button>
+                                    startIcon={<HowToRegIcon className={classes.buttonStartIcon}/>}>{IndexPageTranslation.register[props.language]}</Button>
                         </Link>
                     </Grid>
                 </Grid>
 
                 <Link to="/login">
                     <Breakpoint small down>
-                        <Button className={classes.reducedLoginButtonMobile} disableElevation variant="contained">Login</Button>
+                        <Button className={classes.reducedLoginButtonMobile} disableElevation variant="contained">
+                            {IndexPageTranslation.login[props.language]}
+                        </Button>
                     </Breakpoint>
                     <Breakpoint medium up>
-                        <Button className={classes.reducedLoginButton} disableElevation variant="contained">Login</Button>
+                        <Button className={classes.reducedLoginButton} disableElevation variant="contained">
+                            {IndexPageTranslation.login[props.language]}
+                        </Button>
                     </Breakpoint>
                 </Link>
 
                 <Divider className={classes.divider}/>
 
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                    Due to Covid-19 we are <strong>matching</strong>
+                    {IndexPageTranslation.pitch1[props.language]}
                 </Typography>
 
-                <FlyingCards/>
+                <FlyingCards language={props.language}/>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
+                    {IndexPageTranslation.pitch5[props.language]}
                 </Typography>
 
             </Container>
@@ -388,47 +388,46 @@ export const IndexPageComponent = (props) => {
                 <Container maxWidth="md">
 
                     <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                        "Hello sir, how may I help you?"
+                        {IndexPageTranslation.scene1[props.language]}
                     </Typography>
 
                     <ActivityCard alt="Groceries Drawing" src={DrawingGroceries} description={(
-                        <React.Fragment>"Can you help me with<br/>buying groceries?"</React.Fragment>
+                        <React.Fragment>{IndexPageTranslation.scene2[props.language]}</React.Fragment>
                     )}/>
 
                     <ActivityCard alt="Postal Drawing" src={DrawingPostal} description={(
-                        <React.Fragment>"... going to the post office?"</React.Fragment>
+                        <React.Fragment>{IndexPageTranslation.scene3[props.language]}</React.Fragment>
                     )}/>
 
                     <ActivityCard alt="Medication Drawing" src={DrawingMedication} description={(
-                        <React.Fragment>"... picking up medication?"</React.Fragment>
+                        <React.Fragment>{IndexPageTranslation.scene4[props.language]}</React.Fragment>
                     )}/>
 
                     <ActivityCard alt="Coffee Drawing" src={DrawingCoffee} description={(
-                        <React.Fragment>"... mentally dealing<br/>with isolation?"</React.Fragment>
+                        <React.Fragment>{IndexPageTranslation.scene5[props.language]}</React.Fragment>
                     )}/>
 
                     <Divider className={classes.divider}/>
 
                     <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                        However, sometimes <strong>there might not be a HelperLine-Volunteer in that area!</strong>
+                        {IndexPageTranslation.scene6[props.language]}
                     </Typography>
 
-                    <ActivityCard alt="Mediation Drawing" src={DrawingMediation} description={(
-                        <React.Fragment>You can help them find a volunteer
-                        in <strong>tons of other online forums!</strong></React.Fragment>
-                    )}/>
+                    <ActivityCard alt="Mediation Drawing" src={DrawingMediation} description={
+                        IndexPageTranslation.scene7[props.language]
+                    }/>
 
                 </Container>
             </div>
 
             <Breakpoint small down>
                 <div className={classes.colorPanel2Mobile}>
-                    <CollabPanel/>
+                    <CollabPanel language={props.language}/>
                 </div>
             </Breakpoint>
             <Breakpoint medium up>
                 <div className={classes.colorPanel2}>
-                    <CollabPanel/>
+                    <CollabPanel language={props.language}/>
                 </div>
             </Breakpoint>
 
