@@ -173,6 +173,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "start",
         marginTop: theme.spacing(2),
         marginLeft: theme.spacing(2),
+        height: 58.2,
     },
     drawerLogoIcon: {
         maxWidth: 192,

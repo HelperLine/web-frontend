@@ -35,6 +35,7 @@ import AddIcon from '@material-ui/icons/Add';
 import './CallsPage.scss';
 
 import {CallsPageTranslation} from "./CallsPageTranslation";
+import {Performance} from "./Performance";
 
 var cloneDeep = require('lodash.clonedeep');
 
@@ -225,7 +226,9 @@ export function CallsPageComponent(props) {
     return (
         <Container maxWidth="md" className="CallsPage">
 
-            <Grid container spacing={1} className={classes.formContainer}>
+            <Grid container spacing={2} className={classes.formContainer}>
+
+                <Performance/>
 
                 <Grid item xs={12}>
                     <div className="ButtonBox">
