@@ -1,5 +1,64 @@
 
 export const CallsPageTranslation = {
+    performanceKey1: {
+        english: "Volunteers in your area",
+        deutsch: "Helfer in deiner Gegend",
+    },
+    performanceKey2: {
+        english: "Callers in your area",
+        deutsch: "Anrufer in deiner Gegend",
+    },
+    performanceKey3: {
+        english: "Fulfilled calls",
+        deutsch: "Abgeschlossene Anrufe",
+    },
+    performanceKey4: {
+        english: "Registered since",
+        deutsch: "Registriert seit",
+    },
+
+    performanceAlt1: {
+        english: "Community Performance",
+        deutsch: "Community Performance",
+    },
+    performanceAlt2: {
+        english: "Your Performance",
+        deutsch: "Deine Performance",
+    },
+
+
+
+    filter1: {
+        english: "Which type of calls?",
+        deutsch: "Welche Art von Anrufen?",
+    },
+    filter2: {
+        english: "Only local calls",
+        deutsch: "Nur lokale Hilfe-Anrufe",
+    },
+    filter3: {
+        english: "Only non-local calls",
+        deutsch: "Nur ortsunabhängige Anrufe",
+    },
+    filter4: {
+        english: "Which languages?",
+        deutsch: "Welche Sprachen?",
+    },
+    filter5: {
+        english: "German",
+        deutsch: "Deutsch",
+    },
+    filter6: {
+        english: "English",
+        deutsch: "Englisch",
+    },
+
+
+
+    acceptCall: {
+        english: "Accept Call",
+        deutsch: "Anruf Annehmen",
+    },
     serverOffline: {
         english: "Server currently offline. Please try again later.",
         deutsch: "Server zurzeit offline. Bitte versuchen Sie es später noch einmal.",
@@ -8,18 +67,9 @@ export const CallsPageTranslation = {
         english: "Currently no new calls. Please try again in a few minutes.",
         deutsch: "Zurzeit keine neuen Anrufe. Bitte versuche es in ein paar Minuten nochmal.",
     },
-    acceptCall: {
-        english: "Accept Call",
-        deutsch: "Anruf Annehmen",
-    },
-    online: {
-        english: "Online",
-        deutsch: "Online",
-    },
-    offline: {
-        english: "Offline",
-        deutsch: "Offline",
-    },
+
+
+
     acceptedCalls: {
         english: "Accepted Calls",
         deutsch: "Angenommene Anrufe",

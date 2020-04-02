@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 
+import {connect} from 'react-redux';
+
 import {Button, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -16,6 +18,9 @@ import {CircularProgress} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import Snackbar from "@material-ui/core/Snackbar";
+
+
+import {CallsPageTranslation} from './CallsPageTranslation';
 
 
 const useStyles = makeStyles(theme => ({
@@ -62,7 +67,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export function Filter(props) {
+function FilterComponent(props) {
 
     const classes = useStyles();
 
@@ -118,12 +123,12 @@ export function Filter(props) {
                 } else if (response.data.status === "no new calls") {
                     setErrorMessage({
                         visible: true,
-                        text: "No new calls",
+                        text: CallsPageTranslation.noNewCalls[props.language],
                     });
                     setTimeout(() => {
                         setErrorMessage({
                             visible: true,
-                            text: "No new calls",
+                            text: CallsPageTranslation.noNewCalls[props.language],
                         });
                     }, 2000);
                 }
@@ -133,12 +138,12 @@ export function Filter(props) {
             console.log(response);
             setErrorMessage({
                 visible: true,
-                text: "Server offline",
+                text: CallsPageTranslation.serverOffline[props.language],
             });
             setTimeout(() => {
                 setErrorMessage({
                     visible: false,
-                    text: "Server offline",
+                    text: CallsPageTranslation.serverOffline[props.language],
                 });
             }, 2500);
         });
@@ -159,18 +164,22 @@ export function Filter(props) {
                     <Grid container justify="center">
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Typography variant="h6" className={classes.rowTitle}>
-                                Which type of calls?
+                                {CallsPageTranslation.filter1[props.language]}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Checkbox checked={callFilter.local}
                                       onChange={() => handleCallFilterClick({local: !callFilter.local})}/>
-                            <Typography variant="subtitle1">Only local calls</Typography>
+                            <Typography variant="subtitle1">
+                                {CallsPageTranslation.filter2[props.language]}
+                            </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Checkbox checked={callFilter.global}
                                       onChange={() => handleCallFilterClick({global: !callFilter.global})}/>
-                            <Typography variant="subtitle1">Only non-local calls</Typography>
+                            <Typography variant="subtitle1">
+                                {CallsPageTranslation.filter3[props.language]}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -178,18 +187,22 @@ export function Filter(props) {
                     <Grid container justify="center">
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Typography variant="h6" className={classes.rowTitle}>
-                                Which type of languages?
+                                {CallsPageTranslation.filter4[props.language]}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Checkbox checked={callLanguage.german}
                                       onChange={() => handleCallLanguageClick({german: !callLanguage.german})}/>
-                            <Typography variant="subtitle1">German</Typography>
+                            <Typography variant="subtitle1">
+                                {CallsPageTranslation.filter5[props.language]}
+                            </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Checkbox checked={callLanguage.english}
                                       onChange={() => handleCallLanguageClick({english: !callLanguage.english})}/>
-                            <Typography variant="subtitle1">English</Typography>
+                            <Typography variant="subtitle1">
+                                {CallsPageTranslation.filter6[props.language]}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -204,7 +217,7 @@ export function Filter(props) {
                                         <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
                                         <AddIcon className={classes.buttonIcon}/>
                                     }
-                                    className={classes.button}>Accept Call</Button>
+                                    className={classes.button}>{CallsPageTranslation.acceptCall[props.language]}</Button>
                         </div>
                     </div>
                 </Grid>
@@ -222,3 +235,19 @@ export function Filter(props) {
         </React.Fragment>
     );
 }
+
+
+/* Redux link -------------------------------------------------------------------- */
+/* Making the RouterComponent watch the loggedIn property of the store */
+
+
+const mapStateToProps = state => ({
+    language: state.language,
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+export const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);
+
+

@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import {Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
@@ -7,6 +8,9 @@ import Grid from "@material-ui/core/Grid";
 
 import CommunityDrawing from './images/Drawing_Performance_Community_800px.png';
 import SelfDrawing from './images/Drawing_Performance_Self_800px.png';
+
+
+import {CallsPageTranslation} from './CallsPageTranslation';
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export function Performance(props) {
+function PerformanceComponent(props) {
 
     const classes = useStyles();
 
@@ -68,24 +72,46 @@ export function Performance(props) {
                 <Grid item xs={12} md={6}>
                     <Grid container spacing={2} justify="center">
                         <Grid item xs={12} className={classes.performanceImageContainer}>
-                            <img src={CommunityDrawing} alt="Community Performance"
+                            <img src={CommunityDrawing} alt={CallsPageTranslation.performanceAlt1[props.language]}
                                  className={classes.performanceImage}/>
                         </Grid>
-                        <PerformanceRow text="Volunteers in your area" value={performance.area.volunteers}/>
-                        <PerformanceRow text="Callers in your area" value={performance.area.callers}/>
-                        <PerformanceRow text="Fulfilled calls" value={performance.area.calls}/>
+                        <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
+                                        value={performance.area.volunteers}/>
+                        <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
+                                        value={performance.area.callers}/>
+                        <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
+                                        value={performance.area.calls}/>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Grid container spacing={2} justify="center">
                         <Grid item xs={12} className={classes.performanceImageContainer}>
-                            <img src={SelfDrawing} alt="Your Performance" className={classes.performanceImage}/>
+                            <img src={SelfDrawing} alt={CallsPageTranslation.performanceAlt2[props.language]}
+                                 className={classes.performanceImage}/>
                         </Grid>
-                        <PerformanceRow text="Registered since" value={performance.account.registered}/>
-                        <PerformanceRow text="Fulfilled calls" value={performance.account.calls}/>
+                        <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
+                                        value={performance.account.registered}/>
+                        <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
+                                        value={performance.account.calls}/>
                     </Grid>
                 </Grid>
             </Grid>
         </React.Fragment>
     );
 }
+
+
+/* Redux link -------------------------------------------------------------------- */
+/* Making the RouterComponent watch the loggedIn property of the store */
+
+
+const mapStateToProps = state => ({
+    language: state.language,
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+export const Performance = connect(mapStateToProps, mapDispatchToProps)(PerformanceComponent);
+
+
