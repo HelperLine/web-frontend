@@ -29,10 +29,15 @@ import DrawingMedication from './images/Drawing_Medication_600px.png';
 import DrawingCoffee from './images/Drawing_Coffee_600px.png';
 
 import DrawingMediation from './images/Drawing_Mediation_600px.png';
+import DrawingCollaborate from './images/Drawing_Collaborate_1200px.png';
 
 import PersonIcon from '@material-ui/icons/Person';
 import TuneIcon from '@material-ui/icons/Tune';
 import AddIcon from '@material-ui/icons/Add';
+
+import {CollaborateChecklists} from "./CollaborateChecklists";
+
+import {GuidePageTranslation} from "../GuidePage/GuidePageTranslation";
 
 
 const useStyles = makeStyles(theme => ({
@@ -110,8 +115,28 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-    }
-
+    },
+    connectImageBox: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: theme.spacing(40),
+    },
+    connectImage: {
+        maxHeight: "100%",
+    },
+    collaborateDetails: {
+        display: "flex",
+        alignItems: "start",
+        justifyContent: "start",
+        flexDirection: "column",
+    },
+    collaborateCheckboxLine: {
+        display: "flex",
+        alignItems: "start",
+        justifyContent: "start",
+        flexDirection: "row",
+    },
 }));
 
 export const IndexPageComponent = (props) => {
@@ -139,7 +164,7 @@ export const IndexPageComponent = (props) => {
                     <Grid item xs={12} md={4}>
                         <Paper elevation={3}>
                             <div className={classes.centerBox}>
-                                <img src={DrawingCaller} className={classes.cardImage}/>
+                                <img alt="Caller Drawing" src={DrawingCaller} className={classes.cardImage}/>
                             </div>
 
                             <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
@@ -149,7 +174,7 @@ export const IndexPageComponent = (props) => {
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.centerBox}>
                         <div className={classes.centerBox}>
-                            <img src={DrawingServer} className={classes.cardImage} style={{maxWidth: "30%"}}/>
+                            <img alt="Server Drawing" src={DrawingServer} className={classes.cardImage} style={{maxWidth: "30%"}}/>
                         </div>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
                             ... with ...
@@ -158,7 +183,7 @@ export const IndexPageComponent = (props) => {
                     <Grid item xs={12} md={4}>
                         <Paper elevation={3}>
                             <div className={classes.centerBox}>
-                                <img src={DrawingHelper} className={classes.cardImage}/>
+                                <img alt="Helper Drawing" src={DrawingHelper} className={classes.cardImage}/>
                             </div>
 
                             <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
@@ -183,13 +208,15 @@ export const IndexPageComponent = (props) => {
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             1. Sign up
                         </Typography>
-                        <Button color="secondary" variant="contained" startIcon={<PersonIcon className={classes.buttonStartIcon}/>}>Sign Up</Button>
+                        <Button color="secondary" variant="contained"
+                                startIcon={<PersonIcon className={classes.buttonStartIcon}/>}>Sign Up</Button>
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.centerBox}>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             2. Set Call Filters
                         </Typography>
-                        <Button color="secondary" variant="contained" startIcon={<TuneIcon className={classes.buttonStartIcon}/>}>
+                        <Button color="secondary" variant="contained"
+                                startIcon={<TuneIcon className={classes.buttonStartIcon}/>}>
                             Filter
                         </Button>
                     </Grid>
@@ -197,7 +224,8 @@ export const IndexPageComponent = (props) => {
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             3. Start Helping
                         </Typography>
-                        <Button color="secondary" variant="contained" startIcon={<AddIcon className={classes.buttonStartIcon}/>}>Accept Call</Button>
+                        <Button color="secondary" variant="contained"
+                                startIcon={<AddIcon className={classes.buttonStartIcon}/>}>Accept Call</Button>
                     </Grid>
                 </Grid>
 
@@ -209,7 +237,7 @@ export const IndexPageComponent = (props) => {
 
                 <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
                     <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img src={DrawingGroceries} className={classes.actionImage}/>
+                        <img alt="Groceries Drawing" src={DrawingGroceries} className={classes.actionImage}/>
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
@@ -220,7 +248,7 @@ export const IndexPageComponent = (props) => {
 
                 <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
                     <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img src={DrawingPostal} className={classes.actionImage}/>
+                        <img alt="Postal Drawing" src={DrawingPostal} className={classes.actionImage}/>
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
@@ -231,7 +259,7 @@ export const IndexPageComponent = (props) => {
 
                 <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
                     <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img src={DrawingMedication} className={classes.actionImage}/>
+                        <img alt="Medication Drawing" src={DrawingMedication} className={classes.actionImage}/>
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
@@ -242,7 +270,7 @@ export const IndexPageComponent = (props) => {
 
                 <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
                     <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img src={DrawingCoffee} className={classes.actionImage} style={{maxHeight: "85%"}}/>
+                        <img alt="Coffee Drawing" src={DrawingCoffee} className={classes.actionImage} style={{maxHeight: "85%"}}/>
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
@@ -259,7 +287,7 @@ export const IndexPageComponent = (props) => {
 
                 <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
                     <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                        <img src={DrawingMediation} className={classes.actionImage} style={{maxHeight: "85%"}}/>
+                        <img alt="Mediation Drawing" src={DrawingMediation} className={classes.actionImage} style={{maxHeight: "85%"}}/>
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
@@ -267,6 +295,18 @@ export const IndexPageComponent = (props) => {
                         </Typography>
                     </div>
                 </Paper>
+
+                <Divider className={classes.divider}/>
+
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                    <strong>Collaborate and connect!</strong>
+                </Typography>
+
+                <div className={clsx(classes.centerBox, classes.connectImageBox, classes.margin5)}>
+                    <img alt="Collaborate Drawing" src={DrawingCollaborate} className={classes.connectImage}/>
+                </div>
+
+                <CollaborateChecklists/>
 
             </Container>
         </div>
