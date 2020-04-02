@@ -23,6 +23,12 @@ import DrawingCaller from './images/Drawing_Target_Caller_800px.png';
 import DrawingServer from './images/Drawing_Server_600px.png';
 import DrawingHelper from './images/Drawing_Target_Helper_800px.png';
 
+import DrawingGroceries from './images/Drawing_Groceries_600px.png';
+import DrawingPostal from './images/Drawing_Postal_600px.png';
+import DrawingMedication from './images/Drawing_Medication_600px.png';
+import DrawingCoffee from './images/Drawing_Coffee_600px.png';
+
+import PersonIcon from '@material-ui/icons/Person';
 import TuneIcon from '@material-ui/icons/Tune';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -74,13 +80,34 @@ const useStyles = makeStyles(theme => ({
     centerBoxTop: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "start",
+        justifyContent: "center",
         flexDirection: "column",
     },
     buttonStartIcon: {
         marginLeft: -8,
         marginRight: -4,
     },
+
+    actionPaper: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "start",
+        flexDirection: "row",
+        height: theme.spacing(30),
+    },
+    actionImageBox: {
+        height: "100%",
+        width: "40%",
+    },
+    actionImage: {
+        maxHeight: "100%",
+    },
+    actionText: {
+        width: "60%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    }
 
 }));
 
@@ -95,7 +122,7 @@ export const IndexPageComponent = (props) => {
                     Hilfe am Ohr!
                 </Typography>
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    A hotline for people without internet. <strong>
+                    A <strong>hotline</strong> for people without internet. <strong>
                     <a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555 5305</a></strong>
                 </Typography>
 
@@ -153,7 +180,7 @@ export const IndexPageComponent = (props) => {
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
                             1. Sign up
                         </Typography>
-                        <Button color="secondary" variant="contained">Sign Up</Button>
+                        <Button color="secondary" variant="contained" startIcon={<PersonIcon className={classes.buttonStartIcon}/>}>Sign Up</Button>
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.centerBox}>
                         <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
@@ -172,6 +199,54 @@ export const IndexPageComponent = (props) => {
                 </Grid>
 
                 <Divider className={classes.divider}/>
+
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                    "Hello sir, how may I help you?"
+                </Typography>
+
+                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                        <img src={DrawingGroceries} className={classes.actionImage}/>
+                    </div>
+                    <div className={clsx(classes.centerBox, classes.actionText)}>
+                        <Typography variant="h5">
+                            "Can you help me with buying groceries?"
+                        </Typography>
+                    </div>
+                </Paper>
+
+                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                        <img src={DrawingPostal} className={classes.actionImage}/>
+                    </div>
+                    <div className={clsx(classes.centerBox, classes.actionText)}>
+                        <Typography variant="h5">
+                            "... going to the post office?"
+                        </Typography>
+                    </div>
+                </Paper>
+
+                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                        <img src={DrawingMedication} className={classes.actionImage}/>
+                    </div>
+                    <div className={clsx(classes.centerBox, classes.actionText)}>
+                        <Typography variant="h5">
+                            "... picking up medication?"
+                        </Typography>
+                    </div>
+                </Paper>
+
+                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                        <img src={DrawingCoffee} className={classes.actionImage} style={{maxHeight: "85%"}}/>
+                    </div>
+                    <div className={clsx(classes.centerBox, classes.actionText)}>
+                        <Typography variant="h5">
+                            "... getting over the day with a coffee break?"
+                        </Typography>
+                    </div>
+                </Paper>
 
             </Container>
         </div>
