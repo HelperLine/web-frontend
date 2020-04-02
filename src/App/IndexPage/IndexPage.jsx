@@ -39,7 +39,7 @@ import {CollaborateChecklists} from "./CollaborateChecklists";
 
 
 import {animateScroll as scroll} from 'react-scroll'
-
+import {Breakpoint} from "react-socks";
 
 
 const useStyles = makeStyles(theme => ({
@@ -86,6 +86,13 @@ const useStyles = makeStyles(theme => ({
         position: "fixed",
         top: theme.spacing(2),
         right: theme.spacing(10),
+        color: "white",
+        backgroundColor: theme.palette.primary.transparent40,
+    },
+    reducedLoginButtonMobile: {
+        position: "absolute",
+        top: theme.spacing(2),
+        right: theme.spacing(8),
         color: "white",
         backgroundColor: theme.palette.primary.transparent40,
     },
@@ -139,11 +146,30 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         textAlign: "center",
     },
+    actionPaperMobile: {
+        padding: theme.spacing(2)
+    },
+    actionImageBoxMobile: {
+        height: 200,
+        marginBottom: theme.spacing(2)
+    },
+    actionImageMobile: {
+        maxHeight: "100%",
+    },
+    actionTextMobile: {
+        textAlign: "center",
+    },
     connectImageBox: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: theme.spacing(40),
+    },
+    connectImageBoxMobile: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 200,
     },
     connectImage: {
         maxHeight: "100%",
@@ -177,7 +203,122 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.transparent20,
         width: "100vw",
     },
+
+    colorPanel2Mobile: {
+        paddingTop: theme.spacing(6),
+
+        paddingBottom: 20,
+
+        backgroundColor: theme.palette.primary.transparent20,
+        width: "100vw",
+    },
 }));
+
+const FlyingCards = (props) => {
+    const classes = useStyles();
+
+    return (
+        <Grid container justify="center" spacing={2} className={classes.margin2}>
+            <Grid item xs={8} md={4}>
+                <Paper elevation={0} className={clsx(classes.paper, "LeftTranslateCard")}>
+                    <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
+                        <strong>People in Need</strong>
+                    </Typography>
+                    <div className={classes.centerBox}>
+                        <img alt="Caller Drawing" src={DrawingCaller} className={classes.cardImage}/>
+                    </div>
+                </Paper>
+            </Grid>
+            <Grid item xs={12} md={1} className={classes.withBox}>
+                <Breakpoint small down>
+                    <Typography variant="h5" className={clsx(classes.centerText)}>
+                        with
+                    </Typography>
+                </Breakpoint>
+                <Breakpoint medium up>
+                    <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
+                        with
+                    </Typography>
+                </Breakpoint>
+            </Grid>
+            <Grid item xs={8} md={4}>
+                <Paper elevation={0} className={clsx(classes.paper, "RightTranslateCard")}>
+                    <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
+                        <strong>Digital Volunteers</strong>
+                    </Typography>
+                    <div className={classes.centerBox}>
+                        <img alt="Helper Drawing" src={DrawingHelper} className={classes.cardImage}/>
+                    </div>
+                </Paper>
+            </Grid>
+        </Grid>
+    );
+};
+
+const ActivityCard = (props) => {
+    const classes = useStyles();
+
+    return (
+        <React.Fragment>
+            <Breakpoint small down>
+                <Paper elevation={2} className={clsx(classes.actionPaperMobile, classes.margin2)}>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <div className={clsx(classes.centerBox, classes.actionImageBoxMobile)}>
+                                <img alt={props.alt} src={props.src} className={classes.actionImageMobile}/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div className={clsx(classes.centerBox, classes.actionTextMobile)}>
+                                <Typography variant="h5">{props.description}</Typography>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Breakpoint>
+
+            <Breakpoint medium up>
+                <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                        <img alt={props.alt} src={props.src} className={classes.actionImage}/>
+                    </div>
+                    <div className={clsx(classes.centerBox, classes.actionText)}>
+                        <Typography variant="h5">{props.description}</Typography>
+                    </div>
+                </Paper>
+            </Breakpoint>
+        </React.Fragment>
+    );
+};
+
+
+const CollabPanel = (props) => {
+
+    const classes = useStyles();
+
+    return (
+        <Container maxWidth="md">
+
+            <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                <strong>Collaborate and connect!</strong>
+            </Typography>
+
+            <Breakpoint small down>
+                <div className={clsx(classes.centerBox, classes.connectImageBoxMobile, classes.margin5)}>
+                    <img alt="Collaborate Drawing" src={DrawingCollab} className={classes.connectImage}/>
+                </div>
+            </Breakpoint>
+            <Breakpoint medium up>
+                <div className={clsx(classes.centerBox, classes.connectImageBox, classes.margin5)}>
+                    <img alt="Collaborate Drawing" src={DrawingCollab} className={classes.connectImage}/>
+                </div>
+            </Breakpoint>
+
+            <CollaborateChecklists/>
+
+        </Container>
+    );
+};
 
 export const IndexPageComponent = (props) => {
     const classes = useStyles();
@@ -190,7 +331,8 @@ export const IndexPageComponent = (props) => {
                     HelperLine
                 </Typography>
 
-                <Typography variant="h5" className={clsx(classes.centerText,classes.margin1, classes.nameReferenceText)}>
+                <Typography variant="h5"
+                            className={clsx(classes.centerText, classes.margin1, classes.nameReferenceText)}>
                     <em>(formerly known as "Hilfe am Ohr")</em>
                 </Typography>
 
@@ -199,7 +341,8 @@ export const IndexPageComponent = (props) => {
                 </Typography>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
-                    <strong><a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555 5305</a></strong>
+                    <strong><a href="tel:+49-30-2555-5305" className={classes.pinkLink}>Call +49 30 2555
+                        5305</a></strong>
                 </Typography>
 
                 <Divider className={classes.divider}/>
@@ -218,7 +361,12 @@ export const IndexPageComponent = (props) => {
                 </Grid>
 
                 <Link to="/login">
-                    <Button className={classes.reducedLoginButton} disableElevation variant="contained">Login</Button>
+                    <Breakpoint small down>
+                        <Button className={classes.reducedLoginButtonMobile} disableElevation variant="contained">Login</Button>
+                    </Breakpoint>
+                    <Breakpoint medium up>
+                        <Button className={classes.reducedLoginButton} disableElevation variant="contained">Login</Button>
+                    </Breakpoint>
                 </Link>
 
                 <Divider className={classes.divider}/>
@@ -227,33 +375,7 @@ export const IndexPageComponent = (props) => {
                     Due to Covid-19 we are <strong>matching</strong>
                 </Typography>
 
-                <Grid container justify="center" spacing={2} className={classes.margin2}>
-                    <Grid item xs={12} md={4}>
-                        <Paper elevation={0} className={clsx(classes.paper, "LeftTranslateCard")}>
-                            <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                                <strong>People in Need</strong>
-                            </Typography>
-                            <div className={classes.centerBox}>
-                                <img alt="Caller Drawing" src={DrawingCaller} className={classes.cardImage}/>
-                            </div>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={1} className={classes.withBox}>
-                        <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                            with
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Paper elevation={0} className={clsx(classes.paper, "RightTranslateCard")}>
-                            <Typography variant="h5" className={clsx(classes.centerText, classes.padding2)}>
-                                <strong>Digital Volunteers</strong>
-                            </Typography>
-                            <div className={classes.centerBox}>
-                                <img alt="Helper Drawing" src={DrawingHelper} className={classes.cardImage}/>
-                            </div>
-                        </Paper>
-                    </Grid>
-                </Grid>
+                <FlyingCards/>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
                     because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
@@ -269,87 +391,46 @@ export const IndexPageComponent = (props) => {
                         "Hello sir, how may I help you?"
                     </Typography>
 
-                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
-                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                            <img alt="Groceries Drawing" src={DrawingGroceries} className={classes.actionImage}/>
-                        </div>
-                        <div className={clsx(classes.centerBox, classes.actionText)}>
-                            <Typography variant="h5">
-                                "Can you help me with <br/> buying groceries?"
-                            </Typography>
-                        </div>
-                    </Paper>
+                    <ActivityCard alt="Groceries Drawing" src={DrawingGroceries} description={(
+                        <React.Fragment>"Can you help me with<br/>buying groceries?"</React.Fragment>
+                    )}/>
 
-                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
-                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                            <img alt="Postal Drawing" src={DrawingPostal} className={classes.actionImage}/>
-                        </div>
-                        <div className={clsx(classes.centerBox, classes.actionText)}>
-                            <Typography variant="h5">
-                                "... going to the post office?"
-                            </Typography>
-                        </div>
-                    </Paper>
+                    <ActivityCard alt="Postal Drawing" src={DrawingPostal} description={(
+                        <React.Fragment>"... going to the post office?"</React.Fragment>
+                    )}/>
 
-                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
-                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                            <img alt="Medication Drawing" src={DrawingMedication} className={classes.actionImage}/>
-                        </div>
-                        <div className={clsx(classes.centerBox, classes.actionText)}>
-                            <Typography variant="h5">
-                                "... picking up medication?"
-                            </Typography>
-                        </div>
-                    </Paper>
+                    <ActivityCard alt="Medication Drawing" src={DrawingMedication} description={(
+                        <React.Fragment>"... picking up medication?"</React.Fragment>
+                    )}/>
 
-                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
-                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                            <img alt="Coffee Drawing" src={DrawingCoffee} className={classes.actionImage}
-                                 style={{maxHeight: "85%"}}/>
-                        </div>
-                        <div className={clsx(classes.centerBox, classes.actionText)}>
-                            <Typography variant="h5">
-                                "... dealing with isolation mentally?
-                            </Typography>
-                        </div>
-                    </Paper>
+                    <ActivityCard alt="Coffee Drawing" src={DrawingCoffee} description={(
+                        <React.Fragment>"... mentally dealing<br/>with isolation?"</React.Fragment>
+                    )}/>
 
                     <Divider className={classes.divider}/>
 
                     <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                        However, sometimes <strong>there might not be a volunteer in that area!</strong>
+                        However, sometimes <strong>there might not be a HelperLine-Volunteer in that area!</strong>
                     </Typography>
 
-                    <Paper elevation={2} className={clsx(classes.actionPaper, classes.margin2)}>
-                        <div className={clsx(classes.centerBox, classes.actionImageBox)}>
-                            <img alt="Mediation Drawing" src={DrawingMediation} className={classes.actionImage}
-                                 style={{maxHeight: "85%"}}/>
-                        </div>
-                        <div className={clsx(classes.centerBox, classes.actionText)}>
-                            <Typography variant="h5">
-                                You can help them find one <br/> in <strong>tons of online forums!</strong>
-                            </Typography>
-                        </div>
-                    </Paper>
+                    <ActivityCard alt="Mediation Drawing" src={DrawingMediation} description={(
+                        <React.Fragment>You can help them find a volunteer
+                        in <strong>tons of other online forums!</strong></React.Fragment>
+                    )}/>
 
                 </Container>
             </div>
 
-            <div className={classes.colorPanel2}>
-                <Container maxWidth="md">
-
-                    <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
-                        <strong>Collaborate and connect!</strong>
-                    </Typography>
-
-                    <div className={clsx(classes.centerBox, classes.connectImageBox, classes.margin5)}>
-                        <img alt="Collaborate Drawing" src={DrawingCollab} className={classes.connectImage}/>
-                    </div>
-
-                    <CollaborateChecklists/>
-
-                </Container>
-            </div>
+            <Breakpoint small down>
+                <div className={classes.colorPanel2Mobile}>
+                    <CollabPanel/>
+                </div>
+            </Breakpoint>
+            <Breakpoint medium up>
+                <div className={classes.colorPanel2}>
+                    <CollabPanel/>
+                </div>
+            </Breakpoint>
 
         </div>
     );

@@ -90,6 +90,19 @@ const useStyles = makeStyles(theme => ({
         fill: "white",
     },
 
+    languageButtonMobileReduced: {
+        position: "absolute",
+        right: theme.spacing(2),
+        top: theme.spacing(2.125),
+
+        zIndex: "1000",
+
+        padding: 0,
+    },
+    languageIconMobileReduced: {
+        fill: theme.palette.primary.transparent40,
+    },
+
     logoIcon: {
         position: "fixed",
         left: theme.spacing(2),
@@ -99,6 +112,17 @@ const useStyles = makeStyles(theme => ({
 
         padding: 0,
         maxWidth: 192,
+    },
+
+    logoIconMobileReduced: {
+        position: "absolute",
+        left: theme.spacing(2),
+        top: theme.spacing(2),
+
+        zIndex: "1000",
+
+        padding: 0,
+        maxWidth: 128,
     },
 
 
@@ -215,25 +239,32 @@ function NavbarComponent(props) {
 
     const languageMenuComponent = (
         <React.Fragment>
-            <IconButton onClick={openLanguageMenu}
-                        className={classes.languageButton}
-                        disableRipple={true}>
-                <LanguageIcon
-                    className={classes.languageIcon}
-                    alt={NavbarTranslation.language[props.language] + " Icon"}
-                    fontSize="large"/>
-            </IconButton>
+            <Breakpoint small down>
+                <IconButton edge="end"
+                            onClick={openLanguageMenu}
+                            className={classes.languageButtonMobile}
+                            disableRipple={true}>
+                    <LanguageIcon
+                        className={classes.languageIconMobile}
+                        alt={NavbarTranslation.language[props.language] + " Icon"}/>
+                </IconButton>
+            </Breakpoint>
+            <Breakpoint medium up>
+                <IconButton onClick={openLanguageMenu}
+                            className={classes.languageButton}
+                            disableRipple={true}>
+                    <LanguageIcon
+                        className={classes.languageIcon}
+                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        fontSize="large"/>
+                </IconButton>
+            </Breakpoint>
 
             <LanguageMenu anchorElement={languageMenuAnchor}
                           handleClose={closeLanguageMenu}
                           switchLanguage={props.switchLanguage}/>
-        </React.Fragment>
-    );
 
-    const pageLogoComponent = (
-        <Link to="/">
-            <img src={Logo256}/>
-        </Link>
+        </React.Fragment>
     );
 
     const pageButtons = (
@@ -316,19 +347,6 @@ function NavbarComponent(props) {
 
                         {pageTitleComponent}
                         {languageMenuComponent}
-
-                        <IconButton edge="end"
-                                    onClick={openLanguageMenu}
-                                    className={classes.languageButtonMobile}
-                                    disableRipple={true}>
-                            <LanguageIcon
-                                className={classes.languageIconMobile}
-                                alt={NavbarTranslation.language[props.language] + " Icon"}/>
-                        </IconButton>
-
-                        <LanguageMenu anchorElement={languageMenuAnchor}
-                                      handleClose={closeLanguageMenu}
-                                      switchLanguage={props.switchLanguage}/>
                     </Toolbar>
                 </AppBar>
                 <Drawer open={drawerIsOpen}
@@ -355,7 +373,7 @@ function NavbarComponent(props) {
 
                     <div className={classes.drawerLogoBox}>
                         <Link to="/">
-                            <img src={LogoText512} className={classes.drawerLogoIcon}/>
+                            <img alt="HelperLine Logo" src={LogoText512} className={classes.drawerLogoIcon}/>
                         </Link>
                     </div>
 
@@ -461,18 +479,35 @@ export const ReducedNavbarComponent = (props) => {
         <div className="navbar">
             <CssBaseline/>
 
-            <Link to="/">
-                <img src={LogoText512} className={classes.logoIcon}/>
-            </Link>
+            <Breakpoint small down>
+                <Link to="/">
+                    <img src={LogoText512} className={classes.logoIconMobileReduced}/>
+                </Link>
 
-            <IconButton onClick={openLanguageMenu}
-                        className={classes.languageButton}
-                        disableRipple={true}>
-                <LanguageIcon
-                    className={classes.languageIcon}
-                    alt={NavbarTranslation.language[props.language] + " Icon"}
-                    fontSize="large"/>
-            </IconButton>
+                <IconButton onClick={openLanguageMenu}
+                            className={classes.languageButtonMobileReduced}
+                            disableRipple={true}>
+                    <LanguageIcon
+                        className={classes.languageIconMobileReduced}
+                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        fontSize="large"/>
+                </IconButton>
+            </Breakpoint>
+
+            <Breakpoint medium up>
+                <Link to="/">
+                    <img src={LogoText512} className={classes.logoIcon}/>
+                </Link>
+
+                <IconButton onClick={openLanguageMenu}
+                            className={classes.languageButton}
+                            disableRipple={true}>
+                    <LanguageIcon
+                        className={classes.languageIcon}
+                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        fontSize="large"/>
+                </IconButton>
+            </Breakpoint>
 
             <LanguageMenu anchorElement={languageMenuAnchor}
                           handleClose={closeLanguageMenu}
