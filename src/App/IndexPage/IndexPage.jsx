@@ -28,6 +28,8 @@ import DrawingPostal from './images/Drawing_Postal_600px.png';
 import DrawingMedication from './images/Drawing_Medication_600px.png';
 import DrawingCoffee from './images/Drawing_Coffee_600px.png';
 
+import DrawingMediation from './images/Drawing_Mediation_600px.png';
+
 import PersonIcon from '@material-ui/icons/Person';
 import TuneIcon from '@material-ui/icons/Tune';
 import AddIcon from '@material-ui/icons/Add';
@@ -107,6 +109,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        textAlign: "center",
     }
 
 }));
@@ -210,7 +213,7 @@ export const IndexPageComponent = (props) => {
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
-                            "Can you help me with buying groceries?"
+                            "Can you help me with <br/> buying groceries?"
                         </Typography>
                     </div>
                 </Paper>
@@ -243,7 +246,24 @@ export const IndexPageComponent = (props) => {
                     </div>
                     <div className={clsx(classes.centerBox, classes.actionText)}>
                         <Typography variant="h5">
-                            "... getting over the day with a coffee break?"
+                            "... getting over the day <br/> with a coffee break?"
+                        </Typography>
+                    </div>
+                </Paper>
+
+                <Divider className={classes.divider}/>
+
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                    However, sometimes <strong>there might not be a volunteer in that area!</strong>
+                </Typography>
+
+                <Paper elevation={3} className={clsx(classes.actionPaper, classes.margin2)}>
+                    <div className={clsx(classes.centerBox, classes.actionImageBox)}>
+                        <img src={DrawingMediation} className={classes.actionImage} style={{maxHeight: "85%"}}/>
+                    </div>
+                    <div className={clsx(classes.centerBox, classes.actionText)}>
+                        <Typography variant="h5">
+                            You can help them find one <br/> in <strong>tons of online forums!</strong>
                         </Typography>
                     </div>
                 </Paper>
