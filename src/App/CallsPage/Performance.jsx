@@ -11,6 +11,7 @@ import SelfDrawing from './images/Drawing_Performance_Self_800px.png';
 
 
 import {CallsPageTranslation} from './CallsPageTranslation';
+import {Breakpoint} from "react-socks";
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,11 +24,21 @@ const useStyles = makeStyles(theme => ({
     performancePaper: {
         padding: theme.spacing(2),
     },
+    margin4: {
+        marginBottom: theme.spacing(4),
+    },
     performanceImageContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: 250,
+        marginBottom: theme.spacing(2),
+    },
+    performanceImageContainerMobile: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 150,
         marginBottom: theme.spacing(2),
     },
     performanceImage: {
@@ -56,34 +67,66 @@ function PerformanceComponent(props) {
 
     return (
         <React.Fragment>
-            <Grid container spacing={2} justify="center">
-                <Grid item xs={12} md={6}>
-                    <Grid container spacing={2} justify="center">
-                        <Grid item xs={12} className={classes.performanceImageContainer}>
-                            <img src={CommunityDrawing} alt={CallsPageTranslation.performanceAlt1[props.language]}
-                                 className={classes.performanceImage}/>
+            <Breakpoint small down>
+                <Grid container spacing={2} justify="center">
+                    <Grid item xs={12} md={6} className={classes.margin4}>
+                        <Grid container spacing={2} justify="center">
+                            <Grid item xs={12} className={classes.performanceImageContainerMobile}>
+                                <img src={CommunityDrawing} alt={CallsPageTranslation.performanceAlt1[props.language]}
+                                     className={classes.performanceImage}/>
+                            </Grid>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
+                                            value={props.performance.area.volunteers}/>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
+                                            value={props.performance.area.callers}/>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
+                                            value={props.performance.area.calls}/>
                         </Grid>
-                        <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
-                                        value={props.performance.area.volunteers}/>
-                        <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
-                                        value={props.performance.area.callers}/>
-                        <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                        value={props.performance.area.calls}/>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={2} justify="center">
+                            <Grid item xs={12} className={classes.performanceImageContainerMobile}>
+                                <img src={SelfDrawing} alt={CallsPageTranslation.performanceAlt2[props.language]}
+                                     className={classes.performanceImage}/>
+                            </Grid>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
+                                            value={props.performance.account.registered}/>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
+                                            value={props.performance.account.calls}/>
+                        </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <Grid container spacing={2} justify="center">
-                        <Grid item xs={12} className={classes.performanceImageContainer}>
-                            <img src={SelfDrawing} alt={CallsPageTranslation.performanceAlt2[props.language]}
-                                 className={classes.performanceImage}/>
+            </Breakpoint>
+            <Breakpoint medium up>
+                <Grid container spacing={2} justify="center">
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={2} justify="center">
+                            <Grid item xs={12} className={classes.performanceImageContainer}>
+                                <img src={CommunityDrawing} alt={CallsPageTranslation.performanceAlt1[props.language]}
+                                     className={classes.performanceImage}/>
+                            </Grid>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
+                                            value={props.performance.area.volunteers}/>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
+                                            value={props.performance.area.callers}/>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
+                                            value={props.performance.area.calls}/>
                         </Grid>
-                        <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
-                                        value={props.performance.account.registered}/>
-                        <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                        value={props.performance.account.calls}/>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={2} justify="center">
+                            <Grid item xs={12} className={classes.performanceImageContainer}>
+                                <img src={SelfDrawing} alt={CallsPageTranslation.performanceAlt2[props.language]}
+                                     className={classes.performanceImage}/>
+                            </Grid>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
+                                            value={props.performance.account.registered}/>
+                            <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
+                                            value={props.performance.account.calls}/>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Breakpoint>
         </React.Fragment>
     );
 }
@@ -99,8 +142,7 @@ const mapStateToProps = state => ({
     performance: state.performance,
 });
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 export const Performance = connect(mapStateToProps, mapDispatchToProps)(PerformanceComponent);
 

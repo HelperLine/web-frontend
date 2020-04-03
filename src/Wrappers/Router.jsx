@@ -96,7 +96,7 @@ const RouterComponent = (props) => (
 
                 <Route exact strict path="/login">
                     {props.loggedIn && (
-                        <Redirect to="/account"/>
+                        <Redirect to="/calls"/>
                     )}
                     {!props.loggedIn && (
                         <React.Fragment>
@@ -107,7 +107,7 @@ const RouterComponent = (props) => (
                 </Route>
                 <Route exact strict path="/register">
                     {props.loggedIn && (
-                        <Redirect to="/account"/>
+                        <Redirect to="/calls"/>
                     )}
                     {!props.loggedIn && (
                         <React.Fragment>
