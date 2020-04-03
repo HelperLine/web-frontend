@@ -1,7 +1,7 @@
 
 [*See Backend Repository*](https://github.com/dostuffthatmatters/HelperLine-Backend)
 
-## HelperLine - A Hotline for People without Internet Access
+## HelperLine (Frontend) - A Hotline for People without Internet Access
 
 #### Tech Stack
 
