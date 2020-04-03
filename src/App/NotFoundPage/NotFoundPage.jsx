@@ -9,6 +9,9 @@ import {NotFoundPageTranslation} from "./NotFoundPageTranslation";
 import {handleNewAccountData} from "../../ReduxActions";
 import {connect} from "react-redux";
 import {IndexPageComponent} from "../IndexPage/IndexPage";
+import {Breakpoint} from "react-socks";
+
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,6 +26,9 @@ const useStyles = makeStyles(theme => ({
     },
     image: {
         width: 600,
+    },
+    imageMobile: {
+        width: 250,
     },
     margin1: {
         marginBottom: theme.spacing(1),
@@ -61,7 +67,13 @@ export const NotFoundPageComponent = (props) => {
 
     return (
         <div className={classes.centerBox}>
-            <img src={Drawing_404} alt={"Not Found Image"} className={clsx(classes.image, classes.margin6)}/>
+            <Breakpoint small down>
+                <img src={Drawing_404} alt={"Not Found Image"} className={clsx(classes.imageMobile, classes.margin6)}/>
+            </Breakpoint>
+
+            <Breakpoint medium up>
+                <img src={Drawing_404} alt={"Not Found Image"} className={clsx(classes.image, classes.margin6)}/>
+            </Breakpoint>
 
             <Typography variant="h6" className={clsx(classes.margin3)}>
                 <a className={classes.backLink} href="/"><strong>
@@ -69,11 +81,13 @@ export const NotFoundPageComponent = (props) => {
                 </strong></a>
             </Typography>
 
-            <Typography variant="h6" className={clsx(classes.supportText)}>
-                {NotFoundPageTranslation.supportText[props.language]}
-                <a className={classes.supportLink} href="mailto:support@helperline.io">
-                <strong>support@helperline.io</strong></a>
-            </Typography>
+            <Container maxWidth="sm">
+                <Typography variant="h6" className={clsx(classes.supportText)}>
+                    {NotFoundPageTranslation.supportText[props.language]}
+                    <a className={classes.supportLink} href="mailto:support@helperline.io">
+                    <strong>support@helperline.io</strong></a>
+                </Typography>
+            </Container>
         </div>
     );
 };
