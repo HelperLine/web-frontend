@@ -1,5 +1,5 @@
 
-[*See Backend Repository*](https://github.com/dostuffthatmatters/callcenter-backend)
+[*See Backend Repository*](https://github.com/dostuffthatmatters/HelperLine-Backend)
 
 ## Hotline for People without Internet Access
 
