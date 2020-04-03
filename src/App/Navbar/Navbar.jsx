@@ -165,15 +165,12 @@ const useStyles = makeStyles(theme => ({
     drawerScrollBox: {
         paddingBottom: theme.spacing(10),
     },
-
-
     drawerLogoBox: {
         display: "flex",
         alignItems: "center",
         justifyContent: "start",
         marginTop: theme.spacing(2),
         marginLeft: theme.spacing(2),
-        height: 58.2,
     },
     drawerLogoIcon: {
         maxWidth: 192,

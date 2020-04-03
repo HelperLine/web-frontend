@@ -100,6 +100,15 @@ const GuidePageComponent = (props) => {
                     </ExpansionPanelSummary>
                 </ExpansionPanel>
 
+                <ExpansionPanel disabled>
+                    <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon/>}>
+                        <Typography variant="subtitle1" className={classes.heading}>
+                            {GuidePageTranslation.moneyTransfer[props.language]}
+                        </Typography>
+                    </ExpansionPanelSummary>
+                </ExpansionPanel>
+
             </div>
 
             <Container maxWidth="sm">

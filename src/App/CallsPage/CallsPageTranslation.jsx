@@ -34,7 +34,7 @@ export const CallsPageTranslation = {
     },
     filter2: {
         english: "Only local calls",
-        deutsch: "Nur lokale Hilfe-Anrufe",
+        deutsch: "Nur lokale Anrufe",
     },
     filter3: {
         english: "Only non-local calls",
@@ -66,6 +66,10 @@ export const CallsPageTranslation = {
     noNewCalls: {
         english: "Currently no new calls. Please try again in a few minutes.",
         deutsch: "Zurzeit keine neuen Anrufe. Bitte versuche es in ein paar Minuten nochmal.",
+    },
+    noLanguage: {
+        english: "You have to choose at least one language!",
+        deutsch: "Bitte wählen Sie mindestens eine Sprache aus!",
     },
 
 

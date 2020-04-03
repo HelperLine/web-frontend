@@ -24,8 +24,12 @@ function storeReducer(state = {
     email: "",
     api_key: "",
 
-    account: {}
-    ,
+    account: {},
+    performance: {
+        area: {},
+        account: {}
+    },
+    filters: {},
     calls: {
         accepted: [],
         fulfilled: []
@@ -43,6 +47,8 @@ function storeReducer(state = {
             newState.api_key = action.api_key;
 
             newState.account = action.account;
+            newState.performance = action.performance;
+            newState.filters = action.filters;
             newState.calls = action.calls;
 
             Cookies.set('email', action.email, {expires: 7});
@@ -76,6 +82,8 @@ function storeReducer(state = {
             newState.email = action.email;
 
             newState.account = action.account;
+            newState.performance = action.performance;
+            newState.filters = action.filters;
             newState.calls = action.calls;
 
             Cookies.remove('email');

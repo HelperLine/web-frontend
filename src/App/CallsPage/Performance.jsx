@@ -46,18 +46,6 @@ function PerformanceComponent(props) {
 
     const classes = useStyles();
 
-    const performance = {
-        area: {
-            volunteers: 11,
-            callers: 6,
-            calls: 31
-        },
-        account: {
-            registered: "21.03.20",
-            calls: 7,
-        }
-    };
-
     const PerformanceRow = (props) => (
         <Grid item xs={12}>
             <Typography variant="h6" className={classes.performanceRow}>{props.text}:&nbsp;
@@ -76,11 +64,11 @@ function PerformanceComponent(props) {
                                  className={classes.performanceImage}/>
                         </Grid>
                         <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
-                                        value={performance.area.volunteers}/>
+                                        value={props.performance.area.volunteers}/>
                         <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
-                                        value={performance.area.callers}/>
+                                        value={props.performance.area.callers}/>
                         <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                        value={performance.area.calls}/>
+                                        value={props.performance.area.calls}/>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -90,9 +78,9 @@ function PerformanceComponent(props) {
                                  className={classes.performanceImage}/>
                         </Grid>
                         <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
-                                        value={performance.account.registered}/>
+                                        value={props.performance.account.registered}/>
                         <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                        value={performance.account.calls}/>
+                                        value={props.performance.account.calls}/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -107,6 +95,8 @@ function PerformanceComponent(props) {
 
 const mapStateToProps = state => ({
     language: state.language,
+
+    performance: state.performance,
 });
 
 const mapDispatchToProps = dispatch => ({

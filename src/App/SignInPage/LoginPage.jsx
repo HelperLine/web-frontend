@@ -206,7 +206,7 @@ export function LoginPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 className={classes.button}>
-                            <Link to={"/guide"} className={classes.link}>{SignInTranslation.cancel[props.language]}</Link>
+                            <Link to={"/"} className={classes.link}>{SignInTranslation.cancel[props.language]}</Link>
                         </Button>
                     </div>
                     <div className={classes.wrapper}>

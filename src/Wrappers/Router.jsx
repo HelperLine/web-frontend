@@ -41,7 +41,6 @@ const Content = (props) => {
         <React.Fragment>
             <main className={classes.content}>
                 <div className={classes.fullHeightContainer}>
-                    <div className={classes.toolbar}/>
                     <div className={classes.children}>
                         {props.children}
                     </div>

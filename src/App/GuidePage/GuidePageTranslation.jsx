@@ -70,12 +70,17 @@ export const GuidePageTranslation = {
         english: (<React.Fragment>Dealing with mental health</React.Fragment>),
         deutsch: (<React.Fragment>Tipps und Vermittlung bei Seelsorge</React.Fragment>),
     },
+    moneyTransfer: {
+        english: (<React.Fragment>How to organize money transfer</React.Fragment>),
+        deutsch: (<React.Fragment>Wie kann die Geldübergabe erfolgen?</React.Fragment>),
+    },
+
     text2: {
         english: (
             <React.Fragment>
                 If you want to <strong>actively help us on our journey</strong> feel free to contact us via:
                 <br/>
-                <a href="mailto:jobs@hilfe-am-ohr.de">jobs@hilfe-am-ohr.de</a>
+                <a href="mailto:jobs@hilfe-am-ohr.de">jobs@helperline.io</a>
 
                 <br/><br/>
 
@@ -86,7 +91,7 @@ export const GuidePageTranslation = {
             <React.Fragment>
                 Wenn du uns <strong>aktiv auf unserem Weg unterstützen möchtest</strong> dann kontaktiere uns gerne unter:
                 <br/>
-                <a href="mailto:jobs@hilfe-am-ohr.de">jobs@hilfe-am-ohr.de</a>
+                <a href="mailto:jobs@hilfe-am-ohr.de">jobs@helperline.io</a>
 
                 <br/><br/>
 

@@ -10,6 +10,8 @@ export const handleLogin = (response) => ({
     api_key: response.data.api_key,
 
     account: response.data.account,
+    performance: response.data.performance,
+    filters: response.data.filters,
     calls: response.data.calls,
 });
 
@@ -27,6 +29,8 @@ export const handleNewAccountData = (response) => ({
     email: response.data.email,
 
     account: response.data.account,
+    performance: response.data.performance,
+    filters: response.data.filters,
     calls: response.data.calls,
 });
 

@@ -331,20 +331,24 @@ export const IndexPageComponent = (props) => {
                     {IndexPageTranslation.title1[props.language]}
                 </Typography>
 
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin1, classes.nameReferenceText)}>
+                    <em>{IndexPageTranslation.title2[props.language]}</em>
+                </Typography>
+
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin1)}>
-                    {IndexPageTranslation.title2[props.language]}
+                    {IndexPageTranslation.title3[props.language]}
                 </Typography>
 
                 <Typography variant="h5" className={clsx(classes.centerText)}>
                     <strong><a href="tel:+49-30-2555-5305" className={classes.pinkLink}>
-                        {IndexPageTranslation.title3[props.language]}
+                        {IndexPageTranslation.title4[props.language]}
                     </a></strong>
                 </Typography>
 
                 <Divider className={classes.divider}/>
 
                 <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                    <strong>{IndexPageTranslation.title4[props.language]}</strong>
+                    <strong>{IndexPageTranslation.title5[props.language]}</strong>
                 </Typography>
 
                 <Grid container justify="center" spacing={2}>

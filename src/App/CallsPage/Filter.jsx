@@ -71,90 +71,109 @@ function FilterComponent(props) {
 
     const classes = useStyles();
 
-    let [callFilter, setCallFilter] = useState({local: false, global: false});
-    let [callLanguage, setCallLanguage] = useState({german: true, english: true});
+    let [typeFilter, setTypeFilter] = useState(props.filters.type);
+    let [languageFilter, setLanguageFilter] = useState(props.filters.language);
 
-    function handleCallFilterClick(newState) {
+    function handleTypeFilterClick(newState) {
         if (newState.local !== undefined) {
             if (newState.local) {
                 Object.assign(newState, {global: false})
             } else {
-                Object.assign(newState, {global: callFilter.global})
+                Object.assign(newState, {global: typeFilter.global})
             }
         } else {
             if (newState.global) {
                 Object.assign(newState, {local: false})
             } else {
-                Object.assign(newState, {local: callFilter.local})
+                Object.assign(newState, {local: typeFilter.local})
             }
         }
 
         // TODO: Push changes to redux and to server
 
-        setCallFilter(newState);
+        pushFilterChange({type: newState, language: languageFilter});
+        setTypeFilter(newState);
     }
 
-    function handleCallLanguageClick(newState) {
+    function handleLanguageFilterClick(newState) {
         if (newState.german !== undefined) {
-            Object.assign(newState, {english: callLanguage.english})
+            Object.assign(newState, {english: languageFilter.english})
         } else {
-            Object.assign(newState, {german: callLanguage.german})
+            Object.assign(newState, {german: languageFilter.german})
         }
 
         // TODO: Push changes to redux and to server
 
-        setCallLanguage(newState);
+        pushFilterChange({type: typeFilter, language: newState});
+        setLanguageFilter(newState);
     }
 
 
     let [loadingNewCall, setLoadingNewCall] = useState({loading: false});
     let [errorMessage, setErrorMessage] = useState({visible: false, text: ""});
 
-    function axiosPutAction(action) {
-        axios.put(BACKEND_URL + "backend/database/call", {
+
+    function pushFilterChange(newState) {
+        axios.put(BACKEND_URL + "backend/database/account", {
             email: props.email,
             api_key: props.api_key,
-            action: action,
-        })
-            .then(response => {
-                if (response.data.status === "ok") {
-                    props.handleNewCallData(response);
-                    console.log(response.data.calls);
-                } else if (response.data.status === "no new calls") {
-                    setErrorMessage({
-                        visible: true,
-                        text: CallsPageTranslation.noNewCalls[props.language],
-                    });
-                    setTimeout(() => {
-                        setErrorMessage({
-                            visible: true,
-                            text: CallsPageTranslation.noNewCalls[props.language],
-                        });
-                    }, 2000);
-                }
 
-            }).catch(response => {
-            console.log("Axios promise rejected! Response:");
-            console.log(response);
-            setErrorMessage({
-                visible: true,
-                text: CallsPageTranslation.serverOffline[props.language],
-            });
-            setTimeout(() => {
-                setErrorMessage({
-                    visible: false,
-                    text: CallsPageTranslation.serverOffline[props.language],
-                });
-            }, 2500);
+            filter_type_local: newState.type.local,
+            filter_type_global: newState.type.global,
+
+            filter_language_english: newState.language.english,
+            filter_language_german: newState.language.german,
+
+        }).then(() => {
+            console.log("Filters successfully changed");
+        }).catch(() => {
+            console.log("Filters could not be changed");
+        })
+    }
+
+    function temporaryErrorMessage(text) {
+        setLoadingNewCall({loading: false});
+
+        setErrorMessage({
+            visible: true,
+            text: text,
         });
+        setTimeout(() => {
+            setErrorMessage({
+                visible: false,
+                text: text,
+            });
+        }, 2000);
     }
 
     function acceptNewCall() {
         setLoadingNewCall({loading: true});
-        setTimeout(() => {
-            axiosPutAction("accept");
-            setLoadingNewCall({loading: false});
-        }, 1000);
+
+        if (!languageFilter.german && !languageFilter.english) {
+            temporaryErrorMessage(CallsPageTranslation.noLanguage[props.language]);
+        } else {
+            setTimeout(() => {
+
+                axios.post(BACKEND_URL + "backend/calls/accept", {
+                    email: props.email,
+                    api_key: props.api_key,
+                })
+                    .then(response => {
+                        if (response.data.status === "ok") {
+                            props.handleNewCallData(response);
+                            console.log(response.data.calls);
+                        } else if (response.data.status === "no new calls") {
+                            temporaryErrorMessage(CallsPageTranslation.noNewCalls[props.language]);
+                        }
+
+                    }).catch(response => {
+                        console.log("Axios promise rejected! Response:");
+                        console.log(response);
+
+                        temporaryErrorMessage(CallsPageTranslation.serverOffline[props.language]);
+                    });
+            }, 1000);
+        }
     }
 
     return (
@@ -168,15 +187,15 @@ function FilterComponent(props) {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={callFilter.local}
-                                      onChange={() => handleCallFilterClick({local: !callFilter.local})}/>
+                            <Checkbox checked={typeFilter.local}
+                                      onChange={() => handleTypeFilterClick({local: !typeFilter.local})}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter2[props.language]}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={callFilter.global}
-                                      onChange={() => handleCallFilterClick({global: !callFilter.global})}/>
+                            <Checkbox checked={typeFilter.global}
+                                      onChange={() => handleTypeFilterClick({global: !typeFilter.global})}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter3[props.language]}
                             </Typography>
@@ -191,15 +210,15 @@ function FilterComponent(props) {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={callLanguage.german}
-                                      onChange={() => handleCallLanguageClick({german: !callLanguage.german})}/>
+                            <Checkbox checked={languageFilter.german}
+                                      onChange={() => handleLanguageFilterClick({german: !languageFilter.german})}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter5[props.language]}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={callLanguage.english}
-                                      onChange={() => handleCallLanguageClick({english: !callLanguage.english})}/>
+                            <Checkbox checked={languageFilter.english}
+                                      onChange={() => handleLanguageFilterClick({english: !languageFilter.english})}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter6[props.language]}
                             </Typography>
@@ -243,6 +262,11 @@ function FilterComponent(props) {
 
 const mapStateToProps = state => ({
     language: state.language,
+
+    email: state.email,
+    api_key: state.api_key,
+
+    filters: state.filters,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -4,18 +4,22 @@ import React from 'react';
 export const IndexPageTranslation = {
 
     title1: {
-        english: "Hilfe am Ohr",
-        deutsch: "Hilfe am Ohr",
+        english: "HelperLine",
+        deutsch: "HelperLine",
     },
     title2: {
-        english: <React.Fragment>A <strong>hotline</strong> for people without internet.</React.Fragment>,
-        deutsch: <React.Fragment>Eine <strong>Hotline</strong> für Menschen ohne einen Internet-Zugang.</React.Fragment>,
+        english: "(Former \"Hilfe am Ohr\")",
+        deutsch: "(Ehemals \"Hilfe am Ohr\")",
     },
     title3: {
+        english: <React.Fragment>A <strong>hotline</strong> for people without internet-access.</React.Fragment>,
+        deutsch: <React.Fragment>Eine <strong>Hotline</strong> für Menschen ohne einen Internet-Zugang.</React.Fragment>,
+    },
+    title4: {
         english: "Call +49 30 2555 5305",
         deutsch: "Rufe +49 30 2555 5305 an",
     },
-    title4: {
+    title5: {
         english: "Start helping now!",
         deutsch: "Beginne jetzt zu helfen!",
     },
