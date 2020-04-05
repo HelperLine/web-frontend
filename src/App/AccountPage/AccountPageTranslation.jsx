@@ -74,5 +74,17 @@ export const AccountPageTranslation = {
         english: "New Password Confirmation",
         deutsch: "Bestätigung Neues Passwort",
     },
+
+
+
+    phoneNumber: {
+        english: "Phone Number",
+        deutsch: "Telefonnummer",
+    },
+
+    verifyPhoneNumber: {
+        english: "Verify",
+        deutsch: "Verifizieren",
+    },
 };
 

@@ -22,6 +22,7 @@ import {useStyles} from './styles';
 import {PasswordForm} from "./PasswordForm";
 import {FormSubmission} from "./FormSubmission";
 import {EmailForm} from "./EmailForm";
+import {PhoneForm} from "./PhoneForm";
 
 
 
@@ -34,6 +35,7 @@ export function AccountPageComponent(props) {
     const initialFormValues = {
         email: props.email,
 
+        phone_number: props.account.phone_number,
         zip_code: props.account.zip_code,
         country: props.account.country,
     };
@@ -41,7 +43,7 @@ export function AccountPageComponent(props) {
 
     let [formModified, setFormModified] = useState({modified: false});
 
-    let [activeProcesses, setActiveProcesses] = useState({submitting: false, resending: false});
+    let [activeProcesses, setActiveProcesses] = useState({submitting: false, resending: false, verifying: false});
     let [errorMessage, setErrorMessage] = useState({visible: false, text: ""});
     let [passwordFormOpen, setPasswordFormOpen] = useState({open: false});
 
@@ -53,6 +55,7 @@ export function AccountPageComponent(props) {
     function handleFormChange(newFormData) {
         let newState = {
             email: formValues.email,
+            phone_number: formValues.phone_number,
             zip_code: formValues.zip_code,
             country: formValues.country,
         };
@@ -66,7 +69,7 @@ export function AccountPageComponent(props) {
             form1Modified = (newState["email"] !== props["email"]) || form1Modified;
         }
 
-        ["zip_code", "country"].forEach(key => {
+        ["phone_number", "zip_code", "country"].forEach(key => {
             if (key in newFormData) {
                 newState[key] = newFormData[key];
                 form1Modified = (newFormData[key] !== props.account[key]) || form1Modified;
@@ -133,7 +136,17 @@ export function AccountPageComponent(props) {
                            setActiveProcesses={setActiveProcesses}
                 />
 
+                <PhoneForm value={formValues.phone_number}
+                           handleChange={handleFormChange}
 
+                           showErrorSnackbar={showErrorSnackbar}
+                           hideErrorSnackbar={hideErrorSnackbar}
+
+                           formModified={formModified.modified}
+
+                           activeProcesses={activeProcesses}
+                           setActiveProcesses={setActiveProcesses}
+                />
 
 
 

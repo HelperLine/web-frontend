@@ -24,7 +24,6 @@ export const EmailFormComponent = (props) => {
 
 
     function submit() {
-
         props.hideErrorSnackbar();
         props.setActiveProcesses({resending: true});
 
