@@ -8,7 +8,7 @@ export const IndexPageTranslation = {
         deutsch: "HelperLine",
     },
     title2: {
-        english: "(Former \"Hilfe am Ohr\")",
+        english: "(Formerly \"Hilfe am Ohr\")",
         deutsch: "(Ehemals \"Hilfe am Ohr\")",
     },
     title3: {

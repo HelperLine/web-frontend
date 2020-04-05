@@ -32,7 +32,7 @@ export const AccountPageTranslation = {
     },
     resendVerification: {
         english: "Resend Verification",
-        deutsch: "Bestätigung Erneut Senden",
+        deutsch: "Bestätigung Senden",
     },
     changePassword: {
         english: "Change Password",
