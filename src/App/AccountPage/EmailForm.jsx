@@ -11,6 +11,9 @@ import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
 import {connect} from "react-redux";
 
+import EmailIcon from '@material-ui/icons/Email';
+import AddIcon from "@material-ui/core/SvgIcon/SvgIcon";
+
 
 export const EmailFormComponent = (props) => {
 
@@ -77,7 +80,7 @@ export const EmailFormComponent = (props) => {
                     <div className={classes.wrapper}>
                         <Button variant="contained"  color="secondary" className={classes.button}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.formModified || !resendPossible.resendPossible}
-                                onClick={submit}>
+                                onClick={submit} startIcon={<EmailIcon className={classes.startIcon}/>}>
                             {AccountPageTranslation.resendVerification[props.language]}
                         </Button>
                         {props.activeProcesses.resending && (

@@ -31,12 +31,12 @@ export const AccountPageTranslation = {
         deutsch: "Server zurzeit offline. Bitte versuchen Sie es später noch einmal.",
     },
     resendVerification: {
-        english: "Resend Verification",
-        deutsch: "Bestätigung Senden",
+        english: "Verification",
+        deutsch: "Bestätigung",
     },
     changePassword: {
-        english: "Change Password",
-        deutsch: "Passwort Ändern",
+        english: "Password",
+        deutsch: "Passwort",
     },
     cancel: {
         english: "Cancel",
@@ -83,8 +83,8 @@ export const AccountPageTranslation = {
     },
 
     verifyPhoneNumber: {
-        english: "Verify",
-        deutsch: "Verifizieren",
+        english: "Phone Number",
+        deutsch: "Telefonnummer",
     },
 };
 

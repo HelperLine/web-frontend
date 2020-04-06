@@ -23,7 +23,7 @@ import {PasswordForm} from "./PasswordForm";
 import {FormSubmission} from "./FormSubmission";
 import {EmailForm} from "./EmailForm";
 import {PhoneForm} from "./PhoneForm";
-
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 
 export function AccountPageComponent(props) {
@@ -181,6 +181,7 @@ export function AccountPageComponent(props) {
                                 disabled={activeProcesses.resending || formModified.modified}
 
                                 onClick={() => setPasswordFormOpen({open: true})}
+                                startIcon={<VpnKeyIcon className={classes.startIcon}/>}
                                 className={classes.grayButton}>{AccountPageTranslation.changePassword[props.language]}</Button>
                 </Grid>
 

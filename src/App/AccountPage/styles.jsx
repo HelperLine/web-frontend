@@ -70,5 +70,10 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(3),
     },
 
+    startIcon: {
+        marginLeft: -8,
+        marginRight: -4,
+    },
+
 }));
 

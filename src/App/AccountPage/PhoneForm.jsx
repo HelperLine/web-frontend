@@ -15,6 +15,9 @@ import Dialog from "@material-ui/core/Dialog";
 import Typography from "@material-ui/core/Typography";
 
 
+import AddIcon from '@material-ui/icons/Add';
+
+
 export const PhoneFormComponent = (props) => {
 
     const phoneInputRef = createRef();
@@ -23,6 +26,7 @@ export const PhoneFormComponent = (props) => {
 
     const classes = useStyles();
 
+    console.log(props);
 
     function blur() {
         phoneInputRef.current.blur();
@@ -32,7 +36,7 @@ export const PhoneFormComponent = (props) => {
         props.hideErrorSnackbar();
         props.setActiveProcesses({verifying: true});
 
-        axios.post(BACKEND_URL + "backend/phone/verify", {
+        axios.post(BACKEND_URL + "backend/phone/trigger", {
             email: props.email,
             api_key: props.api_key,
         })
@@ -54,32 +58,26 @@ export const PhoneFormComponent = (props) => {
 
     return (
         <React.Fragment>
-            <Grid item xs={12} md={props.account.phone_verified ? 12 : 8}>
+            <Grid item xs={12} md={8}>
+                {props.account.phone_number_verified && (
                 <CustomTextField
-                    disabled={props.account.email_verified || props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying}
-                    className={classes.textField} variant="outlined"
-
-                    ref={phoneInputRef}
-                    onTab={blur} onEnter={blur} onEscape={blur}
-
-                    label={AccountPageTranslation.phoneNumber[props.language]} fullWidth
-                    value={props.value} onChange={(value) => props.handleChange({phone_number: value})}/>
+                    disabled className={classes.textField} variant="outlined" value={props.account.phone_number}
+                    label={AccountPageTranslation.phoneNumber[props.language]} fullWidth/>
+                )}
             </Grid>
 
-            {!props.account.phone_verified && (
-                <Grid item xs={12} md={4} className={classes.flexButtonBox}>
-                    <div className={classes.wrapper}>
-                        <Button variant="contained" color="secondary" className={classes.button}
-                                disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
-                                onClick={triggerVerification}>
-                            {AccountPageTranslation.verifyPhoneNumber[props.language]}
-                        </Button>
-                        {props.activeProcesses.verifying && (
-                            <CircularProgress size={24} className={classes.buttonProgress} color="secondary"/>
-                        )}
-                    </div>
-                </Grid>
-            )}
+            <Grid item xs={12} md={4} className={classes.flexButtonBox}>
+                <div className={classes.wrapper}>
+                    <Button variant="contained" color="secondary" className={classes.button}
+                            disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
+                            onClick={triggerVerification} startIcon={<AddIcon className={classes.startIcon}/>}>
+                        {AccountPageTranslation.verifyPhoneNumber[props.language]}
+                    </Button>
+                    {props.activeProcesses.verifying && (
+                        <CircularProgress size={24} className={classes.buttonProgress} color="secondary"/>
+                    )}
+                </div>
+            </Grid>
 
             <Dialog onClose={() => setVerifyPopup({open: false})} open={verifyPopup.open}>
 
