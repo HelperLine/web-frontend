@@ -5,7 +5,6 @@ import {handleLogout, switchLanguage} from '../../ReduxActions';
 import clsx from 'clsx';
 import './Navbar.scss';
 
-import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,8 +25,6 @@ import {CircularProgress} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 
 import {Breakpoint} from 'react-socks';
-import Grid from "@material-ui/core/Grid";
-import {CustomTextField} from "../../Components/CustomTextField";
 import Dialog from "@material-ui/core/Dialog";
 
 import Menu from '@material-ui/core/Menu';
@@ -38,8 +35,6 @@ import {NavbarTranslation} from "./NavbarTranslation";
 import LanguageIcon from '@material-ui/icons/Language';
 
 
-import Logo128 from './logos/Drawing_Logo_128px.png';
-import Logo256 from './logos/Drawing_Logo_256px.png';
 import LogoText512 from './logos/Drawing_Logo_Text_512px.png';
 
 
@@ -316,7 +311,7 @@ export const ReducedNavbarComponent = (props) => {
 
             <Breakpoint small down>
                 <Link to="/">
-                    <img src={LogoText512} className={classes.logoIconMobileReduced}/>
+                    <img src={LogoText512} alt="Logo" className={classes.logoIconMobileReduced}/>
                 </Link>
 
                 <IconButton onClick={openLanguageMenu}
@@ -331,7 +326,7 @@ export const ReducedNavbarComponent = (props) => {
 
             <Breakpoint medium up>
                 <Link to="/">
-                    <img src={LogoText512} className={classes.logoIcon}/>
+                    <img src={LogoText512} alt="Logo" className={classes.logoIcon}/>
                 </Link>
 
                 <IconButton onClick={openLanguageMenu}

@@ -12,7 +12,6 @@ import {BACKEND_URL} from "../../secrets";
 import {connect} from "react-redux";
 
 import EmailIcon from '@material-ui/icons/Email';
-import AddIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 
 export const EmailFormComponent = (props) => {

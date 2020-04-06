@@ -11,7 +11,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-import {Link, Element, Events, animateScroll as scroll, scrollSpy, scroller} from 'react-scroll'
+import {scroller} from 'react-scroll'
 import Paper from "@material-ui/core/Paper";
 
 import {IndexPageTranslation} from './IndexPageTranslation';

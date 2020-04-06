@@ -23,10 +23,6 @@ import './SignInPage.scss';
 import {BACKEND_URL} from "../../secrets";
 
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-
 
 import {SignInTranslation} from "./SignInTranslation";
 
@@ -233,10 +229,6 @@ export function RegisterPageComponent(props) {
 
     function focusZip() {
         zipInputRef.current.focus();
-    }
-
-    function focusCountry() {
-        countryInputRef.current.focus();
     }
 
 

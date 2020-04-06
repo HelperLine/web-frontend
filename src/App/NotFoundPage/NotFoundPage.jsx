@@ -6,9 +6,7 @@ import clsx from 'clsx';
 
 import Drawing_404 from './images/Drawing_404.svg';
 import {NotFoundPageTranslation} from "./NotFoundPageTranslation";
-import {handleNewAccountData} from "../../ReduxActions";
 import {connect} from "react-redux";
-import {IndexPageComponent} from "../IndexPage/IndexPage";
 import {Breakpoint} from "react-socks";
 
 import Container from '@material-ui/core/Container';
@@ -68,11 +66,11 @@ export const NotFoundPageComponent = (props) => {
     return (
         <div className={classes.centerBox}>
             <Breakpoint small down>
-                <img src={Drawing_404} alt={"Not Found Image"} className={clsx(classes.imageMobile, classes.margin6)}/>
+                <img src={Drawing_404} alt={"Not Found"} className={clsx(classes.imageMobile, classes.margin6)}/>
             </Breakpoint>
 
             <Breakpoint medium up>
-                <img src={Drawing_404} alt={"Not Found Image"} className={clsx(classes.image, classes.margin6)}/>
+                <img src={Drawing_404} alt={"Not Found"} className={clsx(classes.image, classes.margin6)}/>
             </Breakpoint>
 
             <Typography variant="h6" className={clsx(classes.margin3)}>

@@ -1,4 +1,4 @@
-import React, {createRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {Button, CircularProgress, Container} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +10,6 @@ import {useStyles} from './styles';
 import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
 import {connect} from "react-redux";
-import clsx from "clsx";
 import Dialog from "@material-ui/core/Dialog";
 import Typography from "@material-ui/core/Typography";
 

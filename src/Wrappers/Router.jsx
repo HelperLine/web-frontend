@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
 
 /* Routing Imports --------------------------------------------------------------- */
-import {Switch, Route, BrowserRouter, Redirect, Link} from 'react-router-dom';
+import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 
 
 /* Component Imports ------------------------------------------------------------- */

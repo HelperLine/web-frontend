@@ -21,7 +21,6 @@ import {BACKEND_URL} from "../../secrets";
 import axios from 'axios';
 
 import './SignInPage.scss';
-import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 
 import {SignInTranslation} from "./SignInTranslation";
