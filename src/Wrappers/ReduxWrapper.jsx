@@ -3,7 +3,6 @@
 import React from 'react';
 import {createStore} from 'redux'
 import {Provider} from "react-redux";
-import {Themer} from "./Themer";
 
 
 import Cookies from 'js-cookie';
@@ -13,7 +12,7 @@ import {handleLogin, abortAutoLogin, startAutoLogin, switchLanguage} from "../Re
 import {BACKEND_URL} from "../secrets";
 
 
-var cloneDeep = require('lodash.clonedeep');
+let cloneDeep = require('lodash.clonedeep');
 
 
 function storeReducer(state = {
@@ -145,11 +144,11 @@ if (cookieLanguage !== undefined) {
 }
 
 
-export const ReduxWrapper = () => {
+export const ReduxWrapper = (props) => {
 
     return (
         <Provider store={store}>
-            <Themer/>
+            {props.children}
         </Provider>
     );
 };
