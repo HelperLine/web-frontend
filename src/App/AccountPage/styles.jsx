@@ -75,5 +75,28 @@ export const useStyles = makeStyles(theme => ({
         marginRight: -4,
     },
 
+    phoneDialog: {
+        padding: theme.spacing(3),
+    },
+
+    phoneDialogTitle: {
+        marginBottom: theme.spacing(2),
+        textAlign: "center",
+    },
+
+    phoneDialogCode: {
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(1),
+        textAlign: "center",
+
+    },
+    phoneDialogButton: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+
+        marginBottom: theme.spacing(4),
+    }
+
 }));
 

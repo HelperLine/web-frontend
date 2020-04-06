@@ -86,5 +86,17 @@ export const AccountPageTranslation = {
         english: "Phone Number",
         deutsch: "Telefonnummer",
     },
+    verifyPhoneNumberButton1: {
+        english: "Ok, I did that!",
+        deutsch: "Ok, habe ich gemacht!",
+    },
+    yes: {
+        english: "Yes",
+        deutsch: "Ja",
+    },
+    no: {
+        english: "No",
+        deutsch: "Nein",
+    },
 };
 
