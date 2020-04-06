@@ -38,170 +38,13 @@ import {NavbarTranslation} from "./NavbarTranslation";
 import LanguageIcon from '@material-ui/icons/Language';
 
 
-
-
 import Logo128 from './logos/Drawing_Logo_128px.png';
 import Logo256 from './logos/Drawing_Logo_256px.png';
 import LogoText512 from './logos/Drawing_Logo_Text_512px.png';
 
 
-const drawerWidth = 240;
+import {useStyles} from "./style";
 
-const useStyles = makeStyles(theme => ({
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    toolbar: theme.mixins.toolbar,
-    navBar: {
-        backgroundColor: theme.palette.primary.main,
-    },
-    menuButton: {
-        marginRight: theme.spacing(1),
-    },
-    title: {
-        flexGrow: 1,
-    },
-
-    languageButton: {
-        position: "fixed",
-        right: theme.spacing(2),
-        top: theme.spacing(2),
-
-        zIndex: "1000",
-
-        padding: 0,
-    },
-    languageIcon: {
-        fill: theme.palette.primary.transparent40,
-    },
-
-    languageButtonMobile: {
-        marginRight: theme.spacing(0),
-        padding: 0,
-    },
-    languageIconMobile: {
-        fill: "white",
-    },
-
-    languageButtonMobileReduced: {
-        position: "absolute",
-        right: theme.spacing(2),
-        top: theme.spacing(2.125),
-
-        zIndex: "1000",
-
-        padding: 0,
-    },
-    languageIconMobileReduced: {
-        fill: theme.palette.primary.transparent40,
-    },
-
-    logoIcon: {
-        position: "fixed",
-        left: theme.spacing(2),
-        top: theme.spacing(2),
-
-        zIndex: "1000",
-
-        padding: 0,
-        maxWidth: 192,
-    },
-
-    logoIconMobileReduced: {
-        position: "absolute",
-        left: theme.spacing(2),
-        top: theme.spacing(2),
-
-        zIndex: "1000",
-
-        padding: 0,
-        maxWidth: 128,
-    },
-
-
-    button: {
-        margin: theme.spacing(1),
-        marginBottom: 0,
-        padding: theme.spacing(1),
-        width: "225px",
-        alignItems: "flex-start",
-        justifyContent: "left",
-        textTransform: "capitalize",
-        transitionDelay: 0,
-        transitionDuration: 0
-    },
-    topButton: {
-        marginTop: theme.spacing(1)
-    },
-    link: {
-        textDecoration: "none",
-        display: "block"
-    },
-    divider: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        marginLeft: theme.spacing(1),
-    },
-    wrapper: {
-        position: 'relative',
-    },
-    CircularProgress: {
-        marginTop: 0,
-        marginLeft: 0,
-        marginRight: 4,
-    },
-    drawerBox: {
-        height: "100vh",
-        position: "relative",
-    },
-    drawerScrollBox: {
-        paddingBottom: theme.spacing(10),
-    },
-    drawerLogoBox: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "start",
-        marginTop: theme.spacing(2),
-        marginLeft: theme.spacing(2),
-    },
-    drawerLogoIcon: {
-        maxWidth: 192,
-    },
-
-    logoutDialog: {
-        boxSizing: "border-box",
-        overflowX: "hidden",
-    },
-    logoutDialogContainer: {
-        position: "relative",
-        display: "block",
-        scroll: "disabled",
-        padding: theme.spacing(2),
-        margin: -3.5,
-    },
-    logoutDialogButton: {
-        color: "white",
-    },
-    logoutDialogWrapper: {
-        marginTop: theme.spacing(1),
-        marginLeft: theme.spacing(0.5),
-        marginRight: theme.spacing(0.5),
-        position: 'relative',
-        display: "inline-flex"
-    },
-    logoutDialogTitle: {
-        textAlign: "center",
-    },
-
-}));
 
 function NavbarComponent(props) {
     const classes = useStyles();
@@ -399,40 +242,34 @@ function NavbarComponent(props) {
             <Dialog onClose={() => setLogoutDialogState({open: false})}
                     aria-labelledby="logout-dialog"
                     open={logoutDialog.open}
-                    className={classes.logoutDialog}
-                    maxWidth="xs">
+                    maxWidth="xs" fullWidth>
 
-                <Grid container spacing={1} className={classes.logoutDialogContainer}>
+                <div className={classes.logoutDialogWrapper}>
 
-                    <Grid item xs={12}>
-                        <Typography variant="h6"
-                                    className={classes.logoutDialogTitle}>{NavbarTranslation.logoutQuestion[props.language]}</Typography>
-                    </Grid>
+                    <Typography variant="h6"
+                                className={classes.logoutDialogTitle}>{NavbarTranslation.logoutQuestion[props.language]}</Typography>
 
-                    <Grid item xs={12}>
-                        <div className={clsx("ButtonBox", classes.buttonBox)}>
-                            <div className={classes.logoutDialogWrapper}>
+                    <div className="ButtonBox">
+                        <div className={classes.logoutDialogButtonWrapper}>
+                            <Button variant="contained"
+                                    color="secondary"
+                                    onClick={() => setLogoutDialogState({open: false})}
+                                    className={classes.logoutDialogButton}>{NavbarTranslation.cancel[props.language]}</Button>
+                        </div>
+                        <div className={classes.logoutDialogButtonWrapper}>
+                            <Link to="/logout"
+                                  className={classes.link}
+                                  onClick={() => {
+                                      props.handleLogout();
+                                      setPageTitle(NavbarTranslation.guide[props.language]);
+                                  }}>
                                 <Button variant="contained"
                                         color="secondary"
-                                        onClick={() => setLogoutDialogState({open: false})}
-                                        className={classes.logoutDialogButton}>{NavbarTranslation.cancel[props.language]}</Button>
-                            </div>
-                            <div className={classes.logoutDialogWrapper}>
-                                <Link to="/logout"
-                                      className={classes.link}
-                                      onClick={() => {
-                                          props.handleLogout();
-                                          setPageTitle(NavbarTranslation.guide[props.language]);
-                                      }}>
-                                    <Button variant="contained"
-                                            color="secondary"
-                                            className={classes.logoutDialogButton}>{NavbarTranslation.logout[props.language]}</Button>
-                                </Link>
-                            </div>
+                                        className={classes.logoutDialogButton}>{NavbarTranslation.logout[props.language]}</Button>
+                            </Link>
                         </div>
-                    </Grid>
-
-                </Grid>
+                    </div>
+                </div>
             </Dialog>
 
         </React.Fragment>

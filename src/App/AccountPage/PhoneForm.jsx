@@ -16,7 +16,12 @@ import Typography from "@material-ui/core/Typography";
 
 
 import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
+
 import {handleNewAccountData} from "../../ReduxActions";
+import IconButton from "@material-ui/core/IconButton";
+
+
 
 
 let cloneDeep = require('lodash.clonedeep');
@@ -30,7 +35,8 @@ export const PhoneFormComponent = (props) => {
 
 
     const initialState = {
-        popupStyle: 0,
+        open: false,
+        popupStyle: 1,
         fetchingCode: false,
         fetchingNumber: false,
         fetchingConfirmation: false,
@@ -58,7 +64,7 @@ export const PhoneFormComponent = (props) => {
 
 
     function setState0() {
-        setVerifyPopupState(initialState);
+        setVerifyPopup({open: false});
     }
 
 
@@ -70,7 +76,7 @@ export const PhoneFormComponent = (props) => {
         });
 
         props.hideErrorSnackbar();
-        if (verifyPopup.popupStyle === 0) {
+        if (!verifyPopup.open) {
             props.setActiveProcesses({verifying: true});
         }
 
@@ -89,6 +95,7 @@ export const PhoneFormComponent = (props) => {
         let deadline = new Date().getTime();
 
         setVerifyPopup({
+            open: true,
             popupStyle: 1,
             fetchingCode: false,
 
@@ -122,8 +129,6 @@ export const PhoneFormComponent = (props) => {
     function formatCountdown(minutes_left, seconds_left) {
         let minutes_left_string = minutes_left.toString();
         let seconds_left_string = seconds_left.toString();
-
-        console.log({minutes: minutes_left_string.length, seconds: seconds_left_string.length});
 
         switch (minutes_left_string.length) {
             case 0:
@@ -288,9 +293,14 @@ export const PhoneFormComponent = (props) => {
                 </div>
             </Grid>
 
-            <Dialog onClose={setState0} open={verifyPopup.popupStyle !== 0}>
+            <Dialog onClose={setState0} maxWidth="sm" fullWidth open={verifyPopup.open}>
+
+                <IconButton aria-label="delete" className={classes.phoneDialogClose} onClick={setState0}>
+                    <CloseIcon/>
+                </IconButton>
 
                 <Container maxWidth="sm" className={classes.phoneDialog}>
+
                     <Typography variant="h5" className={classes.phoneDialogTitle}>
                         <strong>Phone Number Confirmation</strong>
                     </Typography>
@@ -299,7 +309,7 @@ export const PhoneFormComponent = (props) => {
 
                     {verifyPopup.popupStyle === 1 && (
                         <Typography variant="subtitle1" className={classes.phoneDialogText}>
-                            Please call <strong>+49 30 2555 5301</strong> with the phone number you want to confirm.
+                            Please call <a href="tel:+493025555301" className={classes.pinkLink}><strong>+49 30 2555 5301</strong></a> with the phone number you want to confirm.
                         </Typography>
                     )}
 

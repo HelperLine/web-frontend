@@ -75,7 +75,12 @@ export const useStyles = makeStyles(theme => ({
 
     phoneDialog: {
         padding: theme.spacing(3),
-        width: 600,
+        minWidth: "100%",
+    },
+    phoneDialogClose: {
+        position: "absolute",
+        top: theme.spacing(1),
+        right: theme.spacing(1),
     },
 
     phoneDialogTitle: {
@@ -97,7 +102,10 @@ export const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-    }
+    },
+    pinkLink: {
+        color: theme.palette.secondary.main,
+    },
 
 }));
 
