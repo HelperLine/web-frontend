@@ -71,12 +71,11 @@ export const useStyles = makeStyles(theme => ({
     },
 
     startIcon: {
-        marginLeft: -8,
-        marginRight: -4,
     },
 
     phoneDialog: {
         padding: theme.spacing(3),
+        width: 600,
     },
 
     phoneDialogTitle: {
@@ -84,9 +83,13 @@ export const useStyles = makeStyles(theme => ({
         textAlign: "center",
     },
 
+    phoneDialogText: {
+        textAlign: "center",
+    },
+
     phoneDialogCode: {
-        marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
         textAlign: "center",
 
     },
@@ -94,8 +97,6 @@ export const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-
-        marginBottom: theme.spacing(4),
     }
 
 }));
