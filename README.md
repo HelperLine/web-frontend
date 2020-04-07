@@ -1,4 +1,6 @@
 
+[*See Project Details*](https://helperline.github.io/project/)
+
 [*See Backend Repository*](https://github.com/helperline/backend)
 
 ## HelperLine (Frontend) - A Hotline for People without Internet Access
