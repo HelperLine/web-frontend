@@ -22,6 +22,12 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 import TextField from "@material-ui/core/TextField";
 
+
+import CloudOffIcon from '@material-ui/icons/CloudOff';
+import CloudDoneIcon from '@material-ui/icons/CloudDone';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 const useStyles = makeStyles(theme => ({
     centerLeftBox: {
         height: "100%",
@@ -29,6 +35,23 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         justifyContent: "flex-start",
     },
+    expandIcon: {
+        fill: theme.palette.primary.transparent40,
+    },
+    callDetailsBox: {
+        position: "relative",
+        width: "100%",
+    },
+    commentStateIcon: {
+        position: "absolute",
+        top: theme.spacing(1),
+        right: theme.spacing(1),
+        fill: theme.palette.primary.transparent40,
+    },
+    commentSavingIcon: {
+        margin: 3,
+        color: theme.palette.primary.transparent40,
+    }
 }));
 
 
@@ -36,11 +59,18 @@ export function CallComponent(props) {
 
     const classes = useStyles();
 
-    let [commentTextField, setCommentTextField] = useState({value: props.call.comment});
+    let [commentTextField, setCommentTextField] = useState(props.call.comment);
     let commentRef = React.createRef();
+
+    let [commentState, setCommentState] = useState("saved");
 
     // Used for "fulfill call", "reject call", "modify call comment"
     function axiosPutAction(action, comment) {
+
+        if (action === "comment") {
+            setCommentState("saving");
+        }
+
         axios.put(BACKEND_URL + "backend/database/call", {
             email: props.email,
             api_key: props.api_key,
@@ -50,6 +80,12 @@ export function CallComponent(props) {
             comment: comment,
         })
             .then(response => {
+                if (action === "comment") {
+                    setTimeout(() => {
+                        setCommentState("saved")
+                    }, 1000);
+                }
+
                 if (response.data.status === "ok") {
                     props.handleNewAccountData(response);
                     console.log(response.data.calls);
@@ -63,19 +99,43 @@ export function CallComponent(props) {
     }
 
     function pushCommentValue() {
-        axiosPutAction("comment", commentTextField.value);
+        axiosPutAction("comment", commentTextField);
     }
 
     function onEscape() {
         commentRef.current.blur();
     }
 
+    function handleChange(newValue) {
+        if (props.call.comment === newValue) {
+            setCommentState("saved");
+        } else {
+            setCommentState("unsaved");
+        }
+        setCommentTextField(newValue)
+    }
+
     console.log(props.call);
+
+    let commentIcon;
+
+    switch (commentState) {
+        case "unsaved":
+            commentIcon = <CloudOffIcon className={classes.commentStateIcon} fontSize="small"/>;
+            break;
+        case "saving":
+            commentIcon = <CircularProgress className={clsx(classes.commentStateIcon, classes.commentSavingIcon)} size={16}/>;
+            break;
+        default:
+            commentIcon = <CloudDoneIcon className={classes.commentStateIcon} fontSize="small"/>;
+            break;
+    }
+
 
     return (
 
         <ExpansionPanel elevation={2}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon className={classes.expandIcon}/>}>
                 <Grid container spacing={2}>
                     <Grid item xs={4} className={classes.centerLeftBox}>
                         <Typography variant="h6">{props.call.phone_number}</Typography>
@@ -89,21 +149,23 @@ export function CallComponent(props) {
                 </Grid>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                <CustomTextField
-                    label="Comments"
-                    multiline={true}
-                    fullWidth={true}
-                    rows="4"
-                    rowsMax="12"
-                    variant="outlined"
-                    ref={commentRef}
+                <div className={classes.callDetailsBox}>
+                    <CustomTextField
+                        label="Comments"
+                        multiline={true}
+                        fullWidth={true}
+                        rows="4"
+                        rowsMax="12"
+                        variant="outlined"
+                        ref={commentRef}
 
-                    onChange={(value) => setCommentTextField({value: value})}
-                    value={commentTextField.value}
+                        onChange={handleChange}
+                        value={commentTextField}
 
-                    onBlur={pushCommentValue}
-                    onEscape={onEscape}
-                />
+                        onBlur={pushCommentValue}
+                        onEscape={onEscape}/>
+                    {commentIcon}
+                </div>
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );
