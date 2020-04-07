@@ -109,8 +109,8 @@ export function CallsPageComponent(props) {
             </Typography>
 
             <div className={classes.callsRoot}>
-                {props.calls.accepted.map((call, index) => (
-                    <Call key={index} call={call}/>
+                {props.calls.accepted.map(call => (
+                    <Call key={call.call_id} call={call}/>
                 ))}
                 {props.calls.accepted.length === 0 && (
                     <Typography variant="subtitle1" className={classes.placeholder}>
@@ -126,8 +126,8 @@ export function CallsPageComponent(props) {
             </Typography>
 
             <div className={classes.callsRoot}>
-                {props.calls.fulfilled.map((call, index) => (
-                    <Call key={index} call={call}/>
+                {props.calls.fulfilled.map(call => (
+                    <Call key={call.call_id} call={call}/>
                 ))}
                 {props.calls.fulfilled.length === 0 && (
                     <Typography variant="subtitle1" className={classes.placeholder}>
