@@ -20,6 +20,7 @@ import './CallsPage.scss';
 import {CallsPageTranslation} from "./CallsPageTranslation";
 import {Performance} from "./Performance";
 import {Filter} from "./Filter";
+import clsx from "clsx";
 
 
 
@@ -86,6 +87,9 @@ const useStyles = makeStyles(theme => ({
     },
     callsRoot: {
         width: "100%",
+    },
+    fulfilledText: {
+        color: theme.palette.primary.transparent40,
     }
 }));
 
@@ -117,7 +121,7 @@ export function CallsPageComponent(props) {
 
             <div className={classes.divider}/>
 
-            <Typography variant="h6" className={classes.subheading}>
+            <Typography variant="h6" className={clsx(classes.subheading, classes.fulfilledText)}>
                 {CallsPageTranslation.fulfilledCalls[props.language]}
             </Typography>
 

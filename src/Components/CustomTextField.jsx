@@ -67,7 +67,7 @@ export const CustomTextField = React.forwardRef((props, ref) => {
 
     return (
         <TextField fullWidth={("fullWidth" in props) ? props["fullWidth"] : false}
-                   className={("className" in props) ? props["className"] : ""}
+                   classes={("className" in props) ? props["className"] : ""}
                    type={("type" in props) ? props["type"] : "text"}
 
                    required={("required" in props) ? props["required"] : false}
