@@ -18,6 +18,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 
 import {CallsPageTranslation} from './CallsPageTranslation';
+import {handleNewAccountData} from "../../ReduxActions";
 
 
 const useStyles = makeStyles(theme => ({
@@ -49,11 +50,6 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(0.5),
         position: 'relative',
     },
-    buttonIcon: {
-        marginLeft: -8,
-        marginRight: -4,
-    },
-
 
     snackbar: {
         margin: theme.spacing(1),
@@ -154,16 +150,30 @@ function FilterComponent(props) {
                 axios.post(BACKEND_URL + "backend/calls/accept", {
                     email: props.email,
                     api_key: props.api_key,
+
+                    filter_type_local: typeFilter.local,
+                    filter_type_global: typeFilter.global,
+
+                    filter_language_german: languageFilter.german,
+                    filter_language_english: languageFilter.english,
                 })
                     .then(response => {
                         if (response.data.status === "ok") {
-                            props.handleNewCallData(response);
+                            setLoadingNewCall({loading: false});
+                            props.handleNewAccountData(response);
                             console.log(response.data.calls);
-                        } else if (response.data.status === "no new calls") {
+                        } else if (response.data.status === "currently no call available") {
+                            setLoadingNewCall({loading: false});
                             temporaryErrorMessage(CallsPageTranslation.noNewCalls[props.language]);
+                            console.log(response.data.status);
+                        } else {
+                            setLoadingNewCall({loading: false});
+                            console.log(response.data.status);
                         }
 
                     }).catch(response => {
+                        setLoadingNewCall({loading: false});
+
                         console.log("Axios promise rejected! Response:");
                         console.log(response);
 
@@ -267,6 +277,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
 });
 
 export const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);

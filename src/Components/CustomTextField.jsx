@@ -76,6 +76,7 @@ export const CustomTextField = React.forwardRef((props, ref) => {
 
                    variant={("variant" in props) ? props["variant"] : "standard"}
                    multiline={("multiline" in props) ? props["multiline"] : false}
+                   rows={("rows" in props) ? props["rows"] : "1"}
                    rowsMax={("rowsMax" in props) ? props["rowsMax"] : "1"}
 
                    value={props.value}

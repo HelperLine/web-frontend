@@ -84,6 +84,9 @@ const useStyles = makeStyles(theme => ({
     placeholder: {
         marginLeft: theme.spacing(1),
     },
+    callsRoot: {
+        width: "100%",
+    }
 }));
 
 export function CallsPageComponent(props) {
@@ -93,10 +96,6 @@ export function CallsPageComponent(props) {
     return (
         <Container maxWidth="md" className="CallsPage">
 
-            <Performance/>
-
-            <Divider className={classes.divider}/>
-
             <Filter/>
 
             <Divider className={classes.divider}/>
@@ -105,14 +104,16 @@ export function CallsPageComponent(props) {
                 {CallsPageTranslation.acceptedCalls[props.language]}
             </Typography>
 
-            {props.calls.accepted.map((call, index) => (
-                <Call key={index} call={call}/>
-            ))}
-            {props.calls.accepted.length === 0 && (
-                <Typography variant="subtitle1" className={classes.placeholder}>
-                    <em>{CallsPageTranslation.noAcceptedCalls[props.language]}</em>
-                </Typography>
-            )}
+            <div className={classes.callsRoot}>
+                {props.calls.accepted.map((call, index) => (
+                    <Call key={index} call={call}/>
+                ))}
+                {props.calls.accepted.length === 0 && (
+                    <Typography variant="subtitle1" className={classes.placeholder}>
+                        <em>{CallsPageTranslation.noAcceptedCalls[props.language]}</em>
+                    </Typography>
+                )}
+            </div>
 
             <div className={classes.divider}/>
 
@@ -120,14 +121,20 @@ export function CallsPageComponent(props) {
                 {CallsPageTranslation.fulfilledCalls[props.language]}
             </Typography>
 
-            {props.calls.fulfilled.map((call, index) => (
-                <Call key={index} call={call}/>
-            ))}
-            {props.calls.fulfilled.length === 0 && (
-                <Typography variant="subtitle1" className={classes.placeholder}>
-                    <em>{CallsPageTranslation.noFulfilledCalls[props.language]}</em>
-                </Typography>
-            )}
+            <div className={classes.callsRoot}>
+                {props.calls.fulfilled.map((call, index) => (
+                    <Call key={index} call={call}/>
+                ))}
+                {props.calls.fulfilled.length === 0 && (
+                    <Typography variant="subtitle1" className={classes.placeholder}>
+                        <em>{CallsPageTranslation.noFulfilledCalls[props.language]}</em>
+                    </Typography>
+                )}
+            </div>
+
+            <Divider className={classes.divider}/>
+
+            <Performance/>
 
             <Snackbar className={classes.snackbar}
                       open={props.errorMessageVisible}

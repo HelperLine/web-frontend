@@ -83,7 +83,7 @@ export const IndexPageTranslation = {
     },
     scene5: {
         english: <React.Fragment>"... mentally dealing<br/>with isolation?"</React.Fragment>,
-        deutsch: <React.Fragment>"... mir mit einem Gespräche in<br/>der Isolation helfen?"</React.Fragment>,
+        deutsch: <React.Fragment>"... mir mit einem Gespräch in<br/>der Isolation helfen?"</React.Fragment>,
     },
     scene6: {
         english: (
