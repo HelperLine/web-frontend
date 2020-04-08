@@ -11,6 +11,9 @@ import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
 
 
+import CloudOffIcon from '@material-ui/icons/CloudOff'
+import CloudDoneIcon from '@material-ui/icons/CloudDone';
+
 import {CircularProgress} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import SnackbarContent from "@material-ui/core/SnackbarContent";
@@ -19,6 +22,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import {CallsPageTranslation} from './CallsPageTranslation';
 import {handleNewAccountData} from "../../ReduxActions";
+import clsx from "clsx";
 
 
 const useStyles = makeStyles(theme => ({
@@ -55,6 +59,18 @@ const useStyles = makeStyles(theme => ({
     },
     snackbarContentError: {
         backgroundColor: theme.palette.primary.main,
+    },
+
+    buttonBox: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        height: "100%",
+    },
+    grayButton: {
+        color: "white",
+        backgroundColor: theme.palette.primary.transparent40,
     },
 }));
 
@@ -101,8 +117,69 @@ function FilterComponent(props) {
     }
 
 
-    let [loadingNewCall, setLoadingNewCall] = useState({loading: false});
+    let [loadingNewCall, setLoadingNewCall] = useState(false);
     let [errorMessage, setErrorMessage] = useState({visible: false, text: ""});
+
+
+    let [switchingOnline, setSwitchingOnline] = useState(false);
+
+
+    function goOnline() {
+        if (!props.account.phone_number_verified || !props.account.phone_number_confirmed) {
+            temporaryErrorMessage("Please confirm your phone number first in the account tab.");
+        } else {
+            setSwitchingOnline(true);
+            setTimeout(() => {
+                axios.put(BACKEND_URL + "backend/forward/online", {
+                    email: props.email,
+                    api_key: props.api_key,
+
+                    filter_type_local: typeFilter.local,
+                    filter_type_global: typeFilter.global,
+
+                    filter_language_english: languageFilter.english,
+                    filter_language_german: languageFilter.german,
+
+                }).then((response) => {
+                    setSwitchingOnline(false);
+
+                    if (response.data.status === "ok") {
+                        props.handleNewAccountData(response);
+                    } else {
+                        console.log(response.data.status);
+                    }
+                }).catch(() => {
+                    setSwitchingOnline(false);
+
+                    console.log("Online state could not be changed");
+                })
+            }, 500);
+        }
+    }
+
+
+    function goOffline() {
+        setSwitchingOnline(true);
+        setTimeout(() => {
+            axios.put(BACKEND_URL + "backend/forward/offline", {
+                email: props.email,
+                api_key: props.api_key,
+
+            }).then((response) => {
+                setSwitchingOnline(false);
+
+                if (response.data.status === "ok") {
+                    props.handleNewAccountData(response);
+                } else {
+                    console.log(response.data.status);
+                }
+            }).catch(() => {
+                setSwitchingOnline(false);
+
+                console.log("Online state could not be changed");
+            })
+        }, 500);
+    }
 
 
     function pushFilterChange(newState) {
@@ -124,7 +201,7 @@ function FilterComponent(props) {
     }
 
     function temporaryErrorMessage(text) {
-        setLoadingNewCall({loading: false});
+        setLoadingNewCall(false);
 
         setErrorMessage({
             visible: true,
@@ -139,11 +216,14 @@ function FilterComponent(props) {
     }
 
     function acceptNewCall() {
-        setLoadingNewCall({loading: true});
 
-        if (!languageFilter.german && !languageFilter.english) {
+        if (!props.account.email_verified) {
+            temporaryErrorMessage("Please verify your email first. Resend the verification in the account tab.");
+        } else if (!languageFilter.german && !languageFilter.english) {
             temporaryErrorMessage(CallsPageTranslation.noLanguage[props.language]);
         } else {
+            setLoadingNewCall(true);
+
             setTimeout(() => {
 
                 axios.post(BACKEND_URL + "backend/calls/accept", {
@@ -158,20 +238,20 @@ function FilterComponent(props) {
                 })
                     .then(response => {
                         if (response.data.status === "ok") {
-                            setLoadingNewCall({loading: false});
+                            setLoadingNewCall(false);
                             props.handleNewAccountData(response);
                             console.log(response.data.calls);
                         } else if (response.data.status === "currently no call available") {
-                            setLoadingNewCall({loading: false});
+                            setLoadingNewCall(false);
                             temporaryErrorMessage(CallsPageTranslation.noNewCalls[props.language]);
                             console.log(response.data.status);
                         } else {
-                            setLoadingNewCall({loading: false});
+                            setLoadingNewCall(false);
                             console.log(response.data.status);
                         }
 
                     }).catch(response => {
-                        setLoadingNewCall({loading: false});
+                        setLoadingNewCall(false);
 
                         console.log("Axios promise rejected! Response:");
                         console.log(response);
@@ -232,17 +312,33 @@ function FilterComponent(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <div className="ButtonBox">
+                    <div className={classes.buttonBox}>
                         <div className={classes.wrapper}>
                             <Button variant="contained"
-                                    disabled={loadingNewCall.loading}
+                                    disabled={loadingNewCall || switchingOnline}
                                     color="secondary"
                                     onClick={acceptNewCall}
-                                    startIcon={loadingNewCall.loading ?
+                                    startIcon={loadingNewCall ?
                                         <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
                                         <AddIcon className={classes.buttonIcon}/>
                                     }
                                     className={classes.button}>{CallsPageTranslation.acceptCall[props.language]}</Button>
+                        </div>
+                        <div className={classes.wrapper}>
+                            <Button variant="contained"
+                                    disabled={loadingNewCall || switchingOnline}
+                                    color={props.account.online ? "secondary" : ""}
+                                    onClick={props.account.online ? goOffline : goOnline}
+                                    startIcon={switchingOnline ?
+                                        <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
+                                        (props.account.online ?
+                                            <CloudDoneIcon className={classes.buttonIcon}/> :
+                                            <CloudOffIcon className={classes.buttonIcon}/>
+                                        )
+                                    }
+                                    className={clsx(classes.button, (!props.account.online ? classes.grayButton : ""))}>
+                                {props.account.online ? "Currently Online" : "Currently Offline"}
+                            </Button>
                         </div>
                     </div>
                 </Grid>
@@ -272,6 +368,7 @@ const mapStateToProps = state => ({
     email: state.email,
     api_key: state.api_key,
 
+    account: state.account,
     filters: state.filters,
 });
 
