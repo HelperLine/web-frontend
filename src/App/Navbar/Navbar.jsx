@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {handleLogout, switchLanguage} from '../../ReduxActions';
+import {handleLogout, switchLanguage, closeMessage} from '../../ReduxActions';
 
 import clsx from 'clsx';
 import './Navbar.scss';
@@ -62,9 +62,11 @@ function NavbarComponent(props) {
     const [languageMenuAnchor, toggleLanguageMenuAnchor] = useState(null);
 
     const openLanguageMenu = (event) => {
+        props.closeMessage();
         toggleLanguageMenuAnchor(event.currentTarget);
     };
     const closeLanguageMenu = () => {
+        props.closeMessage();
         toggleLanguageMenuAnchor(null);
     };
 
@@ -107,7 +109,10 @@ function NavbarComponent(props) {
         <React.Fragment>
             <Link to="/guide"
                   className={classes.link}
-                  onClick={() => setPageTitle(NavbarTranslation.guide[props.language])}>
+                  onClick={() => {
+                      props.closeMessage();
+                      setPageTitle(NavbarTranslation.guide[props.language]);
+                  }}>
                 <Button size="large"
                         color={path.startsWith("/guide") ? "secondary" : "primary"}
                         startIcon={<AssignmentIcon alt={NavbarTranslation.guide[props.language] + " Icon"}/>}
@@ -118,7 +123,10 @@ function NavbarComponent(props) {
                 <React.Fragment>
                     <Link to="/calls"
                           className={classes.link}
-                          onClick={() => setPageTitle(NavbarTranslation.calls[props.language])}>
+                          onClick={() => {
+                              props.closeMessage();
+                              setPageTitle(NavbarTranslation.calls[props.language]);
+                          }}>
                         <Button size="large"
                                 color={path.startsWith("/calls") ? "secondary" : "primary"}
                                 startIcon={<CallIcon alt={NavbarTranslation.calls[props.language] + " Icon"}/>}
@@ -126,7 +134,10 @@ function NavbarComponent(props) {
                     </Link>
                     <Link to="/account"
                           className={classes.link}
-                          onClick={() => setPageTitle(NavbarTranslation.account[props.language])}>
+                          onClick={() => {
+                              props.closeMessage();
+                              setPageTitle(NavbarTranslation.account[props.language]);
+                          }}>
                         <Button size="large"
                                 color={path.startsWith("/account") ? "secondary" : "primary"}
                                 startIcon={<SettingsIcon alt={NavbarTranslation.account[props.language] + " Icon"}/>}
@@ -141,6 +152,7 @@ function NavbarComponent(props) {
         <React.Fragment>
             {props.loggedIn && (
                 <Button onClick={() => {
+                    props.closeMessage();
                     setLogoutDialogState({open: true});
                 }}
                         size="large"
@@ -150,6 +162,7 @@ function NavbarComponent(props) {
             )}
             {!props.loggedIn && (
                 <Link to="/login"
+                      onClick={props.closeMessage}
                       className={classes.link}>
                     <div className={classes.wrapper}>
                         <Button size="large"
@@ -208,7 +221,7 @@ function NavbarComponent(props) {
                     }}>
 
                     <div className={classes.drawerLogoBox}>
-                        <Link to="/">
+                        <Link to="/" onClick={props.closeMessage}>
                             <img alt="HelperLine Logo" src={LogoText512} className={classes.drawerLogoIcon}/>
                         </Link>
                     </div>
@@ -255,6 +268,7 @@ function NavbarComponent(props) {
                             <Link to="/logout"
                                   className={classes.link}
                                   onClick={() => {
+                                      props.closeMessage();
                                       props.handleLogout();
                                       setPageTitle(NavbarTranslation.guide[props.language]);
                                   }}>
@@ -285,6 +299,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     handleLogout: () => dispatch(handleLogout()),
     switchLanguage: (language) => dispatch(switchLanguage(language)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const Navbar = connect(mapStateToProps, mapDispatchToProps)(NavbarComponent);
@@ -299,9 +314,11 @@ export const ReducedNavbarComponent = (props) => {
     const [languageMenuAnchor, toggleLanguageMenuAnchor] = useState(null);
 
     const openLanguageMenu = (event) => {
+        props.closeMessage();
         toggleLanguageMenuAnchor(event.currentTarget);
     };
     const closeLanguageMenu = () => {
+        props.closeMessage();
         toggleLanguageMenuAnchor(null);
     };
 
@@ -310,7 +327,7 @@ export const ReducedNavbarComponent = (props) => {
             <CssBaseline/>
 
             <Breakpoint small down>
-                <Link to="/">
+                <Link to="/" onClick={props.closeMessage}>
                     <img src={LogoText512} alt="Logo" className={classes.logoIconMobileReduced}/>
                 </Link>
 
@@ -325,7 +342,7 @@ export const ReducedNavbarComponent = (props) => {
             </Breakpoint>
 
             <Breakpoint medium up>
-                <Link to="/">
+                <Link to="/" onClick={props.closeMessage}>
                     <img src={LogoText512} alt="Logo" className={classes.logoIcon}/>
                 </Link>
 
@@ -350,6 +367,7 @@ const mapStateToPropsReduced = state => ({});
 
 const mapDispatchToPropsReduced = dispatch => ({
     switchLanguage: (language) => dispatch(switchLanguage(language)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const ReducedNavbar = connect(mapStateToPropsReduced, mapDispatchToPropsReduced)(ReducedNavbarComponent);

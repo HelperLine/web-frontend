@@ -12,6 +12,7 @@ import {BACKEND_URL} from "../../secrets";
 import {connect} from "react-redux";
 
 import EmailIcon from '@material-ui/icons/Email';
+import {closeMessage, openMessage} from "../../ReduxActions";
 
 
 export const EmailFormComponent = (props) => {
@@ -26,7 +27,7 @@ export const EmailFormComponent = (props) => {
 
 
     function submit() {
-        props.hideErrorSnackbar();
+        props.closeMessage();
         props.setActiveProcesses({resending: true});
 
         axios.post(BACKEND_URL + "email/resend", {
@@ -40,14 +41,14 @@ export const EmailFormComponent = (props) => {
                 } else {
                     props.setActiveProcesses({resending: false});
                     setResendPossible({resendPossible: false});
-                    props.showErrorSnackbar(response.data.status);
+                    props.openMessage(response.data.status);
                 }
             }).catch(response => {
             console.log("Axios promise rejected! Server response:");
             console.log(response);
             props.setActiveProcesses({resending: false});
             setResendPossible({resendPossible: false});
-            props.showErrorSnackbar(AccountPageTranslation.serverOffline[props.language]);
+            props.openMessage(AccountPageTranslation.serverOffline[props.language]);
         });
     }
 
@@ -101,7 +102,9 @@ const mapStateToProps = state => ({
     account: state.account,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const EmailForm = connect(mapStateToProps, mapDispatchToProps)(EmailFormComponent);

@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 
 import {connect} from 'react-redux';
-import {handleLogin} from '../../ReduxActions';
+import {closeMessage, handleLogin, openMessage} from '../../ReduxActions';
 
 import {Container} from "@material-ui/core";
 import {Link} from "react-router-dom";
@@ -104,11 +104,10 @@ export function RegisterPageComponent(props) {
             country: SignInTranslation.germany[props.language],
         },
         loading: false,
-        errorMessageVisible: false,
-        errorMessageText: "",
     });
 
     function handleFormChange(newFormData) {
+        props.closeMessage();
         let newState = cloneDeep(state);
 
         ["email", "password", "passwordConfirmation", "zip", "country"].forEach(key => {
@@ -116,50 +115,39 @@ export function RegisterPageComponent(props) {
         });
 
         newState.loading = false;
-        newState.errorMessageVisible = false;
-        newState.errorMessageText = "";
         changeState(newState);
     }
 
     function startLoading() {
+        props.closeMessage();
         blurAll();
 
         let newState = cloneDeep(state);
         newState.loading = true;
-        newState.errorMessageVisible = false;
-        newState.errorMessageText = "";
         changeState(newState);
     }
 
-    function errorSnackbar(text) {
-        let newState = cloneDeep(state);
-        newState.loading = false;
-        newState.errorMessageVisible = true;
-        newState.errorMessageText = text;
-        changeState(newState);
-    }
-
-    function formValidation() {
+    function validation() {
 
         let formValid = true;
 
         ["email", "password", "passwordConfirmation", "zip", "country"].forEach(key => {
             if (state.formData[key] === "") {
-                errorSnackbar(SignInTranslation.fieldEmpty[props.language]);
+                props.openMessage(SignInTranslation.fieldEmpty[props.language]);
                 formValid = false;
             }
         });
 
         if (formValid) {
             if (state.formData["password"] !== state.formData["passwordConfirmation"]) {
-                errorSnackbar(SignInTranslation.passwordConfirmationMatch[props.language]);
+                props.openMessage(SignInTranslation.passwordConfirmationMatch[props.language]);
                 formValid = false;
             }
         }
 
         if (formValid) {
             if (state.formData["password"].length < 8) {
-                errorSnackbar(SignInTranslation.passwordTooShort[props.language]);
+                props.openMessage(SignInTranslation.passwordTooShort[props.language]);
                 formValid = false;
             }
         }
@@ -168,9 +156,11 @@ export function RegisterPageComponent(props) {
     }
 
     function handleRegister() {
-        startLoading();
 
-        if (formValidation()) {
+        if (validation()) {
+            startLoading();
+            props.closeMessage();
+
             axios.post(BACKEND_URL + "database/helper", {
                 email: state.formData.email,
                 password: state.formData.password,
@@ -186,30 +176,30 @@ export function RegisterPageComponent(props) {
                                 props.handleLogin(response);
                                 break;
                             case "email format invalid":
-                                errorSnackbar(SignInTranslation.emailInvalid[props.language]);
+                                openMessage(SignInTranslation.emailInvalid[props.language]);
                                 break;
                             case "password format invalid":
-                                errorSnackbar(SignInTranslation.passwordInvalid[props.language]);
+                                openMessage(SignInTranslation.passwordInvalid[props.language]);
                                 break;
                             case "zip code format invalid":
-                                errorSnackbar(SignInTranslation.zipCodeInvalid[props.language]);
+                                openMessage(SignInTranslation.zipCodeInvalid[props.language]);
                                 break;
                             case "country invalid":
-                                errorSnackbar(SignInTranslation.countryInvalid[props.language]);
+                                openMessage(SignInTranslation.countryInvalid[props.language]);
                                 break;
                             case "email already taken":
-                                errorSnackbar(SignInTranslation.emailTaken[props.language]);
+                                openMessage(SignInTranslation.emailTaken[props.language]);
                                 break;
                             default:
                                 console.log(response.data);
-                                errorSnackbar(SignInTranslation.defaultError[props.language]);
+                                props.openMessage(SignInTranslation.defaultError[props.language]);
                                 break;
                         }
                     }, 1000);
                 }).catch(response => {
                 console.log("Axios promise rejected! Response:");
                 console.log(response);
-                errorSnackbar(SignInTranslation.serverOffline[props.language]);
+                props.openMessage(SignInTranslation.serverOffline[props.language]);
             });
         }
     }
@@ -341,18 +331,6 @@ export function RegisterPageComponent(props) {
                 </div>
 
                 <Link to={"/login"} className={classes.switchLink}>{SignInTranslation.alreadyHaveAnAccount[props.language]}</Link>
-
-                {state.errorMessageVisible && (
-                    <Snackbar className={classes.snackbar}
-                              open={true}
-                              anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                        <SnackbarContent
-                            className={classes.snackbarContentError}
-                            aria-describedby="message-id"
-                            message={<span id="message-id">{state.errorMessageText}</span>}
-                        />
-                    </Snackbar>
-                )}
             </div>
         </Container>
     );
@@ -369,6 +347,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleLogin: (response) => dispatch(handleLogin(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const RegisterPage = connect(mapStateToProps, mapDispatchToProps)(RegisterPageComponent);

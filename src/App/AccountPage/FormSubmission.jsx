@@ -8,7 +8,7 @@ import {AccountPageTranslation} from "./AccountPageTranslation";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
-import {handleNewAccountData} from "../../ReduxActions";
+import {handleNewAccountData, openMessage, closeMessage} from "../../ReduxActions";
 import {connect} from "react-redux";
 
 
@@ -17,12 +17,14 @@ const FormSubmissionComponent = (props) => {
     const classes = useStyles();
 
     function submit() {
-        props.setActiveProcesses({submitting: true});
 
         if (validation()) {
+            props.setActiveProcesses({submitting: true});
+            props.closeMessage();
+
             // Looks and feels better if the process actually takes some time
             setTimeout(() => {
-                axios.put(BACKEND_URL + "database/account", {
+                axios.put(BACKEND_URL + "database/helper", {
                     email: props.email,
                     api_key: props.api_key,
 
@@ -36,13 +38,14 @@ const FormSubmissionComponent = (props) => {
                             props.handleNewAccountData(response);
                             props.setFormModified({modified: false});
                         } else {
-                            props.showErrorSnackbar(response.data.status);
+                            props.setActiveProcesses({submitting: false});
+                            props.openMessage(response.data.status);
                         }
                     }).catch(response => {
                     console.log("Axios promise rejected! Server response:");
                     console.log(response);
                     props.setActiveProcesses({submitting: false});
-                    props.showErrorSnackbar(AccountPageTranslation.serverOffline[props.language]);
+                    props.openMessage(AccountPageTranslation.serverOffline[props.language]);
                 });
             }, 1000);
         }
@@ -51,7 +54,7 @@ const FormSubmissionComponent = (props) => {
     function validation() {
         ["email", "zip_code", "country"].forEach(key => {
             if (props.formValues[key] === "") {
-                props.showErrorSnackbar(AccountPageTranslation.fieldEmpty[props.language]);
+                props.openMessage(AccountPageTranslation.fieldEmpty[props.language]);
                 return false;
             }
         });
@@ -101,6 +104,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const FormSubmission = connect(mapStateToProps, mapDispatchToProps)(FormSubmissionComponent);

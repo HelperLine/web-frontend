@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 
 import {connect} from 'react-redux';
-import {handleLogin} from '../../ReduxActions';
+import {closeMessage, handleLogin, openMessage} from '../../ReduxActions';
 
 import {Container} from "@material-ui/core";
 import {Link} from "react-router-dom";
@@ -12,9 +12,6 @@ import {Button} from "@material-ui/core";
 import {CircularProgress} from "@material-ui/core";
 
 import {CustomTextField} from "../../Components/CustomTextField";
-
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 import {BACKEND_URL} from "../../secrets";
 
@@ -89,17 +86,16 @@ export function LoginPageComponent(props) {
         email: "",
         password: "",
         loading: false,
-        errorMessageVisible: false,
-        errorMessageText: "",
     });
 
     function handleFormChange(email, password) {
+
+        props.closeMessage();
+
         changeState({
             email: email,
             password: password,
             loading: false,
-            errorMessageVisible: false,
-            errorMessageText: "",
         });
     }
 
@@ -109,16 +105,12 @@ export function LoginPageComponent(props) {
 
         let newState = cloneDeep(state);
         newState.loading = true;
-        newState.errorMessageVisible = false;
-        newState.errorMessageText = "";
         changeState(newState);
     }
 
-    function errorSnackbar(text) {
+    function stopLoading() {
         let newState = cloneDeep(state);
         newState.loading = false;
-        newState.errorMessageVisible = true;
-        newState.errorMessageText = text;
         changeState(newState);
     }
 
@@ -132,14 +124,16 @@ export function LoginPageComponent(props) {
                     if (response.data.status === "ok") {
                         props.handleLogin(response);
                     } else {
-                        errorSnackbar(SignInTranslation.invalidEmailPassword[props.language]);
+                        stopLoading();
+                        props.openMessage(SignInTranslation.invalidEmailPassword[props.language]);
                     }
-                }, 1000);
+                }, 500);
             }).catch(response => {
-            console.log("Axios promise rejected! Response:");
-            console.log(response);
-            errorSnackbar(SignInTranslation.serverOffline[props.language]);
-        });
+                console.log("Axios promise rejected! Response:");
+                console.log(response);
+                stopLoading();
+                props.openMessage(SignInTranslation.serverOffline[props.language]);
+            });
     }
 
     function focusEmail() {
@@ -223,18 +217,6 @@ export function LoginPageComponent(props) {
                 </div>
 
                 <Link to={"/register"} className={classes.switchLink}>{SignInTranslation.noAccountYet[props.language]}</Link>
-
-                {state.errorMessageVisible && (
-                    <Snackbar className={classes.snackbar}
-                              open={true}
-                              anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                        <SnackbarContent
-                            className={classes.snackbarContentError}
-                            aria-describedby="message-id"
-                            message={<span id="message-id">{state.errorMessageText}</span>}
-                        />
-                    </Snackbar>
-                )}
             </div>
         </Container>
     );
@@ -251,6 +233,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleLogin: (response) => dispatch(handleLogin(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const LoginPage = connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);

@@ -1,16 +1,13 @@
 import React, {useState, useRef} from 'react';
 
 import {connect} from 'react-redux';
-import {handleNewAccountData} from '../../ReduxActions';
+import {handleNewAccountData, openMessage, closeMessage} from '../../ReduxActions';
 
 import {Container} from "@material-ui/core";
 
 import {Button} from "@material-ui/core";
 
 import {CustomTextField} from "../../Components/CustomTextField";
-
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 import './AccountPage.scss';
 
@@ -44,15 +41,18 @@ export function AccountPageComponent(props) {
     let [formModified, setFormModified] = useState({modified: false});
 
     let [activeProcesses, setActiveProcesses] = useState({submitting: false, resending: false, verifying: false});
-    let [errorMessage, setErrorMessage] = useState({visible: false, text: ""});
     let [passwordFormOpen, setPasswordFormOpen] = useState({open: false});
 
 
     function resetFormChange() {
+        props.closeMessage();
         setFormValues({...initialFormValues});
     }
 
     function handleFormChange(newFormData) {
+
+        props.closeMessage();
+
         let newState = {
             email: formValues.email,
             phone_number: formValues.phone_number,
@@ -78,29 +78,8 @@ export function AccountPageComponent(props) {
             }
         });
 
-        hideErrorSnackbar();
-
         setFormModified({modified: form1Modified});
         setFormValues(newState);
-    }
-
-
-
-
-
-
-    function showErrorSnackbar(text) {
-        setErrorMessage({
-            visible: true,
-            text: text
-        });
-    }
-
-    function hideErrorSnackbar() {
-        setErrorMessage({
-            visible: false,
-            text: errorMessage.text
-        });
     }
 
 
@@ -110,12 +89,12 @@ export function AccountPageComponent(props) {
 
 
     function form2Success() {
-        setErrorMessage({visible: true, text: "Success!"});
+        props.openMessage("Success!");
         setPasswordFormOpen({open: false});
 
         setTimeout(() => {
-            setErrorMessage({visible: false});
-        }, 1000);
+            props.closeMessage();
+        }, 1250);
     }
 
 
@@ -127,9 +106,6 @@ export function AccountPageComponent(props) {
                 <EmailForm value={formValues.email}
                            handleChange={handleFormChange}
 
-                           showErrorSnackbar={showErrorSnackbar}
-                           hideErrorSnackbar={hideErrorSnackbar}
-
                            formModified={formModified.modified}
 
                            activeProcesses={activeProcesses}
@@ -138,9 +114,6 @@ export function AccountPageComponent(props) {
 
                 <PhoneForm value={formValues.phone_number}
                            handleChange={handleFormChange}
-
-                           showErrorSnackbar={showErrorSnackbar}
-                           hideErrorSnackbar={hideErrorSnackbar}
 
                            formModified={formModified.modified}
 
@@ -202,8 +175,6 @@ export function AccountPageComponent(props) {
 
                                 open={formModified.modified}
 
-                                showErrorSnackbar={showErrorSnackbar}
-                                hideErrorSnackbar={hideErrorSnackbar}
                                 success={form2Success}
 
                                 activeProcesses={activeProcesses}
@@ -219,20 +190,8 @@ export function AccountPageComponent(props) {
                           handleClose={() => setPasswordFormOpen({open: false})}
                           language={props.language}
 
-                          showErrorSnackbar={showErrorSnackbar}
-                          hideErrorSnackbar={hideErrorSnackbar}
                           success={form2Success}
             />
-
-            <Snackbar className={classes.snackbar}
-                      open={errorMessage.visible}
-                      anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}>
-                <SnackbarContent
-                    className={classes.snackbarContentError}
-                    aria-describedby="message-id"
-                    message={<span id="message-id">{errorMessage.text}</span>}
-                />
-            </Snackbar>
 
         </Container>
     );
@@ -252,6 +211,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const AccountPage = connect(mapStateToProps, mapDispatchToProps)(AccountPageComponent);

@@ -11,7 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import {useStyles} from './styles';
 import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
-import {handleNewAccountData} from "../../ReduxActions";
+import {closeMessage, handleNewAccountData, openMessage} from "../../ReduxActions";
 import {connect} from "react-redux";
 
 
@@ -53,13 +53,14 @@ export const PasswordFormComponent = (props) => {
             }
         });
 
-        props.hideErrorSnackbar();
+        props.closeMessage();
 
         setFormValues(newState);
     }
 
 
     function cancel() {
+        props.closeMessage();
         setFormValues(initialFormState);
         setSubmitting({submitting: false});
         props.handleClose();
@@ -69,6 +70,7 @@ export const PasswordFormComponent = (props) => {
         if (validation()) {
 
             setSubmitting({submitting: true});
+            props.closeMessage();
 
             // Looks and feels better if the process actually takes some time
             setTimeout(() => {
@@ -87,17 +89,17 @@ export const PasswordFormComponent = (props) => {
                         } else {
                             setSubmitting({submitting: false});
                             if (response.data.status === "password format invalid") {
-                                props.showErrorSnackbar(AccountPageTranslation.passwordInvalid[props.language]);
+                                props.openMessage(AccountPageTranslation.passwordInvalid[props.language]);
                             } else {
                                 console.log(response);
-                                props.showErrorSnackbar(AccountPageTranslation.defaultError[props.language]);
+                                props.openMessage(AccountPageTranslation.defaultError[props.language]);
                             }
                         }
                     }).catch(response => {
                     console.log("Axios promise rejected! Server response:");
                     console.log(response);
                     setSubmitting({submitting: false});
-                    props.showErrorSnackbar(AccountPageTranslation.serverOffline[props.language]);
+                    props.openMessage(AccountPageTranslation.serverOffline[props.language]);
                 });
             }, 1000);
         }
@@ -110,18 +112,18 @@ export const PasswordFormComponent = (props) => {
 
         ["old_password", "new_password", "new_password_confirmation"].forEach(key => {
             if (formValues[key] === "") {
-                props.showErrorSnackbar(AccountPageTranslation.passwordFieldEmpty[props.language]);
+                props.openMessage(AccountPageTranslation.passwordFieldEmpty[props.language]);
                 return false;
             }
         });
 
         if (formValues.new_password !== formValues.new_password_confirmation) {
-            props.showErrorSnackbar(AccountPageTranslation.passwordConfirmationMatch[props.language]);
+            props.openMessage(AccountPageTranslation.passwordConfirmationMatch[props.language]);
             return false;
         }
 
         if (formValues.new_password.length < 8) {
-            props.showErrorSnackbar(AccountPageTranslation.passwordTooShort[props.language]);
+            props.openMessage(AccountPageTranslation.passwordTooShort[props.language]);
             return false;
         }
 
@@ -242,6 +244,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const PasswordForm = connect(mapStateToProps, mapDispatchToProps)(PasswordFormComponent);
