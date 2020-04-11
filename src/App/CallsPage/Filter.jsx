@@ -21,7 +21,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 
 import {CallsPageTranslation} from './CallsPageTranslation';
-import {handleNewAccountData} from "../../ReduxActions";
+import {handleNewAccountData, openMessage, closeMessage} from "../../ReduxActions";
 import clsx from "clsx";
 
 
@@ -83,6 +83,9 @@ function FilterComponent(props) {
     let [languageFilter, setLanguageFilter] = useState(props.filters.language);
 
     function handleTypeFilterClick(newState) {
+
+        props.closeMessage();
+
         if (newState.local !== undefined) {
             if (newState.local) {
                 Object.assign(newState, {global: false})
@@ -102,6 +105,9 @@ function FilterComponent(props) {
     }
 
     function handleLanguageFilterClick(newState) {
+
+        props.closeMessage();
+
         if (newState.german !== undefined) {
             Object.assign(newState, {english: languageFilter.english})
         } else {
@@ -114,16 +120,15 @@ function FilterComponent(props) {
 
 
     let [loadingNewCall, setLoadingNewCall] = useState(false);
-    let [errorMessage, setErrorMessage] = useState({visible: false, text: ""});
-
 
     let [switchingOnline, setSwitchingOnline] = useState(false);
 
 
     function goOnline() {
         if (!props.account.phone_number_verified || !props.account.phone_number_confirmed) {
-            temporaryErrorMessage("Please confirm your phone number first in the account tab.");
+            props.openMessage("Please confirm your phone number first in the account tab.");
         } else {
+            props.closeMessage();
             setSwitchingOnline(true);
             setTimeout(() => {
                 axios.put(BACKEND_URL + "forward/online", {
@@ -155,6 +160,7 @@ function FilterComponent(props) {
 
 
     function goOffline() {
+        props.closeMessage();
         setSwitchingOnline(true);
         setTimeout(() => {
             axios.put(BACKEND_URL + "forward/offline", {
@@ -196,30 +202,15 @@ function FilterComponent(props) {
         })
     }
 
-    function temporaryErrorMessage(text) {
-        setLoadingNewCall(false);
-
-        setErrorMessage({
-            visible: true,
-            text: text,
-        });
-        setTimeout(() => {
-            setErrorMessage({
-                visible: false,
-                text: text,
-            });
-        }, 2000);
-    }
-
     function acceptNewCall() {
 
         if (!props.account.email_verified) {
-            temporaryErrorMessage("Please verify your email first. Resend the verification in the account tab.");
+            props.openMessage("Please verify your email first. Resend the verification in the account tab.");
         } else if (!languageFilter.german && !languageFilter.english) {
-            temporaryErrorMessage(CallsPageTranslation.noLanguage[props.language]);
+            props.openMessage(CallsPageTranslation.noLanguage[props.language]);
         } else {
+            props.closeMessage();
             setLoadingNewCall(true);
-
             setTimeout(() => {
 
                 axios.post(BACKEND_URL + "calls/accept", {
@@ -239,7 +230,7 @@ function FilterComponent(props) {
                             console.log(response.data.calls);
                         } else if (response.data.status === "currently no call available") {
                             setLoadingNewCall(false);
-                            temporaryErrorMessage(CallsPageTranslation.noNewCalls[props.language]);
+                            props.openMessage(CallsPageTranslation.noNewCalls[props.language]);
                             console.log(response.data.status);
                         } else {
                             setLoadingNewCall(false);
@@ -252,7 +243,7 @@ function FilterComponent(props) {
                         console.log("Axios promise rejected! Response:");
                         console.log(response);
 
-                        temporaryErrorMessage(CallsPageTranslation.serverOffline[props.language]);
+                        props.openMessage(CallsPageTranslation.serverOffline[props.language]);
                     });
             }, 1000);
         }
@@ -339,16 +330,6 @@ function FilterComponent(props) {
                     </div>
                 </Grid>
             </Grid>
-
-            <Snackbar className={classes.snackbar}
-                      open={errorMessage.visible}
-                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
-                <SnackbarContent
-                    className={classes.snackbarContentError}
-                    aria-describedby="message-id"
-                    message={<span id="message-id">{errorMessage.text}</span>}
-                />
-            </Snackbar>
         </React.Fragment>
     );
 }
@@ -370,6 +351,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);

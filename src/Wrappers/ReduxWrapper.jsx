@@ -33,6 +33,11 @@ function storeReducer(state = {
         accepted: [],
         fulfilled: []
     },
+
+    message: {
+        open: false,
+        text: ""
+    },
 }, action) {
 
     let newState = cloneDeep(state);
@@ -92,6 +97,15 @@ function storeReducer(state = {
         case "SWITCH_LANGUAGE":
             newState.language = action.language;
             Cookies.set('language', action.language, {expires: 365});
+            return newState;
+
+        case "OPEN_MESSAGE":
+            newState.message.open = true;
+            newState.message.text = action.text;
+            return newState;
+
+        case "CLOSE_MESSAGE":
+            newState.message.open = false;
             return newState;
 
         default:

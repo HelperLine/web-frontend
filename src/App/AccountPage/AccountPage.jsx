@@ -240,7 +240,6 @@ export function AccountPageComponent(props) {
 
 
 /* Redux link -------------------------------------------------------------------- */
-/* Making the RouterComponent watch the loggedIn property of the store */
 
 
 const mapStateToProps = state => ({

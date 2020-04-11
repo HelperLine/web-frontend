@@ -38,3 +38,14 @@ export const switchLanguage = (language) => ({
     type: "SWITCH_LANGUAGE",
     language: language,
 });
+
+
+export const openMessage = (text) => ({
+    type: "OPEN_MESSAGE",
+    text: text,
+});
+
+
+export const closeMessage = () => ({
+    type: "CLOSE_MESSAGE",
+});
