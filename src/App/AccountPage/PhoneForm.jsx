@@ -281,7 +281,7 @@ export const PhoneFormComponent = (props) => {
                         <Button disableElevation variant="contained" className={clsx(classes.button, classes.grayButton)}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
                                 onClick={setState1} startIcon={<AddIcon className={classes.startIcon}/>}>
-                            {WordTranslations.verification[props.language]}
+                            {WordTranslations.phoneNumber[props.language]}
                         </Button>
                     )}
                     {!(props.account.phone_number_verified
@@ -289,7 +289,7 @@ export const PhoneFormComponent = (props) => {
                         <Button variant="contained" color="secondary" className={clsx(classes.button)}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
                                 onClick={setState1} startIcon={<AddIcon className={classes.startIcon}/>}>
-                            {WordTranslations.verification[props.language]}
+                            {WordTranslations.phoneNumber[props.language]}
                         </Button>
                     )}
                     {(props.activeProcesses.verifying && !verifyPopup.open) && (

@@ -129,18 +129,6 @@ export const useStyles = makeStyles(theme => ({
     connectImage: {
         maxHeight: "100%",
     },
-    collaborateDetails: {
-        display: "flex",
-        alignItems: "start",
-        justifyContent: "start",
-        flexDirection: "column",
-    },
-    collaborateCheckboxLine: {
-        display: "flex",
-        alignItems: "start",
-        justifyContent: "start",
-        flexDirection: "row",
-    },
     colorPanel1: {
         marginTop: theme.spacing(6),
         paddingTop: theme.spacing(6),
@@ -166,5 +154,28 @@ export const useStyles = makeStyles(theme => ({
 
         backgroundColor: theme.palette.primary.transparent20,
         width: "100vw",
+    },
+    collaborateDetails: {
+        display: "flex",
+        alignItems: "start",
+        justifyContent: "start",
+        flexDirection: "column",
+    },
+    collaborateCheckboxLine: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "start",
+        flexDirection: "row",
+    },
+    collaborateCheckbox: {
+        fill: theme.palette.secondary.main,
+        margin: theme.spacing(1),
+        cursor: "pointer",
+    },
+    collabPaper: {
+        padding: theme.spacing(1.25),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
 }));

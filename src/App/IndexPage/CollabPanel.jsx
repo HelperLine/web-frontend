@@ -6,7 +6,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from "@material-ui/core/Typography";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import clsx from "clsx";
-import {makeStyles} from "@material-ui/core/styles";
 
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -15,60 +14,15 @@ import {scroller} from 'react-scroll'
 import Paper from "@material-ui/core/Paper";
 
 import {IndexPageTranslation} from '../../Translations/Pages/IndexPageTranslation';
+import {Container} from "@material-ui/core";
+import {Breakpoint} from "react-socks";
+import DrawingCollab from "./images/Drawing_Collab_1200px.png";
+import {useStyles} from './style';
 
 let cloneDeep = require('lodash.clonedeep');
 
 
-const useStyles = makeStyles(theme => ({
-    margin1: {
-        marginBottom: theme.spacing(1),
-    },
-    margin2: {
-        marginBottom: theme.spacing(2),
-    },
-    margin3: {
-        marginBottom: theme.spacing(3),
-    },
-    margin4: {
-        marginBottom: theme.spacing(4),
-    },
-    margin5: {
-        marginBottom: theme.spacing(5),
-    },
-    margin6: {
-        marginBottom: theme.spacing(6),
-    },
-    collaborateDetails: {
-        display: "flex",
-        alignItems: "start",
-        justifyContent: "start",
-        flexDirection: "column",
-    },
-    collaborateCheckboxLine: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "start",
-        flexDirection: "row",
-    },
-    collaborateCheckbox: {
-        fill: theme.palette.secondary.main,
-        margin: theme.spacing(1),
-        cursor: "pointer",
-    },
-    collabPaper: {
-        padding: theme.spacing(1.25),
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    pinkLink: {
-        color: theme.palette.secondary.main,
-        textDecoration: "none",
-    },
-}));
-
-
-export const CollaborateChecklists = (props) => {
+const CollabChecklist = (props) => {
 
     const classes = useStyles();
 
@@ -221,5 +175,34 @@ export const CollaborateChecklists = (props) => {
                 </Paper>
             </Grid>
         </Grid>
+    );
+};
+
+
+export const CollabPanel = (props) => {
+
+    const classes = useStyles();
+
+    return (
+        <Container maxWidth="md">
+
+            <Typography variant="h5" className={clsx(classes.centerText, classes.margin3)}>
+                <strong>{IndexPageTranslation.collab1[props.language]}</strong>
+            </Typography>
+
+            <Breakpoint small down>
+                <div className={clsx(classes.centerBox, classes.connectImageBoxMobile, classes.margin5)}>
+                    <img alt="Collaborate Drawing" src={DrawingCollab} className={classes.connectImage}/>
+                </div>
+            </Breakpoint>
+            <Breakpoint medium up>
+                <div className={clsx(classes.centerBox, classes.connectImageBox, classes.margin5)}>
+                    <img alt="Collaborate Drawing" src={DrawingCollab} className={classes.connectImage}/>
+                </div>
+            </Breakpoint>
+
+            <CollabChecklist language={props.language}/>
+
+        </Container>
     );
 };

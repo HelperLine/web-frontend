@@ -79,25 +79,25 @@ export const CallsPageTranslation = {
 
 
     timeLabelReceived: {
-        enlish: "Received",
+        english: "Received",
         deutsch: "Eingegangen",
     },
     timeLabelAccepted: {
-        enlish: "Accepted",
+        english: "Accepted",
         deutsch: "Akzeptiert",
     },
     timeLabelFulfilled: {
-        enlish: "Fulfilled",
+        english: "Fulfilled",
         deutsch: "Erfüllt",
     },
 
 
     currentlyOnline: {
-        enlish: "Currently Online",
+        english: "Currently Online",
         deutsch: "Zurzeit Online",
     },
     currentlyOffline: {
-        enlish: "Currently Offline",
+        english: "Currently Offline",
         deutsch: "Zurzeit Offline",
     },
 };
