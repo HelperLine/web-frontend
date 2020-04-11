@@ -1,5 +1,4 @@
 
-# [START helperline_frontend_yaml]
 runtime: nodejs10
 
 handlers:
@@ -21,5 +20,3 @@ handlers:
   - url: /.*
     static_files: build/index.html
     upload: build/index.html
-
-# [END helperline_frontend_yaml]

@@ -97,8 +97,6 @@ function FilterComponent(props) {
             }
         }
 
-        // TODO: Push changes to redux and to server
-
         pushFilterChange({type: newState, language: languageFilter});
         setTypeFilter(newState);
     }
@@ -109,8 +107,6 @@ function FilterComponent(props) {
         } else {
             Object.assign(newState, {german: languageFilter.german})
         }
-
-        // TODO: Push changes to redux and to server
 
         pushFilterChange({type: typeFilter, language: newState});
         setLanguageFilter(newState);
@@ -130,7 +126,7 @@ function FilterComponent(props) {
         } else {
             setSwitchingOnline(true);
             setTimeout(() => {
-                axios.put(BACKEND_URL + "backend/forward/online", {
+                axios.put(BACKEND_URL + "forward/online", {
                     email: props.email,
                     api_key: props.api_key,
 
@@ -161,7 +157,7 @@ function FilterComponent(props) {
     function goOffline() {
         setSwitchingOnline(true);
         setTimeout(() => {
-            axios.put(BACKEND_URL + "backend/forward/offline", {
+            axios.put(BACKEND_URL + "forward/offline", {
                 email: props.email,
                 api_key: props.api_key,
 
@@ -183,7 +179,7 @@ function FilterComponent(props) {
 
 
     function pushFilterChange(newState) {
-        axios.put(BACKEND_URL + "backend/database/account", {
+        axios.put(BACKEND_URL + "database/helper", {
             email: props.email,
             api_key: props.api_key,
 
@@ -226,7 +222,7 @@ function FilterComponent(props) {
 
             setTimeout(() => {
 
-                axios.post(BACKEND_URL + "backend/calls/accept", {
+                axios.post(BACKEND_URL + "calls/accept", {
                     email: props.email,
                     api_key: props.api_key,
 

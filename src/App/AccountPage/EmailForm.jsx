@@ -29,7 +29,7 @@ export const EmailFormComponent = (props) => {
         props.hideErrorSnackbar();
         props.setActiveProcesses({resending: true});
 
-        axios.post(BACKEND_URL + "backend/email/resend", {
+        axios.post(BACKEND_URL + "email/resend", {
             email: props.email,
             api_key: props.api_key,
         })

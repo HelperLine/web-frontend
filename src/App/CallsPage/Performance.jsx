@@ -82,18 +82,6 @@ function PerformanceComponent(props) {
                                             value={props.performance.area.calls}/>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Grid container spacing={2} justify="center">
-                            <Grid item xs={12} className={classes.performanceImageContainerMobile}>
-                                <img src={SelfDrawing} alt={CallsPageTranslation.performanceAlt2[props.language]}
-                                     className={classes.performanceImage}/>
-                            </Grid>
-                            <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
-                                            value={props.performance.account.registered}/>
-                            <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                            value={props.performance.account.calls}/>
-                        </Grid>
-                    </Grid>
                 </Grid>
             </Breakpoint>
             <Breakpoint medium up>
@@ -110,18 +98,6 @@ function PerformanceComponent(props) {
                                             value={props.performance.area.callers}/>
                             <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
                                             value={props.performance.area.calls}/>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Grid container spacing={2} justify="center">
-                            <Grid item xs={12} className={classes.performanceImageContainer}>
-                                <img src={SelfDrawing} alt={CallsPageTranslation.performanceAlt2[props.language]}
-                                     className={classes.performanceImage}/>
-                            </Grid>
-                            <PerformanceRow text={CallsPageTranslation.performanceKey4[props.language]}
-                                            value={props.performance.account.registered}/>
-                            <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                            value={props.performance.account.calls}/>
                         </Grid>
                     </Grid>
                 </Grid>

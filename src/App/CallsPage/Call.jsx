@@ -105,7 +105,7 @@ export function CallComponent(props) {
             setFulfillCallActive(true);
         }
 
-        axios.put(BACKEND_URL + "backend/database/call", {
+        axios.put(BACKEND_URL + "database/call", {
             email: props.email,
             api_key: props.api_key,
             call_id: props.call.call_id,

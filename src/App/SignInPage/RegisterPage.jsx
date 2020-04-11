@@ -27,7 +27,7 @@ import Grid from "@material-ui/core/Grid";
 import {SignInTranslation} from "./SignInTranslation";
 
 
-var cloneDeep = require('lodash.clonedeep');
+let cloneDeep = require('lodash.clonedeep');
 
 
 const useStyles = makeStyles(theme => ({
@@ -167,11 +167,11 @@ export function RegisterPageComponent(props) {
         return formValid;
     }
 
-    function handleLogin() {
+    function handleRegister() {
         startLoading();
 
         if (formValidation()) {
-            axios.post(BACKEND_URL + "backend/database/account", {
+            axios.post(BACKEND_URL + "database/helper", {
                 email: state.formData.email,
                 password: state.formData.password,
 
@@ -302,7 +302,7 @@ export function RegisterPageComponent(props) {
                     <Grid item xs={12} sm={6}>
                         <CustomTextField
                             required
-                            ref={zipInputRef} onTab={focusEmail} onEnter={handleLogin} onEscape={blurZip}
+                            ref={zipInputRef} onTab={focusEmail} onEnter={handleRegister} onEscape={blurZip}
                             className={classes.textField} variant="outlined" label={SignInTranslation.zipCode[props.language]} fullWidth
                             value={state.formData.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
                     </Grid>
@@ -330,7 +330,7 @@ export function RegisterPageComponent(props) {
                         <Button variant="contained"
                                 disabled={state.loading}
                                 color="secondary"
-                                onClick={handleLogin}
+                                onClick={handleRegister}
                                 className={classes.button}>{SignInTranslation.register[props.language]}</Button>
                         {state.loading && (
                             <CircularProgress size={24}

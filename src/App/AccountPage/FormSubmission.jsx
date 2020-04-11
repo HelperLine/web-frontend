@@ -22,7 +22,7 @@ const FormSubmissionComponent = (props) => {
         if (validation()) {
             // Looks and feels better if the process actually takes some time
             setTimeout(() => {
-                axios.put(BACKEND_URL + "backend/database/account", {
+                axios.put(BACKEND_URL + "database/account", {
                     email: props.email,
                     api_key: props.api_key,
 

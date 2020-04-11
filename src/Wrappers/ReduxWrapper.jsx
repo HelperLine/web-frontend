@@ -109,7 +109,7 @@ let cookieApiKey =  Cookies.get('api_key');
 
 if (cookieEmail !== undefined && cookieApiKey !== undefined) {
     store.dispatch(startAutoLogin());
-    axios.post(BACKEND_URL + "backend/login/helper", {email: cookieEmail, api_key: cookieApiKey})
+    axios.post(BACKEND_URL + "login/helper", {email: cookieEmail, api_key: cookieApiKey})
         .then(response => {
             if (response.data.status === "ok") {
                 // Instant view-change looks laggy rather than fast -> 1.0 second delay

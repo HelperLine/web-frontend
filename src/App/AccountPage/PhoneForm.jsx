@@ -194,7 +194,7 @@ export const PhoneFormComponent = (props) => {
 
 
     function triggerFetchingCode() {
-        axios.post(BACKEND_URL + "backend/phone/trigger", {
+        axios.post(BACKEND_URL + "phone/trigger", {
             email: props.email,
             api_key: props.api_key,
         })
@@ -218,7 +218,7 @@ export const PhoneFormComponent = (props) => {
 
 
     function triggerFetchingPhoneNumber() {
-        axios.put(BACKEND_URL + "backend/database/account", {
+        axios.put(BACKEND_URL + "database/helper", {
             email: props.email,
             api_key: props.api_key,
         })
@@ -246,7 +246,7 @@ export const PhoneFormComponent = (props) => {
 
 
     function triggerFetchingConfirmation() {
-        axios.post(BACKEND_URL + "backend/phone/confirm", {
+        axios.post(BACKEND_URL + "phone/confirm", {
             email: props.email,
             api_key: props.api_key,
         })

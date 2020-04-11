@@ -26,7 +26,7 @@ import Grid from "@material-ui/core/Grid";
 import {SignInTranslation} from "./SignInTranslation";
 
 
-var cloneDeep = require('lodash.clonedeep');
+let cloneDeep = require('lodash.clonedeep');
 
 
 const useStyles = makeStyles(theme => ({
@@ -125,7 +125,7 @@ export function LoginPageComponent(props) {
     function handleLogin() {
         startLoading();
 
-        axios.post(BACKEND_URL + "backend/login/helper", {email: state.email, password: state.password})
+        axios.post(BACKEND_URL + "login/helper", {email: state.email, password: state.password})
             .then(response => {
 
                 setTimeout(() => {

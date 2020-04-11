@@ -72,7 +72,7 @@ export const PasswordFormComponent = (props) => {
 
             // Looks and feels better if the process actually takes some time
             setTimeout(() => {
-                axios.put(BACKEND_URL + "backend/database/account", {
+                axios.put(BACKEND_URL + "database/helper", {
                     email: props.email,
                     api_key: props.api_key,
 
@@ -83,6 +83,7 @@ export const PasswordFormComponent = (props) => {
                         if (response.data.status === "ok") {
                             setSubmitting({submitting: false});
                             props.success();
+                            setFormValues(initialFormState);
                         } else {
                             setSubmitting({submitting: false});
                             if (response.data.status === "password format invalid") {
