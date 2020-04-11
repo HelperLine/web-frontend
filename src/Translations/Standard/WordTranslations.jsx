@@ -75,6 +75,10 @@ export const WordTranslation = {
         english: "Phone Number",
         deutsch: "Telefonnummer",
     },
+    code: {
+        english: "Code",
+        deutsch: "Code",
+    },
     verification: {
         english: "Verification",
         deutsch: "Bestätigung",
@@ -102,6 +106,21 @@ export const WordTranslation = {
     language: {
         english: "Language",
         deutsch: "Sprache"
-    }
+    },
+
+
+    comment: {
+        english: "Comment",
+        deutsch: "Kommentar",
+    },
+    reject: {
+        english: "Reject",
+        deutsch: "Ablehnen",
+    },
+    done: {
+        english: "Done",
+        deutsch: "Erledigt",
+    },
+
 };
 

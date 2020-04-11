@@ -30,7 +30,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {NavbarTranslation} from "../../Translations/Pages/NavbarTranslation";
+import {ConfirmationMessageTranslation} from "../../Translations/Standard/ConfirmationMessageTranslation";
 import {WordTranslation} from "../../Translations/Standard/WordTranslations";
 
 import LanguageIcon from '@material-ui/icons/Language';
@@ -256,7 +256,7 @@ function NavbarComponent(props) {
                 <div className={classes.logoutDialogWrapper}>
 
                     <Typography variant="h6"
-                                className={classes.logoutDialogTitle}>{NavbarTranslation.logoutQuestion[props.language]}</Typography>
+                                className={classes.logoutDialogTitle}>{ConfirmationMessageTranslation.areYourSure[props.language]}</Typography>
 
                     <div className="ButtonBox">
                         <div className={classes.logoutDialogButtonWrapper}>

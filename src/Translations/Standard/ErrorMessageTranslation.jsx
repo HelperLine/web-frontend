@@ -61,4 +61,9 @@ export const ErrorMessageTranslation = {
         english: "Zip invalid",
         deutsch: "Postleitzahl undgültig",
     },
+    pleaseVerifyEmail: {
+        english: "Please verify your email first. Resend the verification in the account tab.",
+        deutsch: "Bitte bestätigen Sie Ihre Email-Addresse. Eine weitere Bestätigungs-Email " +
+            "erhalten Sie auf der Accout Seite.",
+    }
 };

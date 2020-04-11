@@ -205,7 +205,7 @@ function FilterComponent(props) {
     function acceptNewCall() {
 
         if (!props.account.email_verified) {
-            props.openMessage("Please verify your email first. Resend the verification in the account tab.");
+            props.openMessage(ErrorMessageTranslation.pleaseVerifyEmail[props.language]);
         } else if (!languageFilter.german && !languageFilter.english) {
             props.openMessage(ErrorMessageTranslation.noLanguageSelected[props.language]);
         } else {
@@ -324,7 +324,9 @@ function FilterComponent(props) {
                                         )
                                     }
                                     className={clsx(classes.button, (!props.account.online ? classes.grayButton : ""))}>
-                                {props.account.online ? "Currently Online" : "Currently Offline"}
+                                {props.account.online ?
+                                    CallsPageTranslation.currentlyOnline[props.language] :
+                                    CallsPageTranslation.currentlyOffline[props.language]}
                             </Button>
                         </div>
                     </div>

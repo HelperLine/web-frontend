@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 import clsx from "clsx";
 
-import {AccountPageTranslation} from "../../Translations/Pages/AccountPageTranslation";
 import {WordTranslation} from "../../Translations/Standard/WordTranslations";
 import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
 

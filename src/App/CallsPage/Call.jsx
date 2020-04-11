@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 
 
 import Typography from "@material-ui/core/Typography";
-import {handleNewAccountData} from "../../ReduxActions";
+import {handleNewAccountData, openMessage, closeMessage} from "../../ReduxActions";
 import {connect} from "react-redux";
 import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
@@ -19,6 +19,9 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 
+import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
 
 import CloudOffIcon from '@material-ui/icons/CloudOff';
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
@@ -134,6 +137,7 @@ export function CallComponent(props) {
 
                 console.log("Axios promise rejected! Response:");
                 console.log(response);
+                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
             });
     }
 
@@ -180,7 +184,7 @@ export function CallComponent(props) {
     return (
 
         <ExpansionPanel elevation={2}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon onClick={props.closeMessage}
                 className={(props.call.status === "accepted") ? classes.expandIconAccepted : classes.expandIconFulfilled}/>}>
                 <Grid container spacing={0}>
                     <Grid item xs={12} md={12} lg={4} className={classes.centerLeftBox}>
@@ -194,14 +198,25 @@ export function CallComponent(props) {
                         <Typography
                             variant="subtitle1"
                             className={(props.call.status === "fulfilled") ? classes.fulfilledText : ""}>
-                            Received: <strong>{props.call.timestamp_received}</strong>
+                            {CallsPageTranslation.timeLabelReceived[props.language]}: <strong>{props.call.timestamp_received}</strong>
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={6} lg={4} className={clsx(classes.centerLeftBox, classes.timestampBox)}>
                         <Typography
                             variant="subtitle1"
                             className={(props.call.status === "fulfilled") ? classes.fulfilledText : ""}>
-                            Accepted: <strong>{props.call.timestamp_accepted}</strong>
+                            {(props.call.status === "accepted") && (
+                                <React.Fragment>
+                                    {CallsPageTranslation.timeLabelAccepted[props.language]}:
+                                    <strong>{props.call.timestamp_accepted}</strong>
+                                </React.Fragment>
+                            )}
+                            {(props.call.status === "fulfilled") && (
+                                <React.Fragment>
+                                    {CallsPageTranslation.timeLabelFulfilled[props.language]}:
+                                    <strong>{props.call.timestamp_fulfilled}</strong>
+                                </React.Fragment>
+                            )}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -209,7 +224,7 @@ export function CallComponent(props) {
             <ExpansionPanelDetails>
                 <div className={classes.callDetailsBox}>
                     <CustomTextField
-                        label="Comments"
+                        label={WordTranslation.comment[props.language]}
                         multiline={true}
                         fullWidth={true}
                         rows="4"
@@ -237,7 +252,7 @@ export function CallComponent(props) {
                                             <ClearIcon/>
                                         }
                                         className={clsx(classes.button, classes.disabledButton)}>
-                                    Reject
+                                    {WordTranslation.reject[props.language]}
                                 </Button>
                                 <Button variant="contained" disableElevation
                                         disabled={rejectCallActive || fulfillCallActive}
@@ -248,7 +263,7 @@ export function CallComponent(props) {
                                             <CheckIcon/>
                                         }
                                         className={classes.button}>
-                                    Done
+                                    {WordTranslation.done[props.language]}
                                 </Button>
                             </div>
                         </div>
@@ -269,6 +284,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
+    openMessage: (text) => dispatch(openMessage(text)),
+    closeMessage: () => dispatch(closeMessage()),
 });
 
 export const Call = connect(mapStateToProps, mapDispatchToProps)(CallComponent);

@@ -76,5 +76,29 @@ export const CallsPageTranslation = {
         english: "No Fulfilled Calls",
         deutsch: "Keine Abgeschlossenen Anrufe",
     },
+
+
+    timeLabelReceived: {
+        enlish: "Received",
+        deutsch: "Eingegangen",
+    },
+    timeLabelAccepted: {
+        enlish: "Accepted",
+        deutsch: "Akzeptiert",
+    },
+    timeLabelFulfilled: {
+        enlish: "Fulfilled",
+        deutsch: "Erfüllt",
+    },
+
+
+    currentlyOnline: {
+        enlish: "Currently Online",
+        deutsch: "Zurzeit Online",
+    },
+    currentlyOffline: {
+        enlish: "Currently Offline",
+        deutsch: "Zurzeit Offline",
+    },
 };
 

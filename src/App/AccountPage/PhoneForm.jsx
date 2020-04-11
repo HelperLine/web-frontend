@@ -7,6 +7,7 @@ import {CustomTextField} from "../../Components/CustomTextField";
 import {AccountPageTranslation} from "../../Translations/Pages/AccountPageTranslation";
 import {WordTranslation} from "../../Translations/Standard/WordTranslations";
 import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+import {ConfirmationMessageTranslation} from "../../Translations/Standard/ConfirmationMessageTranslation";
 
 import {useStyles} from './styles';
 import axios from "axios";
@@ -233,11 +234,12 @@ export const PhoneFormComponent = (props) => {
                         setState4(phone_number);
                     } else {
                         setState2(verifyPopup.code);
-                        props.openMessage("Are you sure?");
+                        props.openMessage(ConfirmationMessageTranslation.areYourSure[props.language]);
                     }
                 } else {
                     setState0();
-                    props.openMessage(response.data.status);
+                    console.log(response);
+                    props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
                 }
             }).catch(response => {
                 console.log("Axios promise rejected! Server response:");
@@ -315,20 +317,22 @@ export const PhoneFormComponent = (props) => {
                 <Container maxWidth="sm" className={classes.phoneDialog}>
 
                     <Typography variant="h5" className={classes.phoneDialogTitle}>
-                        <strong>Phone Number Confirmation</strong>
+                        <strong>{AccountPageTranslation.phonePopupTitle[props.language]}</strong>
                     </Typography>
 
 
 
                     {verifyPopup.popupStyle === 1 && (
                         <Typography variant="subtitle1" className={classes.phoneDialogText}>
-                            Please call <a href="tel:+493025555301" className={classes.pinkLink}><strong>+49 30 2555 5301</strong></a> with the phone number you want to confirm.
+                            {AccountPageTranslation.phonePopupText11[props.language]}&nbsp;
+                            <a href="tel:+493025555301" className={classes.pinkLink}><strong>+49 30 2555 5301</strong></a>&nbsp;
+                            {AccountPageTranslation.phonePopupText12[props.language]}
                         </Typography>
                     )}
 
                     {verifyPopup.popupStyle === 2 && (
                         <Typography variant="subtitle1" className={classes.phoneDialogText}>
-                            Is this your phone number?
+                            {AccountPageTranslation.phonePopupText2[props.language]}
                         </Typography>
                     )}
 
@@ -336,14 +340,14 @@ export const PhoneFormComponent = (props) => {
 
                     {verifyPopup.popupStyle === 1 && (
                         <Typography variant="h5" className={classes.phoneDialogCode}>
-                            Code: <strong>{verifyPopup.code}</strong>
-                            &nbsp; ({formatCountdown(countdown.minutes_left, countdown.seconds_left)})
+                            {WordTranslation.code[props.language]}: <strong>{verifyPopup.code}</strong> &nbsp;
+                            ({formatCountdown(countdown.minutes_left, countdown.seconds_left)})
                         </Typography>
                     )}
 
                     {verifyPopup.popupStyle === 2 && (
                         <Typography variant="h5" className={classes.phoneDialogCode}>
-                            Phone Number: <strong>{verifyPopup.phone_number}</strong>
+                            {WordTranslation.phoneNumber[props.language]}: <strong>{verifyPopup.phone_number}</strong>
                         </Typography>
                     )}
 
