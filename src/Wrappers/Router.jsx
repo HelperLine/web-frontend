@@ -16,7 +16,6 @@ import {CallsPage} from "../App/CallsPage/CallsPage";
 import {GuidePage} from "../App/GuidePage/GuidePage";
 import {IndexPage} from "../App/IndexPage/IndexPage";
 import {NotFoundPage} from "../App/NotFoundPage/NotFoundPage";
-// import {Footer} from "../App/Footer/Footer";
 
 
 /* Component --------------------------------------------------------------------- */

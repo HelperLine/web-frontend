@@ -16,11 +16,11 @@ import CloudDoneIcon from '@material-ui/icons/CloudDone';
 
 import {CircularProgress} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import Snackbar from "@material-ui/core/Snackbar";
 
 
-import {CallsPageTranslation} from './CallsPageTranslation';
+import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
+import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+
 import {handleNewAccountData, openMessage, closeMessage} from "../../ReduxActions";
 import clsx from "clsx";
 
@@ -207,7 +207,7 @@ function FilterComponent(props) {
         if (!props.account.email_verified) {
             props.openMessage("Please verify your email first. Resend the verification in the account tab.");
         } else if (!languageFilter.german && !languageFilter.english) {
-            props.openMessage(CallsPageTranslation.noLanguage[props.language]);
+            props.openMessage(ErrorMessageTranslation.noLanguageSelected[props.language]);
         } else {
             props.closeMessage();
             setLoadingNewCall(true);
@@ -230,7 +230,7 @@ function FilterComponent(props) {
                             console.log(response.data.calls);
                         } else if (response.data.status === "currently no call available") {
                             setLoadingNewCall(false);
-                            props.openMessage(CallsPageTranslation.noNewCalls[props.language]);
+                            props.openMessage(ErrorMessageTranslation.noNewCalls[props.language]);
                             console.log(response.data.status);
                         } else {
                             setLoadingNewCall(false);
@@ -243,7 +243,7 @@ function FilterComponent(props) {
                         console.log("Axios promise rejected! Response:");
                         console.log(response);
 
-                        props.openMessage(CallsPageTranslation.serverOffline[props.language]);
+                        props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
                     });
             }, 1000);
         }

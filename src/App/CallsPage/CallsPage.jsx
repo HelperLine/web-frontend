@@ -1,23 +1,16 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-
 import {connect} from 'react-redux';
-
 import {Container} from "@material-ui/core";
 import {Typography} from "@material-ui/core";
-
 import Divider from "@material-ui/core/Divider";
-
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-
-
 import {Call} from "./Call";
-
-
 import './CallsPage.scss';
 
-import {CallsPageTranslation} from "./CallsPageTranslation";
+import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
+
 import {Performance} from "./Performance";
 import {Filter} from "./Filter";
 import clsx from "clsx";

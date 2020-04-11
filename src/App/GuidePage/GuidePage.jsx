@@ -10,7 +10,7 @@ import './GuidePage.scss';
 import {handleNewAccountData} from "../../ReduxActions";
 import {connect} from "react-redux";
 
-import {GuidePageTranslation} from "./GuidePageTranslation";
+import {GuidePageTranslation} from "../../Translations/Pages/GuidePageTranslation";
 
 
 const useStyles = makeStyles(theme => ({

@@ -6,10 +6,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 import CommunityDrawing from './images/Drawing_Performance_Community_800px.png';
-import SelfDrawing from './images/Drawing_Performance_Self_800px.png';
 
+import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
 
-import {CallsPageTranslation} from './CallsPageTranslation';
 import {Breakpoint} from "react-socks";
 
 

@@ -4,10 +4,12 @@ import {Button, CircularProgress, Container} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 import clsx from "clsx";
-import {AccountPageTranslation} from "./AccountPageTranslation";
+
+import {AccountPageTranslation} from "../../Translations/Pages/AccountPageTranslation";
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+
 import Dialog from "@material-ui/core/Dialog";
-
-
 import {useStyles} from './styles';
 import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
@@ -89,18 +91,18 @@ export const PasswordFormComponent = (props) => {
                         } else {
                             setSubmitting({submitting: false});
                             if (response.data.status === "password format invalid") {
-                                props.openMessage(AccountPageTranslation.passwordInvalid[props.language]);
+                                props.openMessage(ErrorMessageTranslation.passwordInvalid[props.language]);
                             } else {
                                 console.log(response);
-                                props.openMessage(AccountPageTranslation.defaultError[props.language]);
+                                props.openMessage(ErrorMessageTranslation.defaultError[props.language]);
                             }
                         }
                     }).catch(response => {
-                    console.log("Axios promise rejected! Server response:");
-                    console.log(response);
-                    setSubmitting({submitting: false});
-                    props.openMessage(AccountPageTranslation.serverOffline[props.language]);
-                });
+                        console.log("Axios promise rejected! Server response:");
+                        console.log(response);
+                        setSubmitting({submitting: false});
+                        props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                    });
             }, 1000);
         }
 
@@ -112,18 +114,18 @@ export const PasswordFormComponent = (props) => {
 
         ["old_password", "new_password", "new_password_confirmation"].forEach(key => {
             if (formValues[key] === "") {
-                props.openMessage(AccountPageTranslation.passwordFieldEmpty[props.language]);
+                props.openMessage(ErrorMessageTranslation.passwordFieldEmpty[props.language]);
                 return false;
             }
         });
 
         if (formValues.new_password !== formValues.new_password_confirmation) {
-            props.openMessage(AccountPageTranslation.passwordConfirmationMatch[props.language]);
+            props.openMessage(ErrorMessageTranslation.passwordConfirmationMatch[props.language]);
             return false;
         }
 
         if (formValues.new_password.length < 8) {
-            props.openMessage(AccountPageTranslation.passwordTooShort[props.language]);
+            props.openMessage(ErrorMessageTranslation.passwordTooShort[props.language]);
             return false;
         }
 
@@ -168,7 +170,7 @@ export const PasswordFormComponent = (props) => {
                             onTab={focus2} onEnter={focus2}
                             onEscape={blur1}
 
-                            label={AccountPageTranslation.oldPassword[props.language]} fullWidth
+                            label={WordTranslation.oldPassword[props.language]} fullWidth
                             value={formValues.old_password}
                             onChange={(value) => handleFormChange({old_password: value})}/>
                     </Grid>
@@ -183,7 +185,7 @@ export const PasswordFormComponent = (props) => {
                             onTab={focus3} onEnter={focus3}
                             onEscape={blur2}
 
-                            label={AccountPageTranslation.newPassword[props.language]} fullWidth
+                            label={WordTranslation.newPassword[props.language]} fullWidth
                             value={formValues.new_password}
                             onChange={(value) => handleFormChange({new_password: value})}/>
                     </Grid>
@@ -198,7 +200,7 @@ export const PasswordFormComponent = (props) => {
                             onTab={submit} onEnter={submit}
                             onEscape={blur3}
 
-                            label={AccountPageTranslation.newPasswordConfirmation[props.language]} fullWidth
+                            label={WordTranslation.newPasswordConfirmation[props.language]} fullWidth
                             value={formValues.new_password_confirmation}
                             onChange={(value) => handleFormChange({new_password_confirmation: value})}/>
                     </Grid>
@@ -210,14 +212,14 @@ export const PasswordFormComponent = (props) => {
                                         disabled={submitting.submitting}
                                         color="secondary"
                                         onClick={cancel}
-                                        className={classes.button}>{AccountPageTranslation.cancel[props.language]}</Button>
+                                        className={classes.button}>{WordTranslation.cancel[props.language]}</Button>
                             </div>
                             <div className={classes.wrapper}>
                                 <Button variant="contained"
                                         disabled={submitting.submitting}
                                         color="secondary"
                                         onClick={submit}
-                                        className={classes.button}>{AccountPageTranslation.submit[props.language]}</Button>
+                                        className={classes.button}>{WordTranslation.submit[props.language]}</Button>
                                 {submitting.submitting && (
                                     <CircularProgress size={24}
                                                       className={classes.buttonProgress}

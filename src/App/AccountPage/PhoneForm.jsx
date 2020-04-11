@@ -3,8 +3,10 @@ import React, {useState} from 'react';
 import {Button, CircularProgress, Container} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
-import {AccountPageTranslation} from "./AccountPageTranslation";
 
+import {AccountPageTranslation} from "../../Translations/Pages/AccountPageTranslation";
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
 
 import {useStyles} from './styles';
 import axios from "axios";
@@ -209,12 +211,12 @@ export const PhoneFormComponent = (props) => {
                     props.openMessage(response.data.status);
                 }
             }).catch(response => {
-            console.log("Axios promise rejected! Server response:");
-            console.log(response);
-            setState0();
-            props.setActiveProcesses({verifying: false});
-            props.openMessage(AccountPageTranslation.serverOffline[props.language]);
-        });
+                console.log("Axios promise rejected! Server response:");
+                console.log(response);
+                setState0();
+                props.setActiveProcesses({verifying: false});
+                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+            });
     }
 
 
@@ -238,11 +240,11 @@ export const PhoneFormComponent = (props) => {
                     props.openMessage(response.data.status);
                 }
             }).catch(response => {
-            console.log("Axios promise rejected! Server response:");
-            console.log(response);
-            setState0();
-            props.openMessage(AccountPageTranslation.serverOffline[props.language]);
-        });
+                console.log("Axios promise rejected! Server response:");
+                console.log(response);
+                setState0();
+                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+            });
     }
 
 
@@ -263,7 +265,7 @@ export const PhoneFormComponent = (props) => {
             console.log("Axios promise rejected! Server response:");
             console.log(response);
             setState0();
-            props.openMessage(AccountPageTranslation.serverOffline[props.language]);
+            props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
         });
     }
 
@@ -277,7 +279,7 @@ export const PhoneFormComponent = (props) => {
                     disabled className={classes.textField} variant="outlined"
                     value={(props.account.phone_number_verified
                         && props.account.phone_number_confirmed) ? props.account.phone_number : ""}
-                    label={AccountPageTranslation.phoneNumber[props.language]} fullWidth/>
+                    label={WordTranslation.phoneNumber[props.language]} fullWidth/>
             </Grid>
 
             <Grid item xs={12} md={4} className={classes.flexButtonBox}>
@@ -287,7 +289,7 @@ export const PhoneFormComponent = (props) => {
                         <Button disableElevation variant="contained" className={clsx(classes.button, classes.grayButton)}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
                                 onClick={setState1} startIcon={<AddIcon className={classes.startIcon}/>}>
-                            {AccountPageTranslation.verifyPhoneNumber[props.language]}
+                            {WordTranslation.verification[props.language]}
                         </Button>
                     )}
                     {!(props.account.phone_number_verified
@@ -295,7 +297,7 @@ export const PhoneFormComponent = (props) => {
                         <Button variant="contained" color="secondary" className={clsx(classes.button)}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
                                 onClick={setState1} startIcon={<AddIcon className={classes.startIcon}/>}>
-                            {AccountPageTranslation.verifyPhoneNumber[props.language]}
+                            {WordTranslation.verification[props.language]}
                         </Button>
                     )}
                     {(props.activeProcesses.verifying && !verifyPopup.open) && (
@@ -371,7 +373,7 @@ export const PhoneFormComponent = (props) => {
                                             variant="contained" className={clsx(classes.button, classes.grayButton)}
                                             disabled={verifyPopup.fetchingCode || verifyPopup.fetchingConfirmation}
                                             onClick={setState1}>
-                                        {AccountPageTranslation.no[props.language]}
+                                        {WordTranslation.no[props.language]}
                                     </Button>
                                     {verifyPopup.fetchingCode && (
                                         <CircularProgress size={24} className={classes.buttonProgress}
@@ -384,7 +386,7 @@ export const PhoneFormComponent = (props) => {
                                             variant="contained" color="secondary" className={classes.button}
                                             disabled={verifyPopup.fetchingConfirmation}
                                             onClick={setState5}>
-                                        {AccountPageTranslation.yes[props.language]}
+                                        {WordTranslation.yes[props.language]}
                                     </Button>
                                     {verifyPopup.fetchingConfirmation && (
                                         <CircularProgress size={24} className={classes.buttonProgress}

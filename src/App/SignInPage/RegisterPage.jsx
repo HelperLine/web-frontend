@@ -13,9 +13,6 @@ import {CircularProgress} from "@material-ui/core";
 
 import {CustomTextField} from "../../Components/CustomTextField";
 
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-
 import axios from 'axios';
 
 import './SignInPage.scss';
@@ -24,7 +21,9 @@ import {BACKEND_URL} from "../../secrets";
 
 import Grid from "@material-ui/core/Grid";
 
-import {SignInTranslation} from "./SignInTranslation";
+import {SignInTranslation} from "../../Translations/Pages/SignInTranslation";
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
 
 
 let cloneDeep = require('lodash.clonedeep');
@@ -101,7 +100,7 @@ export function RegisterPageComponent(props) {
             passwordConfirmation: "",
 
             zip: "",
-            country: SignInTranslation.germany[props.language],
+            country: WordTranslation.germany[props.language],
         },
         loading: false,
     });
@@ -133,21 +132,21 @@ export function RegisterPageComponent(props) {
 
         ["email", "password", "passwordConfirmation", "zip", "country"].forEach(key => {
             if (state.formData[key] === "") {
-                props.openMessage(SignInTranslation.fieldEmpty[props.language]);
+                props.openMessage(ErrorMessageTranslation.fieldEmpty[props.language]);
                 formValid = false;
             }
         });
 
         if (formValid) {
             if (state.formData["password"] !== state.formData["passwordConfirmation"]) {
-                props.openMessage(SignInTranslation.passwordConfirmationMatch[props.language]);
+                props.openMessage(ErrorMessageTranslation.passwordConfirmationMatch[props.language]);
                 formValid = false;
             }
         }
 
         if (formValid) {
             if (state.formData["password"].length < 8) {
-                props.openMessage(SignInTranslation.passwordTooShort[props.language]);
+                props.openMessage(ErrorMessageTranslation.passwordTooShort[props.language]);
                 formValid = false;
             }
         }
@@ -166,7 +165,7 @@ export function RegisterPageComponent(props) {
                 password: state.formData.password,
 
                 zip_code: state.formData.zip,
-                country: SignInTranslation.germany[props.language],
+                country: WordTranslation.germany[props.language],
             })
                 .then(response => {
 
@@ -176,30 +175,30 @@ export function RegisterPageComponent(props) {
                                 props.handleLogin(response);
                                 break;
                             case "email format invalid":
-                                openMessage(SignInTranslation.emailInvalid[props.language]);
+                                openMessage(ErrorMessageTranslation.emailInvalid[props.language]);
                                 break;
                             case "password format invalid":
-                                openMessage(SignInTranslation.passwordInvalid[props.language]);
+                                openMessage(ErrorMessageTranslation.passwordInvalid[props.language]);
                                 break;
                             case "zip code format invalid":
-                                openMessage(SignInTranslation.zipCodeInvalid[props.language]);
+                                openMessage(ErrorMessageTranslation.zipCodeInvalid[props.language]);
                                 break;
                             case "country invalid":
-                                openMessage(SignInTranslation.countryInvalid[props.language]);
+                                openMessage(ErrorMessageTranslation.countryInvalid[props.language]);
                                 break;
                             case "email already taken":
-                                openMessage(SignInTranslation.emailTaken[props.language]);
+                                openMessage(ErrorMessageTranslation.emailTaken[props.language]);
                                 break;
                             default:
                                 console.log(response.data);
-                                props.openMessage(SignInTranslation.defaultError[props.language]);
+                                props.openMessage(ErrorMessageTranslation.defaultError[props.language]);
                                 break;
                         }
                     }, 1000);
                 }).catch(response => {
                 console.log("Axios promise rejected! Response:");
                 console.log(response);
-                props.openMessage(SignInTranslation.serverOffline[props.language]);
+                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
             });
         }
     }
@@ -253,7 +252,7 @@ export function RegisterPageComponent(props) {
     return (
         <Container maxWidth="md" className="SignInPage">
             <div className="SignInForm">
-                <Typography variant="h3" className={classes.title}>{SignInTranslation.register[props.language]}</Typography>
+                <Typography variant="h3" className={classes.title}>{WordTranslation.register[props.language]}</Typography>
 
                 <Grid container spacing={1} className={classes.formContainer}>
 
@@ -261,7 +260,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required
                             ref={emailInputRef} onTab={focusPassword} onEnter={focusPassword} onEscape={blurEmail}
-                            className={classes.textField} variant="outlined" label={SignInTranslation.email[props.language]} fullWidth
+                            className={classes.textField} variant="outlined" label={WordTranslation.email[props.language]} fullWidth
                             value={state.formData.email} onChange={(email) => handleFormChange({email: email})}/>
                     </Grid>
 
@@ -270,7 +269,7 @@ export function RegisterPageComponent(props) {
                             required type="password"
                             ref={passwordInputRef} onTab={focusPasswordConfirmation} onEnter={focusPasswordConfirmation}
                             onEscape={blurPassword}
-                            className={classes.textField} variant="outlined" label={SignInTranslation.password[props.language]} fullWidth
+                            className={classes.textField} variant="outlined" label={WordTranslation.password[props.language]} fullWidth
                             value={state.formData.password}
                             onChange={(password) => handleFormChange({password: password})}/>
                     </Grid>
@@ -280,7 +279,7 @@ export function RegisterPageComponent(props) {
                             required type="password"
                             ref={passwordConfirmationInputRef} onTab={focusZip} onEnter={focusZip}
                             onEscape={blurPasswordConfirmation}
-                            className={classes.textField} variant="outlined" label={SignInTranslation.confirmPassword[props.language]} fullWidth
+                            className={classes.textField} variant="outlined" label={WordTranslation.confirmPassword[props.language]} fullWidth
                             value={state.formData.passwordConfirmation}
                             onChange={(passwordConfirmation) => handleFormChange({passwordConfirmation: passwordConfirmation})}/>
                     </Grid>
@@ -293,7 +292,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required
                             ref={zipInputRef} onTab={focusEmail} onEnter={handleRegister} onEscape={blurZip}
-                            className={classes.textField} variant="outlined" label={SignInTranslation.zipCode[props.language]} fullWidth
+                            className={classes.textField} variant="outlined" label={WordTranslation.zipCode[props.language]} fullWidth
                             value={state.formData.zip} onChange={(zip) => handleFormChange({zip: zip})}/>
                     </Grid>
 
@@ -301,7 +300,7 @@ export function RegisterPageComponent(props) {
                         <CustomTextField
                             required disabled
                             ref={countryInputRef}
-                            className={classes.textField} variant="outlined" label={SignInTranslation.country[props.language]} fullWidth
+                            className={classes.textField} variant="outlined" label={WordTranslation.country[props.language]} fullWidth
                             value={state.formData.country}/>
                     </Grid>
 
@@ -313,7 +312,7 @@ export function RegisterPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 className={classes.button}>
-                            <Link to={"/"} className={classes.link}>{SignInTranslation.cancel[props.language]}</Link>
+                            <Link to={"/"} className={classes.link}>{WordTranslation.cancel[props.language]}</Link>
                         </Button>
                     </div>
                     <div className={classes.wrapper}>
@@ -321,7 +320,7 @@ export function RegisterPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 onClick={handleRegister}
-                                className={classes.button}>{SignInTranslation.register[props.language]}</Button>
+                                className={classes.button}>{WordTranslation.register[props.language]}</Button>
                         {state.loading && (
                             <CircularProgress size={24}
                                               className={classes.buttonProgress}

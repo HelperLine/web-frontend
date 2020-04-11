@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 
 import Drawing_404 from './images/Drawing_404.svg';
-import {NotFoundPageTranslation} from "./NotFoundPageTranslation";
+import {NotFoundPageTranslation} from "../../Translations/Pages/NotFoundPageTranslation";
 import {connect} from "react-redux";
 import {Breakpoint} from "react-socks";
 

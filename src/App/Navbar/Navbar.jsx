@@ -30,7 +30,8 @@ import Dialog from "@material-ui/core/Dialog";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {NavbarTranslation} from "./NavbarTranslation";
+import {NavbarTranslation} from "../../Translations/Pages/NavbarTranslation";
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
 
 import LanguageIcon from '@material-ui/icons/Language';
 
@@ -47,11 +48,11 @@ function NavbarComponent(props) {
     const path = window.location.pathname;
     let initialPageTitle = "";
     if (path.startsWith("/guide")) {
-        initialPageTitle = NavbarTranslation.guide[props.language];
+        initialPageTitle = WordTranslation.guide[props.language];
     } else if (path.startsWith("/calls")) {
-        initialPageTitle = NavbarTranslation.calls[props.language];
+        initialPageTitle = WordTranslation.calls[props.language];
     } else if (path.startsWith("/account")) {
-        initialPageTitle = NavbarTranslation.account[props.language];
+        initialPageTitle = WordTranslation.account[props.language];
     }
 
     const [pageTitle, setPageTitle] = useState(initialPageTitle);
@@ -84,7 +85,7 @@ function NavbarComponent(props) {
                             disableRipple={true}>
                     <LanguageIcon
                         className={classes.languageIconMobile}
-                        alt={NavbarTranslation.language[props.language] + " Icon"}/>
+                        alt={WordTranslation.language[props.language] + " Icon"}/>
                 </IconButton>
             </Breakpoint>
             <Breakpoint medium up>
@@ -93,7 +94,7 @@ function NavbarComponent(props) {
                             disableRipple={true}>
                     <LanguageIcon
                         className={classes.languageIcon}
-                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        alt={WordTranslation.language[props.language] + " Icon"}
                         fontSize="large"/>
                 </IconButton>
             </Breakpoint>
@@ -111,12 +112,12 @@ function NavbarComponent(props) {
                   className={classes.link}
                   onClick={() => {
                       props.closeMessage();
-                      setPageTitle(NavbarTranslation.guide[props.language]);
+                      setPageTitle(WordTranslation.guide[props.language]);
                   }}>
                 <Button size="large"
                         color={path.startsWith("/guide") ? "secondary" : "primary"}
-                        startIcon={<AssignmentIcon alt={NavbarTranslation.guide[props.language] + " Icon"}/>}
-                        className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.guide[props.language]}</Button>
+                        startIcon={<AssignmentIcon alt={WordTranslation.guide[props.language] + " Icon"}/>}
+                        className={clsx(classes.button, classes.topButton)}>{WordTranslation.guide[props.language]}</Button>
             </Link>
 
             {props.loggedIn && (
@@ -125,23 +126,23 @@ function NavbarComponent(props) {
                           className={classes.link}
                           onClick={() => {
                               props.closeMessage();
-                              setPageTitle(NavbarTranslation.calls[props.language]);
+                              setPageTitle(WordTranslation.calls[props.language]);
                           }}>
                         <Button size="large"
                                 color={path.startsWith("/calls") ? "secondary" : "primary"}
-                                startIcon={<CallIcon alt={NavbarTranslation.calls[props.language] + " Icon"}/>}
-                                className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.calls[props.language]}</Button>
+                                startIcon={<CallIcon alt={WordTranslation.calls[props.language] + " Icon"}/>}
+                                className={clsx(classes.button, classes.topButton)}>{WordTranslation.calls[props.language]}</Button>
                     </Link>
                     <Link to="/account"
                           className={classes.link}
                           onClick={() => {
                               props.closeMessage();
-                              setPageTitle(NavbarTranslation.account[props.language]);
+                              setPageTitle(WordTranslation.account[props.language]);
                           }}>
                         <Button size="large"
                                 color={path.startsWith("/account") ? "secondary" : "primary"}
-                                startIcon={<SettingsIcon alt={NavbarTranslation.account[props.language] + " Icon"}/>}
-                                className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.account[props.language]}</Button>
+                                startIcon={<SettingsIcon alt={WordTranslation.account[props.language] + " Icon"}/>}
+                                className={clsx(classes.button, classes.topButton)}>{WordTranslation.account[props.language]}</Button>
                     </Link>
                 </React.Fragment>
             )}
@@ -157,8 +158,8 @@ function NavbarComponent(props) {
                 }}
                         size="large"
                         color="primary"
-                        startIcon={<PersonIcon alt={NavbarTranslation.logout[props.language] + " Icon"}/>}
-                        className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.logout[props.language]}</Button>
+                        startIcon={<PersonIcon alt={WordTranslation.logout[props.language] + " Icon"}/>}
+                        className={clsx(classes.button, classes.topButton)}>{WordTranslation.logout[props.language]}</Button>
             )}
             {!props.loggedIn && (
                 <Link to="/login"
@@ -171,8 +172,8 @@ function NavbarComponent(props) {
 
                                 startIcon={props.autoLogin ?
                                     <CircularProgress size={20} className={classes.CircularProgress} disabled/> :
-                                    <PersonIcon alt={NavbarTranslation.login[props.language] + " Icon"}/>}
-                                className={clsx(classes.button, classes.topButton)}>{NavbarTranslation.login[props.language]}</Button>
+                                    <PersonIcon alt={WordTranslation.login[props.language] + " Icon"}/>}
+                                className={clsx(classes.button, classes.topButton)}>{WordTranslation.login[props.language]}</Button>
                     </div>
                 </Link>
             )}
@@ -191,7 +192,7 @@ function NavbarComponent(props) {
                                     aria-label="menu"
                                     className={classes.menuButton}
                                     onClick={() => toggleDrawer(true)}>
-                            <MenuIcon alt={NavbarTranslation.menu[props.language] + " Icon"}/>
+                            <MenuIcon alt={WordTranslation.menu[props.language] + " Icon"}/>
                         </IconButton>
 
                         {pageTitleComponent}
@@ -238,7 +239,7 @@ function NavbarComponent(props) {
                             disableRipple={true}>
                     <LanguageIcon
                         className={classes.languageIcon}
-                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        alt={WordTranslation.language[props.language] + " Icon"}
                         fontSize="large"/>
                 </IconButton>
 
@@ -262,7 +263,7 @@ function NavbarComponent(props) {
                             <Button variant="contained"
                                     color="secondary"
                                     onClick={() => setLogoutDialogState({open: false})}
-                                    className={classes.logoutDialogButton}>{NavbarTranslation.cancel[props.language]}</Button>
+                                    className={classes.logoutDialogButton}>{WordTranslation.cancel[props.language]}</Button>
                         </div>
                         <div className={classes.logoutDialogButtonWrapper}>
                             <Link to="/logout"
@@ -270,11 +271,11 @@ function NavbarComponent(props) {
                                   onClick={() => {
                                       props.closeMessage();
                                       props.handleLogout();
-                                      setPageTitle(NavbarTranslation.guide[props.language]);
+                                      setPageTitle(WordTranslation.guide[props.language]);
                                   }}>
                                 <Button variant="contained"
                                         color="secondary"
-                                        className={classes.logoutDialogButton}>{NavbarTranslation.logout[props.language]}</Button>
+                                        className={classes.logoutDialogButton}>{WordTranslation.logout[props.language]}</Button>
                             </Link>
                         </div>
                     </div>
@@ -336,7 +337,7 @@ export const ReducedNavbarComponent = (props) => {
                             disableRipple={true}>
                     <LanguageIcon
                         className={classes.languageIconMobileReduced}
-                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        alt={WordTranslation.language[props.language] + " Icon"}
                         fontSize="large"/>
                 </IconButton>
             </Breakpoint>
@@ -351,7 +352,7 @@ export const ReducedNavbarComponent = (props) => {
                             disableRipple={true}>
                     <LanguageIcon
                         className={classes.languageIcon}
-                        alt={NavbarTranslation.language[props.language] + " Icon"}
+                        alt={WordTranslation.language[props.language] + " Icon"}
                         fontSize="large"/>
                 </IconButton>
             </Breakpoint>

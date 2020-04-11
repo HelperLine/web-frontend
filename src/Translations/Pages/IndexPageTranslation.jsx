@@ -23,14 +23,6 @@ export const IndexPageTranslation = {
         english: "Start helping now!",
         deutsch: "Beginne jetzt zu helfen!",
     },
-    register: {
-        english: "Register",
-        deutsch: "Registrieren",
-    },
-    login: {
-        english: "Login",
-        deutsch: "Anmelden",
-    },
 
 
 

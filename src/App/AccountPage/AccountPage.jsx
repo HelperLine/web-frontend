@@ -13,7 +13,7 @@ import './AccountPage.scss';
 
 import Grid from "@material-ui/core/Grid";
 
-import {AccountPageTranslation} from "./AccountPageTranslation";
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
 
 import {useStyles} from './styles';
 import {PasswordForm} from "./PasswordForm";
@@ -137,7 +137,7 @@ export function AccountPageComponent(props) {
                         ref={zipInputRef} onTab={blurZip} onEnter={blurZip} onEscape={blurZip}
 
                         className={classes.textField} variant="outlined"
-                        label={AccountPageTranslation.zipCode[props.language]} fullWidth
+                        label={WordTranslation.zipCode[props.language]} fullWidth
                         value={formValues.zip_code} onChange={(zip_code) => handleFormChange({zip_code: zip_code})}/>
                 </Grid>
 
@@ -145,7 +145,7 @@ export function AccountPageComponent(props) {
                     <CustomTextField
                         required disabled
                         className={classes.textField} variant="outlined"
-                        label={AccountPageTranslation.country[props.language]} fullWidth
+                        label={WordTranslation.country[props.language]} fullWidth
                         value={formValues.country}/>
                 </Grid>
 
@@ -155,7 +155,7 @@ export function AccountPageComponent(props) {
 
                                 onClick={() => setPasswordFormOpen({open: true})}
                                 startIcon={<VpnKeyIcon className={classes.startIcon}/>}
-                                className={classes.grayButton}>{AccountPageTranslation.changePassword[props.language]}</Button>
+                                className={classes.grayButton}>{WordTranslation.password[props.language]}</Button>
                 </Grid>
 
                 <Grid item xs={12}>

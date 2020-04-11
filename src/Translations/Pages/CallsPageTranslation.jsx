@@ -54,24 +54,10 @@ export const CallsPageTranslation = {
     },
 
 
-
     acceptCall: {
         english: "Accept Call",
         deutsch: "Anruf Annehmen",
     },
-    serverOffline: {
-        english: "Server currently offline. Please try again later.",
-        deutsch: "Server zurzeit offline. Bitte versuchen Sie es später noch einmal.",
-    },
-    noNewCalls: {
-        english: "Currently no new calls. Please try again in a few minutes.",
-        deutsch: "Zurzeit keine neuen Anrufe. Bitte versuche es in ein paar Minuten nochmal.",
-    },
-    noLanguage: {
-        english: "You have to choose at least one language!",
-        deutsch: "Bitte wählen Sie mindestens eine Sprache aus!",
-    },
-
 
 
     acceptedCalls: {

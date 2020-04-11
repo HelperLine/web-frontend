@@ -4,7 +4,10 @@ import React from 'react';
 
 import {useStyles} from './styles';
 import {Button, CircularProgress} from "@material-ui/core";
-import {AccountPageTranslation} from "./AccountPageTranslation";
+
+import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import {BACKEND_URL} from "../../secrets";
@@ -45,7 +48,7 @@ const FormSubmissionComponent = (props) => {
                     console.log("Axios promise rejected! Server response:");
                     console.log(response);
                     props.setActiveProcesses({submitting: false});
-                    props.openMessage(AccountPageTranslation.serverOffline[props.language]);
+                    props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
                 });
             }, 1000);
         }
@@ -54,7 +57,7 @@ const FormSubmissionComponent = (props) => {
     function validation() {
         ["email", "zip_code", "country"].forEach(key => {
             if (props.formValues[key] === "") {
-                props.openMessage(AccountPageTranslation.fieldEmpty[props.language]);
+                props.openMessage(ErrorMessageTranslation.fieldEmpty[props.language]);
                 return false;
             }
         });
@@ -71,14 +74,14 @@ const FormSubmissionComponent = (props) => {
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending}
                                 color="secondary"
                                 onClick={props.cancel}
-                                className={classes.button}>{AccountPageTranslation.cancel[props.language]}</Button>
+                                className={classes.button}>{WordTranslation.cancel[props.language]}</Button>
                     </div>
                     <div className={classes.wrapper}>
                         <Button variant="contained"
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending}
                                 color="secondary"
                                 onClick={submit}
-                                className={classes.button}>{AccountPageTranslation.submit[props.language]}</Button>
+                                className={classes.button}>{WordTranslation.submit[props.language]}</Button>
                         {props.activeProcesses.submitting && (
                             <CircularProgress size={24}
                                               className={classes.buttonProgress}

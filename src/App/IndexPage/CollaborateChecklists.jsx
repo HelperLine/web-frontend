@@ -14,7 +14,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {scroller} from 'react-scroll'
 import Paper from "@material-ui/core/Paper";
 
-import {IndexPageTranslation} from './IndexPageTranslation';
+import {IndexPageTranslation} from '../../Translations/Pages/IndexPageTranslation';
 
 let cloneDeep = require('lodash.clonedeep');
 
