@@ -1,5 +1,5 @@
 
-export const WordTranslation = {
+export const WordTranslations = {
     yes: {
         english: "Yes",
         deutsch: "Ja",

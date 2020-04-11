@@ -4,8 +4,7 @@ import {Button, CircularProgress} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 import {useStyles} from './styles';
 import axios from "axios";
@@ -39,17 +38,16 @@ export const EmailFormComponent = (props) => {
                 if (response.data.status === "ok") {
                     props.setActiveProcesses({resending: false});
                     setResendPossible({resendPossible: false});
+                    props.openMessage("success");
                 } else {
                     props.setActiveProcesses({resending: false});
                     setResendPossible({resendPossible: false});
                     props.openMessage(response.data.status);
                 }
-            }).catch(response => {
-                console.log("Axios promise rejected! Server response:");
-                console.log(response);
+            }).catch(() => {
                 props.setActiveProcesses({resending: false});
                 setResendPossible({resendPossible: false});
-                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                props.openMessage("server error");
             });
     }
 
@@ -72,7 +70,7 @@ export const EmailFormComponent = (props) => {
                     ref={emailInputRef}
                     onTab={blur} onEnter={blur} onEscape={blur}
 
-                    label={WordTranslation.email[props.language]} fullWidth
+                    label={WordTranslations.email[props.language]} fullWidth
                     value={props.value} onChange={(email) => props.handleChange({email: email})}/>
             </Grid>
 
@@ -82,7 +80,7 @@ export const EmailFormComponent = (props) => {
                         <Button variant="contained"  color="secondary" className={classes.button}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.formModified || !resendPossible.resendPossible}
                                 onClick={submit} startIcon={<EmailIcon className={classes.startIcon}/>}>
-                            {WordTranslation.verification[props.language]}
+                            {WordTranslations.verification[props.language]}
                         </Button>
                         {props.activeProcesses.resending && (
                             <CircularProgress size={24} className={classes.buttonProgress} color="secondary"/>

@@ -5,8 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 import clsx from "clsx";
 
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
+import {MessageTranslations} from "../../Translations/Standard/MessageTranslations";
 
 import Dialog from "@material-ui/core/Dialog";
 import {useStyles} from './styles';
@@ -89,18 +89,11 @@ export const PasswordFormComponent = (props) => {
                             setFormValues(initialFormState);
                         } else {
                             setSubmitting({submitting: false});
-                            if (response.data.status === "password format invalid") {
-                                props.openMessage(ErrorMessageTranslation.passwordInvalid[props.language]);
-                            } else {
-                                console.log(response);
-                                props.openMessage(ErrorMessageTranslation.defaultError[props.language]);
-                            }
+                            props.openMessage(response.data.status);
                         }
-                    }).catch(response => {
-                        console.log("Axios promise rejected! Server response:");
-                        console.log(response);
+                    }).catch(() => {
                         setSubmitting({submitting: false});
-                        props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                        props.openMessage("");
                     });
             }, 1000);
         }
@@ -113,18 +106,18 @@ export const PasswordFormComponent = (props) => {
 
         ["old_password", "new_password", "new_password_confirmation"].forEach(key => {
             if (formValues[key] === "") {
-                props.openMessage(ErrorMessageTranslation.passwordFieldEmpty[props.language]);
+                props.openMessage(MessageTranslations.passwordFieldEmpty[props.language]);
                 return false;
             }
         });
 
         if (formValues.new_password !== formValues.new_password_confirmation) {
-            props.openMessage(ErrorMessageTranslation.passwordConfirmationMatch[props.language]);
+            props.openMessage(MessageTranslations.passwordConfirmationMatch[props.language]);
             return false;
         }
 
         if (formValues.new_password.length < 8) {
-            props.openMessage(ErrorMessageTranslation.passwordTooShort[props.language]);
+            props.openMessage(MessageTranslations.passwordTooShort[props.language]);
             return false;
         }
 
@@ -169,7 +162,7 @@ export const PasswordFormComponent = (props) => {
                             onTab={focus2} onEnter={focus2}
                             onEscape={blur1}
 
-                            label={WordTranslation.oldPassword[props.language]} fullWidth
+                            label={WordTranslations.oldPassword[props.language]} fullWidth
                             value={formValues.old_password}
                             onChange={(value) => handleFormChange({old_password: value})}/>
                     </Grid>
@@ -184,7 +177,7 @@ export const PasswordFormComponent = (props) => {
                             onTab={focus3} onEnter={focus3}
                             onEscape={blur2}
 
-                            label={WordTranslation.newPassword[props.language]} fullWidth
+                            label={WordTranslations.newPassword[props.language]} fullWidth
                             value={formValues.new_password}
                             onChange={(value) => handleFormChange({new_password: value})}/>
                     </Grid>
@@ -199,7 +192,7 @@ export const PasswordFormComponent = (props) => {
                             onTab={submit} onEnter={submit}
                             onEscape={blur3}
 
-                            label={WordTranslation.newPasswordConfirmation[props.language]} fullWidth
+                            label={WordTranslations.newPasswordConfirmation[props.language]} fullWidth
                             value={formValues.new_password_confirmation}
                             onChange={(value) => handleFormChange({new_password_confirmation: value})}/>
                     </Grid>
@@ -211,14 +204,14 @@ export const PasswordFormComponent = (props) => {
                                         disabled={submitting.submitting}
                                         color="secondary"
                                         onClick={cancel}
-                                        className={classes.button}>{WordTranslation.cancel[props.language]}</Button>
+                                        className={classes.button}>{WordTranslations.cancel[props.language]}</Button>
                             </div>
                             <div className={classes.wrapper}>
                                 <Button variant="contained"
                                         disabled={submitting.submitting}
                                         color="secondary"
                                         onClick={submit}
-                                        className={classes.button}>{WordTranslation.submit[props.language]}</Button>
+                                        className={classes.button}>{WordTranslations.submit[props.language]}</Button>
                                 {submitting.submitting && (
                                     <CircularProgress size={24}
                                                       className={classes.buttonProgress}

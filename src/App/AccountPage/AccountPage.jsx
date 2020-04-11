@@ -13,7 +13,7 @@ import './AccountPage.scss';
 
 import Grid from "@material-ui/core/Grid";
 
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 import {useStyles} from './styles';
 import {PasswordForm} from "./PasswordForm";
@@ -89,19 +89,15 @@ export function AccountPageComponent(props) {
 
 
     function form2Success() {
-        props.openMessage("Success!");
+        props.openMessage("success");
         setPasswordFormOpen({open: false});
-
-        setTimeout(() => {
-            props.closeMessage();
-        }, 1250);
     }
 
 
     return (
         <Container maxWidth="md" className="AccountPage">
 
-            <Grid container spacing={1} className={classes.formContainer}>
+            <Grid container spacing={2} className={classes.formContainer}>
 
                 <EmailForm value={formValues.email}
                            handleChange={handleFormChange}
@@ -121,14 +117,6 @@ export function AccountPageComponent(props) {
                            setActiveProcesses={setActiveProcesses}
                 />
 
-
-
-
-
-                <Grid item xs={12}>
-                    <div className={classes.divider}/>
-                </Grid>
-
                 <Grid item xs={12} md={4}>
                     <CustomTextField
                         required
@@ -137,7 +125,7 @@ export function AccountPageComponent(props) {
                         ref={zipInputRef} onTab={blurZip} onEnter={blurZip} onEscape={blurZip}
 
                         className={classes.textField} variant="outlined"
-                        label={WordTranslation.zipCode[props.language]} fullWidth
+                        label={WordTranslations.zipCode[props.language]} fullWidth
                         value={formValues.zip_code} onChange={(zip_code) => handleFormChange({zip_code: zip_code})}/>
                 </Grid>
 
@@ -145,7 +133,7 @@ export function AccountPageComponent(props) {
                     <CustomTextField
                         required disabled
                         className={classes.textField} variant="outlined"
-                        label={WordTranslation.country[props.language]} fullWidth
+                        label={WordTranslations.country[props.language]} fullWidth
                         value={formValues.country}/>
                 </Grid>
 
@@ -155,7 +143,7 @@ export function AccountPageComponent(props) {
 
                                 onClick={() => setPasswordFormOpen({open: true})}
                                 startIcon={<VpnKeyIcon className={classes.startIcon}/>}
-                                className={classes.grayButton}>{WordTranslation.password[props.language]}</Button>
+                                className={classes.grayButton}>{WordTranslations.password[props.language]}</Button>
                 </Grid>
 
                 <Grid item xs={12}>

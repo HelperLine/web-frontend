@@ -21,8 +21,7 @@ import './SignInPage.scss';
 import Grid from "@material-ui/core/Grid";
 
 import {SignInTranslation} from "../../Translations/Pages/SignInTranslation";
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 
 let cloneDeep = require('lodash.clonedeep');
@@ -127,14 +126,12 @@ export function LoginPageComponent(props) {
                         props.handleLogin(response);
                     } else {
                         stopLoading();
-                        props.openMessage(ErrorMessageTranslation.invalidEmailPassword[props.language]);
+                        props.openMessage(response.data.status);
                     }
                 }, 500);
             }).catch(response => {
-                console.log("Axios promise rejected! Response:");
-                console.log(response);
                 stopLoading();
-                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                props.openMessage("");
             });
     }
 
@@ -157,7 +154,7 @@ export function LoginPageComponent(props) {
     return (
         <Container maxWidth="xs" className={"SignInPage"}>
             <div className="SignInForm">
-                <Typography variant="h3" className={classes.title}>{WordTranslation.login[props.language]}</Typography>
+                <Typography variant="h3" className={classes.title}>{WordTranslations.login[props.language]}</Typography>
 
                 <Grid container spacing={1} className={classes.formContainer}>
                     <Grid item xs={12}>
@@ -170,7 +167,7 @@ export function LoginPageComponent(props) {
                             className={classes.textField}
                             variant="outlined"
 
-                            label={WordTranslation.email[props.language]}
+                            label={WordTranslations.email[props.language]}
                             fullWidth
 
                             value={state.email}
@@ -186,7 +183,7 @@ export function LoginPageComponent(props) {
                             className={classes.textField}
                             variant="outlined"
 
-                            label={WordTranslation.password[props.language]}
+                            label={WordTranslations.password[props.language]}
                             type="password"
                             fullWidth
 
@@ -201,7 +198,7 @@ export function LoginPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 className={classes.button}>
-                            <Link to={"/"} className={classes.link}>{WordTranslation.cancel[props.language]}</Link>
+                            <Link to={"/"} className={classes.link}>{WordTranslations.cancel[props.language]}</Link>
                         </Button>
                     </div>
                     <div className={classes.wrapper}>
@@ -209,7 +206,7 @@ export function LoginPageComponent(props) {
                                 disabled={state.loading}
                                 color="secondary"
                                 onClick={handleLogin}
-                                className={classes.button}>{WordTranslation.login[props.language]}</Button>
+                                className={classes.button}>{WordTranslations.login[props.language]}</Button>
                         {state.loading && (
                             <CircularProgress size={24}
                                               className={classes.buttonProgress}

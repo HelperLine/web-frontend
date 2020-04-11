@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 
 import {IndexPageTranslation} from "../../Translations/Pages/IndexPageTranslation";
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 import {handleNewAccountData} from "../../ReduxActions";
 import {connect} from "react-redux";
@@ -179,7 +179,7 @@ export const IndexPageComponent = (props) => {
                     <Grid item className={classes.centerBoxTop}>
                         <Link to="/register">
                             <Button color="secondary" variant="contained"
-                                    startIcon={<HowToRegIcon className={classes.buttonStartIcon}/>}>{WordTranslation.register[props.language]}</Button>
+                                    startIcon={<HowToRegIcon className={classes.buttonStartIcon}/>}>{WordTranslations.register[props.language]}</Button>
                         </Link>
                     </Grid>
                 </Grid>
@@ -187,12 +187,12 @@ export const IndexPageComponent = (props) => {
                 <Link to="/login">
                     <Breakpoint small down>
                         <Button className={classes.reducedLoginButtonMobile} disableElevation variant="contained">
-                            {WordTranslation.login[props.language]}
+                            {WordTranslations.login[props.language]}
                         </Button>
                     </Breakpoint>
                     <Breakpoint medium up>
                         <Button className={classes.reducedLoginButton} disableElevation variant="contained">
-                            {WordTranslation.login[props.language]}
+                            {WordTranslations.login[props.language]}
                         </Button>
                     </Breakpoint>
                 </Link>

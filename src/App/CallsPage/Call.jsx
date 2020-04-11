@@ -20,8 +20,7 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 
 import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 import CloudOffIcon from '@material-ui/icons/CloudOff';
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
@@ -117,27 +116,20 @@ export function CallComponent(props) {
             comment: comment,
         })
             .then(response => {
-                setTimeout(() => {
-                    setCommentState("saved");
-                    setRejectCallActive(false);
-                    setFulfillCallActive(false);
-                }, 500);
+                setCommentState("saved");
+                setRejectCallActive(false);
+                setFulfillCallActive(false);
 
                 if (response.data.status === "ok") {
                     props.handleNewAccountData(response);
                 } else {
-                    console.log(response.data);
+                    props.openMessage(response.data.status);
                 }
-            }).catch(response => {
-                setTimeout(() => {
-                    setCommentState("saved");
-                    setRejectCallActive(false);
-                    setFulfillCallActive(false);
-                }, 500);
-
-                console.log("Axios promise rejected! Response:");
-                console.log(response);
-                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+            }).catch(() => {
+                setCommentState("saved");
+                setRejectCallActive(false);
+                setFulfillCallActive(false);
+                props.openMessage("");
             });
     }
 
@@ -224,7 +216,7 @@ export function CallComponent(props) {
             <ExpansionPanelDetails>
                 <div className={classes.callDetailsBox}>
                     <CustomTextField
-                        label={WordTranslation.comment[props.language]}
+                        label={WordTranslations.comment[props.language]}
                         multiline={true}
                         fullWidth={true}
                         rows="4"
@@ -252,7 +244,7 @@ export function CallComponent(props) {
                                             <ClearIcon/>
                                         }
                                         className={clsx(classes.button, classes.disabledButton)}>
-                                    {WordTranslation.reject[props.language]}
+                                    {WordTranslations.reject[props.language]}
                                 </Button>
                                 <Button variant="contained" disableElevation
                                         disabled={rejectCallActive || fulfillCallActive}
@@ -263,7 +255,7 @@ export function CallComponent(props) {
                                             <CheckIcon/>
                                         }
                                         className={classes.button}>
-                                    {WordTranslation.done[props.language]}
+                                    {WordTranslations.done[props.language]}
                                 </Button>
                             </div>
                         </div>

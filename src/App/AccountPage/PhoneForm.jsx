@@ -5,9 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import {CustomTextField} from "../../Components/CustomTextField";
 
 import {AccountPageTranslation} from "../../Translations/Pages/AccountPageTranslation";
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
-import {ConfirmationMessageTranslation} from "../../Translations/Standard/ConfirmationMessageTranslation";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 import {useStyles} from './styles';
 import axios from "axios";
@@ -67,6 +65,7 @@ export const PhoneFormComponent = (props) => {
 
 
     function setState0() {
+        props.setActiveProcesses({verifying: false});
         setVerifyPopup({open: false});
     }
 
@@ -208,15 +207,11 @@ export const PhoneFormComponent = (props) => {
                     setState2(response.data.token);
                 } else {
                     setState0();
-                    props.setActiveProcesses({verifying: false});
                     props.openMessage(response.data.status);
                 }
-            }).catch(response => {
-                console.log("Axios promise rejected! Server response:");
-                console.log(response);
+            }).catch(() => {
                 setState0();
-                props.setActiveProcesses({verifying: false});
-                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                props.openMessage("");
             });
     }
 
@@ -234,18 +229,15 @@ export const PhoneFormComponent = (props) => {
                         setState4(phone_number);
                     } else {
                         setState2(verifyPopup.code);
-                        props.openMessage(ConfirmationMessageTranslation.areYourSure[props.language]);
+                        props.openMessage("are you sure");
                     }
                 } else {
                     setState0();
-                    console.log(response);
-                    props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                    props.openMessage(response.data.status);
                 }
-            }).catch(response => {
-                console.log("Axios promise rejected! Server response:");
-                console.log(response);
+            }).catch(() => {
                 setState0();
-                props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                props.openMessage("");
             });
     }
 
@@ -263,12 +255,10 @@ export const PhoneFormComponent = (props) => {
                     setState0();
                     props.openMessage(response.data.status);
                 }
-            }).catch(response => {
-            console.log("Axios promise rejected! Server response:");
-            console.log(response);
-            setState0();
-            props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
-        });
+            }).catch(() => {
+                setState0();
+                props.openMessage("");
+            });
     }
 
 
@@ -281,7 +271,7 @@ export const PhoneFormComponent = (props) => {
                     disabled className={classes.textField} variant="outlined"
                     value={(props.account.phone_number_verified
                         && props.account.phone_number_confirmed) ? props.account.phone_number : ""}
-                    label={WordTranslation.phoneNumber[props.language]} fullWidth/>
+                    label={WordTranslations.phoneNumber[props.language]} fullWidth/>
             </Grid>
 
             <Grid item xs={12} md={4} className={classes.flexButtonBox}>
@@ -291,7 +281,7 @@ export const PhoneFormComponent = (props) => {
                         <Button disableElevation variant="contained" className={clsx(classes.button, classes.grayButton)}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
                                 onClick={setState1} startIcon={<AddIcon className={classes.startIcon}/>}>
-                            {WordTranslation.verification[props.language]}
+                            {WordTranslations.verification[props.language]}
                         </Button>
                     )}
                     {!(props.account.phone_number_verified
@@ -299,7 +289,7 @@ export const PhoneFormComponent = (props) => {
                         <Button variant="contained" color="secondary" className={clsx(classes.button)}
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending || props.activeProcesses.verifying || props.formModified}
                                 onClick={setState1} startIcon={<AddIcon className={classes.startIcon}/>}>
-                            {WordTranslation.verification[props.language]}
+                            {WordTranslations.verification[props.language]}
                         </Button>
                     )}
                     {(props.activeProcesses.verifying && !verifyPopup.open) && (
@@ -340,14 +330,14 @@ export const PhoneFormComponent = (props) => {
 
                     {verifyPopup.popupStyle === 1 && (
                         <Typography variant="h5" className={classes.phoneDialogCode}>
-                            {WordTranslation.code[props.language]}: <strong>{verifyPopup.code}</strong> &nbsp;
+                            {WordTranslations.code[props.language]}: <strong>{verifyPopup.code}</strong> &nbsp;
                             ({formatCountdown(countdown.minutes_left, countdown.seconds_left)})
                         </Typography>
                     )}
 
                     {verifyPopup.popupStyle === 2 && (
                         <Typography variant="h5" className={classes.phoneDialogCode}>
-                            {WordTranslation.phoneNumber[props.language]}: <strong>{verifyPopup.phone_number}</strong>
+                            {WordTranslations.phoneNumber[props.language]}: <strong>{verifyPopup.phone_number}</strong>
                         </Typography>
                     )}
 
@@ -377,7 +367,7 @@ export const PhoneFormComponent = (props) => {
                                             variant="contained" className={clsx(classes.button, classes.grayButton)}
                                             disabled={verifyPopup.fetchingCode || verifyPopup.fetchingConfirmation}
                                             onClick={setState1}>
-                                        {WordTranslation.no[props.language]}
+                                        {WordTranslations.no[props.language]}
                                     </Button>
                                     {verifyPopup.fetchingCode && (
                                         <CircularProgress size={24} className={classes.buttonProgress}
@@ -390,7 +380,7 @@ export const PhoneFormComponent = (props) => {
                                             variant="contained" color="secondary" className={classes.button}
                                             disabled={verifyPopup.fetchingConfirmation}
                                             onClick={setState5}>
-                                        {WordTranslation.yes[props.language]}
+                                        {WordTranslations.yes[props.language]}
                                     </Button>
                                     {verifyPopup.fetchingConfirmation && (
                                         <CircularProgress size={24} className={classes.buttonProgress}

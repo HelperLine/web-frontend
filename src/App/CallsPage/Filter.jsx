@@ -17,9 +17,7 @@ import CloudDoneIcon from '@material-ui/icons/CloudDone';
 import {CircularProgress} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 
-
 import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
 
 import {handleNewAccountData, openMessage, closeMessage} from "../../ReduxActions";
 import clsx from "clsx";
@@ -126,7 +124,7 @@ function FilterComponent(props) {
 
     function goOnline() {
         if (!props.account.phone_number_verified || !props.account.phone_number_confirmed) {
-            props.openMessage("Please confirm your phone number first in the account tab.");
+            props.openMessage("phone number not verified");
         } else {
             props.closeMessage();
             setSwitchingOnline(true);
@@ -147,12 +145,11 @@ function FilterComponent(props) {
                     if (response.data.status === "ok") {
                         props.handleNewAccountData(response);
                     } else {
-                        console.log(response.data.status);
+                        props.openMessage(response.data.status);
                     }
                 }).catch(() => {
                     setSwitchingOnline(false);
-
-                    console.log("Online state could not be changed");
+                    props.openMessage("");
                 })
             }, 500);
         }
@@ -177,8 +174,7 @@ function FilterComponent(props) {
                 }
             }).catch(() => {
                 setSwitchingOnline(false);
-
-                console.log("Online state could not be changed");
+                props.openMessage("");
             })
         }, 500);
     }
@@ -205,9 +201,9 @@ function FilterComponent(props) {
     function acceptNewCall() {
 
         if (!props.account.email_verified) {
-            props.openMessage(ErrorMessageTranslation.pleaseVerifyEmail[props.language]);
+            props.openMessage("email not verified");
         } else if (!languageFilter.german && !languageFilter.english) {
-            props.openMessage(ErrorMessageTranslation.noLanguageSelected[props.language]);
+            props.openMessage("no language selected");
         } else {
             props.closeMessage();
             setLoadingNewCall(true);
@@ -224,26 +220,17 @@ function FilterComponent(props) {
                     filter_language_english: languageFilter.english,
                 })
                     .then(response => {
-                        if (response.data.status === "ok") {
-                            setLoadingNewCall(false);
-                            props.handleNewAccountData(response);
-                            console.log(response.data.calls);
-                        } else if (response.data.status === "currently no call available") {
-                            setLoadingNewCall(false);
-                            props.openMessage(ErrorMessageTranslation.noNewCalls[props.language]);
-                            console.log(response.data.status);
-                        } else {
-                            setLoadingNewCall(false);
-                            console.log(response.data.status);
-                        }
-
-                    }).catch(response => {
                         setLoadingNewCall(false);
 
-                        console.log("Axios promise rejected! Response:");
-                        console.log(response);
+                        if (response.data.status === "ok") {
+                            props.handleNewAccountData(response);
+                        } else {
+                            props.openMessage(response.data.status);
+                        }
 
-                        props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
+                    }).catch(() => {
+                        setLoadingNewCall(false);
+                        props.openMessage("");
                     });
             }, 1000);
         }

@@ -5,8 +5,7 @@ import React from 'react';
 import {useStyles} from './styles';
 import {Button, CircularProgress} from "@material-ui/core";
 
-import {WordTranslation} from "../../Translations/Standard/WordTranslations";
-import {ErrorMessageTranslation} from "../../Translations/Standard/ErrorMessageTranslation";
+import {WordTranslations} from "../../Translations/Standard/WordTranslations";
 
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
@@ -40,16 +39,15 @@ const FormSubmissionComponent = (props) => {
                             props.setActiveProcesses({submitting: false});
                             props.handleNewAccountData(response);
                             props.setFormModified({modified: false});
+                            props.openMessage("success");
                         } else {
                             props.setActiveProcesses({submitting: false});
                             props.openMessage(response.data.status);
                         }
-                    }).catch(response => {
-                    console.log("Axios promise rejected! Server response:");
-                    console.log(response);
-                    props.setActiveProcesses({submitting: false});
-                    props.openMessage(ErrorMessageTranslation.serverOffline[props.language]);
-                });
+                    }).catch(() => {
+                        props.setActiveProcesses({submitting: false});
+                        props.openMessage("");
+                    });
             }, 1000);
         }
     }
@@ -57,7 +55,7 @@ const FormSubmissionComponent = (props) => {
     function validation() {
         ["email", "zip_code", "country"].forEach(key => {
             if (props.formValues[key] === "") {
-                props.openMessage(ErrorMessageTranslation.fieldEmpty[props.language]);
+                props.openMessage("field empty");
                 return false;
             }
         });
@@ -74,14 +72,14 @@ const FormSubmissionComponent = (props) => {
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending}
                                 color="secondary"
                                 onClick={props.cancel}
-                                className={classes.button}>{WordTranslation.cancel[props.language]}</Button>
+                                className={classes.button}>{WordTranslations.cancel[props.language]}</Button>
                     </div>
                     <div className={classes.wrapper}>
                         <Button variant="contained"
                                 disabled={props.activeProcesses.submitting || props.activeProcesses.resending}
                                 color="secondary"
                                 onClick={submit}
-                                className={classes.button}>{WordTranslation.submit[props.language]}</Button>
+                                className={classes.button}>{WordTranslations.submit[props.language]}</Button>
                         {props.activeProcesses.submitting && (
                             <CircularProgress size={24}
                                               className={classes.buttonProgress}

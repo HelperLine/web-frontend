@@ -116,7 +116,7 @@ const mapStateToProps = state => ({
     performance: state.performance,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = () => ({});
 
 export const Performance = connect(mapStateToProps, mapDispatchToProps)(PerformanceComponent);
 
