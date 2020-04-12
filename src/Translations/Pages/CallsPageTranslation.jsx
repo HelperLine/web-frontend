@@ -33,12 +33,12 @@ export const CallsPageTranslation = {
         deutsch: "Welche Art von Anrufen?",
     },
     filter2: {
-        english: "Only local calls",
-        deutsch: "Nur lokale Anrufe",
+        english: "Only from your neighborhood",
+        deutsch: "Nur aus deiner Umgebung",
     },
     filter3: {
-        english: "Only non-local calls",
-        deutsch: "Nur ortsunabhängige Anrufe",
+        english: "Only requests regardless of location",
+        deutsch: "Nur ortsunabhängige Anfragen",
     },
     filter4: {
         english: "Which languages?",

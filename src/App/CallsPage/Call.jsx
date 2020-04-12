@@ -173,6 +173,18 @@ export function CallComponent(props) {
             break;
     }
 
+    let callType = "";
+
+    if (props.call.call_type.includes("forwarded")) {
+        callType = "Forwarded";
+    } else if (props.call.call_type.includes("global")) {
+        callType = "Global";
+    } else if (props.call.call_type.includes("accepted-match")) {
+        callType = "Local Match";
+    } else {
+        callType = "Local Mismatch";
+    }
+
     return (
 
         <ExpansionPanel elevation={2}>
@@ -185,6 +197,7 @@ export function CallComponent(props) {
                             className={(props.call.status === "fulfilled") ? classes.fulfilledText : ""}>
                             {props.call.phone_number}
                         </Typography>
+                        <Typography variant="subtitle2">&nbsp;({callType})</Typography>
                     </Grid>
                     <Grid item xs={12} md={6} lg={4} className={clsx(classes.centerLeftBox, classes.timestampBox)}>
                         <Typography

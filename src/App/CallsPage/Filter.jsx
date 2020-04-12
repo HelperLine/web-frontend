@@ -239,7 +239,7 @@ function FilterComponent(props) {
     return (
         <React.Fragment>
             <Grid container spacing={2} justify="center">
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={5}>
                     <Grid container justify="center">
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Typography variant="h6" className={classes.rowTitle}>
@@ -262,7 +262,7 @@ function FilterComponent(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                     <Grid container justify="center">
                         <Grid item xs={12} className={classes.checkListRow}>
                             <Typography variant="h6" className={classes.rowTitle}>

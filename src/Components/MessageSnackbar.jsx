@@ -149,7 +149,7 @@ function MessageSnackbarComponent(props) {
             break;
 
         case "success":
-            text = getFullText("sucessMessage");
+            text = getFullText("successMessage");
             setTimeout(() => {
                 props.closeMessage();
             }, 1250);
