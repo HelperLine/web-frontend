@@ -101,10 +101,10 @@ const RouterComponent = (props) => (
                 </Route>
 
                 <Route exact strict path="/login">
-                    {props.loggedIn && (
+                    {(props.loggedIn || props.autoLogin) && (
                         <Redirect to="/calls"/>
                     )}
-                    {!props.loggedIn && (
+                    {(!props.loggedIn && !props.autoLogin) && (
                         <React.Fragment>
                             <ReducedNavbar/>
                             <LoginPage/>
@@ -113,10 +113,10 @@ const RouterComponent = (props) => (
                     )}
                 </Route>
                 <Route exact strict path="/register">
-                    {props.loggedIn && (
+                    {(props.loggedIn || props.autoLogin) && (
                         <Redirect to="/calls"/>
                     )}
-                    {!props.loggedIn && (
+                    {(!props.loggedIn && !props.autoLogin) && (
                         <React.Fragment>
                             <ReducedNavbar/>
                             <RegisterPage/>

@@ -60,62 +60,51 @@ export const Footer = () => {
 
     const classes = useStyles();
 
+    function linkButton (link, Icon, text) {
+        return (
+            <Grid item className={classes.gridItem}>
+                <a href={link}
+                   rel="noopener noreferrer"
+                   target="_blank">
+                    <Button
+                        className={classes.button}
+                        size="large"
+                        startIcon={<Icon className={classes.startIcon}/>}>
+                        {text}
+                    </Button>
+                </a>
+            </Grid>
+        );
+    }
+
     return (
         <div className={clsx(classes.footer, "Footer")}>
             <Container maxWidth="md">
                 <Grid container justify="center" spacing={2}>
 
-                    <Grid item xs={12} md className={classes.gridItem}>
-                        <a href="https://github.com/dostuffthatmatters"
-                           rel="noopener noreferrer"
-                           target="_blank">
-                            <Button
-                                className={classes.button}
-                                size="large"
-                                startIcon={<CopyrightIcon className={classes.startIcon}/>}>
-                                        Moritz Makowski
-                            </Button>
-                        </a>
-                    </Grid>
+                    {linkButton(
+                        "https://github.com/dostuffthatmatters",
+                        CopyrightIcon,
+                        "Moritz Makowski"
+                    )}
 
-                    <Grid item xs={12} md className={classes.gridItem}>
-                        <a href="https://github.com/helperline"
-                           rel="noopener noreferrer"
-                           target="_blank">
-                            <Button
-                                className={classes.button}
-                                size="large"
-                                startIcon={<GitHubIcon className={classes.startIcon}/>}>
-                                Open Source
-                            </Button>
-                        </a>
-                    </Grid>
+                    {linkButton(
+                        "https://github.com/helperline",
+                        GitHubIcon,
+                        "Open Source"
+                    )}
 
-                    <Grid item xs={12} md className={classes.gridItem}>
-                        <a href="https://github.com/orgs/HelperLine/projects/1"
-                           rel="noopener noreferrer"
-                           target="_blank">
-                            <Button
-                                className={classes.button}
-                                size="large"
-                                startIcon={<DeveloperModeIcon className={classes.startIcon}/>}>
-                                Progress
-                            </Button>
-                        </a>
-                    </Grid>
+                    {linkButton(
+                        "https://github.com/orgs/HelperLine/projects/1",
+                        DeveloperModeIcon,
+                        "Progress"
+                    )}
 
-                    <Grid item xs={12} md className={classes.gridItem}>
-                        <a href="https://helperline.github.io/project/"
-                           rel="noopener noreferrer"
-                           target="_blank">
-                            <Button
-                                className={classes.button}
-                                size="large"
-                                startIcon={<GroupIcon className={classes.startIcon}/>}>
-                                About
-                            </Button>
-                        </a>
-                    </Grid>
+                    {linkButton(
+                        "https://helperline.github.io/project/",
+                        GroupIcon,
+                        "About"
+                    )}
 
                 </Grid>
             </Container>
