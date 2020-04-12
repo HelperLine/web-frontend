@@ -27,8 +27,8 @@ export const IndexPageTranslation = {
 
 
     pitch1: {
-        english: <React.Fragment>Due to Covid-19 we are <strong>matching</strong></React.Fragment>,
-        deutsch: <React.Fragment>Aufgrund von Covid-19 <strong>matchen</strong> wir</React.Fragment>,
+        english: "Due to Covid-19 we are matching",
+        deutsch: "Aufgrund von Covid-19 matchen wir",
     },
     pitch2: {
         english: "People in Need",
@@ -43,16 +43,8 @@ export const IndexPageTranslation = {
         deutsch: "Digitalen Freiwilligen",
     },
     pitch5: {
-        english: (
-            <React.Fragment>
-                because most of the <strong>people in need of assist do <u>not</u> use the internet!</strong>
-            </React.Fragment>
-        ),
-        deutsch: (
-            <React.Fragment>
-                weil die meisten <strong>Personen, die zurzeit Hilfe benötigen, das Internet <u>nicht</u> benutzen!</strong>
-            </React.Fragment>
-        ),
+        english: "because most of the people in need of assist do not use the internet!",
+        deutsch: "weil die meisten Personen, die zurzeit Hilfe benötigen, das Internet nicht benutzen!",
     },
 
 

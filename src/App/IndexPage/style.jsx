@@ -178,4 +178,11 @@ export const useStyles = makeStyles(theme => ({
         alignItems: "center",
         justifyContent: "center",
     },
+
+    marginTop6: {
+        marginTop: theme.spacing(6),
+    },
+    sponsorImage: {
+        maxWidth: "100%",
+    },
 }));

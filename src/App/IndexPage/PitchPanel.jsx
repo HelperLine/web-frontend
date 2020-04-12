@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
@@ -9,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import DrawingCaller from "./images/Drawing_Target_Caller_800px.png";
 import {Breakpoint} from "react-socks";
 import DrawingHelper from "./images/Drawing_Target_Helper_800px.png";
+import Container from "@material-ui/core/Container";
 
 
 const FlyingCards = (props) => {
@@ -58,16 +58,18 @@ export const PitchPanel = (props) => {
     const classes = useStyles();
 
     return (
-        <React.Fragment>
-            <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
-                {IndexPageTranslation.pitch1[props.language]}
-            </Typography>
+        <div className={classes.marginTop6}>
+            <Container maxWidth="md">
+                <Typography variant="h5" className={clsx(classes.centerText, classes.margin2)}>
+                    {IndexPageTranslation.pitch1[props.language]}
+                </Typography>
 
-            <FlyingCards language={props.language}/>
+                <FlyingCards language={props.language}/>
 
-            <Typography variant="h5" className={clsx(classes.centerText)}>
-                {IndexPageTranslation.pitch5[props.language]}
-            </Typography>
-        </React.Fragment>
+                <Typography variant="h5" className={clsx(classes.centerText)}>
+                    {IndexPageTranslation.pitch5[props.language]}
+                </Typography>
+            </Container>
+        </div>
     );
 };
