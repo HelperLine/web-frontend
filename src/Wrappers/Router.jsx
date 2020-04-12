@@ -16,6 +16,8 @@ import {CallsPage} from "../App/CallsPage/CallsPage";
 import {GuidePage} from "../App/GuidePage/GuidePage";
 import {IndexPage} from "../App/IndexPage/IndexPage";
 import {NotFoundPage} from "../App/NotFoundPage/NotFoundPage";
+import {Footer} from "../App/Footer/Footer";
+import {Breakpoint} from "react-socks";
 
 
 /* Component --------------------------------------------------------------------- */
@@ -24,6 +26,8 @@ import {NotFoundPage} from "../App/NotFoundPage/NotFoundPage";
 const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
+        paddingLeft: 240,
+        width: "100vw",
     },
     fullHeightContainer: {
         minHeight: "100vh",
@@ -45,6 +49,7 @@ const Content = (props) => {
                         {props.children}
                     </div>
                 </div>
+                <Footer/>
             </main>
         </React.Fragment>
     );
@@ -53,11 +58,13 @@ const Content = (props) => {
 
 const RouterComponent = (props) => (
     <BrowserRouter>
+
         <Route>
             <Switch>
                 <Route exact strict path="/">
                     <ReducedNavbar/>
                     <IndexPage/>
+                    <Footer/>
                 </Route>
 
                 <Route exact strict path="/guide">
@@ -101,6 +108,7 @@ const RouterComponent = (props) => (
                         <React.Fragment>
                             <ReducedNavbar/>
                             <LoginPage/>
+                            <Footer/>
                         </React.Fragment>
                     )}
                 </Route>
@@ -112,6 +120,7 @@ const RouterComponent = (props) => (
                         <React.Fragment>
                             <ReducedNavbar/>
                             <RegisterPage/>
+                            <Footer/>
                         </React.Fragment>
                     )}
                 </Route>
@@ -122,6 +131,7 @@ const RouterComponent = (props) => (
                 <Route>
                     <ReducedNavbar/>
                     <NotFoundPage/>
+                    <Footer/>
                 </Route>
             </Switch>
         </Route>

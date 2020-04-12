@@ -1,10 +1,15 @@
 
-.BrightCard {
-    background-color: transparent;
+.Footer {
+    margin: 0;
+    position: relative;
 
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.15);
+    .BrightCard {
+        background-color: transparent;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        cursor: pointer;
     }
-
-    cursor: pointer;
 }

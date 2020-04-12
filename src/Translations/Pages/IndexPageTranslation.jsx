@@ -70,29 +70,21 @@ export const IndexPageTranslation = {
         deutsch: <React.Fragment>"... mir mit einem Gespräch in<br/>der Isolation helfen?"</React.Fragment>,
     },
     scene6: {
-        english: (
-            <React.Fragment>
-                However, sometimes <strong>there might not be a Hilfe-am-Ohr-Volunteer in that area!</strong>
-            </React.Fragment>
-        ),
-        deutsch: (
-            <React.Fragment>
-                Leider kann es passieren, dass es <strong>keinen Helfer unsere Hotline in der Gegend</strong> gibt!
-            </React.Fragment>
-        ),
+        english: "However, sometimes there might not be a Hilfe-am-Ohr-Volunteer in that area!",
+        deutsch: "Leider kann es passieren, dass es keinen Helfer unsere Hotline in der Gegend gibt!",
     },
     scene7: {
         english: (
             <React.Fragment>
                 You can help them find a volunteer in <br/>
-                <strong>tons of other online forums!</strong>
+                tons of other online forums!
             </React.Fragment>
         ),
         deutsch: (
             <React.Fragment>
                 Du kannst dem Anrufer aber dabei helfen <br/>
-                <strong>in den zahlreichen Online-Foren <br/>
-                einen lokalen Helfer zu finden!</strong>
+                in den zahlreichen Online-Foren einen <br/>
+                lokalen Helfer zu finden!
             </React.Fragment>
         ),
     },
