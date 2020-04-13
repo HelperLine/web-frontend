@@ -175,14 +175,16 @@ export function CallComponent(props) {
 
     let callType = "";
 
-    if (props.call.call_type.includes("forwarded")) {
-        callType = "Forwarded";
+    if (props.call.call_type.includes("forwarded") && props.call.call_type.includes("local")) {
+        callType = "Local - Forwarded";
+    } else if (props.call.call_type.includes("forwarded") && props.call.call_type.includes("global")) {
+        callType = "Global - Forwarded";
     } else if (props.call.call_type.includes("global")) {
-        callType = "Global";
+        callType = "Global - Match";
     } else if (props.call.call_type.includes("accepted-match")) {
-        callType = "Local Match";
+        callType = "Local - Match";
     } else {
-        callType = "Local Mismatch";
+        callType = "Local - Mismatch";
     }
 
     return (
@@ -197,7 +199,11 @@ export function CallComponent(props) {
                             className={(props.call.status === "fulfilled") ? classes.fulfilledText : ""}>
                             {props.call.phone_number}
                         </Typography>
-                        <Typography variant="subtitle2">&nbsp;({callType})</Typography>
+                        <Typography
+                            variant="subtitle2"
+                            className={(props.call.status === "fulfilled") ? classes.fulfilledText : ""}>
+                            &nbsp;({callType})
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} md={6} lg={4} className={clsx(classes.centerLeftBox, classes.timestampBox)}>
                         <Typography
