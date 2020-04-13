@@ -213,7 +213,7 @@ function NavbarComponent(props) {
                 </Drawer>
             </Breakpoint>
 
-            <Breakpoint large up>
+            <Breakpoint medium up>
                 <Drawer
                     className={classes.drawer}
                     variant="permanent"

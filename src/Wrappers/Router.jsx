@@ -29,6 +29,10 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: 240,
         width: "100vw",
     },
+    contentMobile: {
+        flexGrow: 1,
+        width: "100vw",
+    },
     fullHeightContainer: {
         minHeight: "100vh",
     },
@@ -43,14 +47,26 @@ const Content = (props) => {
 
     return (
         <React.Fragment>
-            <main className={classes.content}>
-                <div className={classes.fullHeightContainer}>
-                    <div className={classes.children}>
-                        {props.children}
+            <Breakpoint small down>
+                <main className={classes.contentMobile}>
+                    <div className={classes.fullHeightContainer}>
+                        <div className={classes.children}>
+                            {props.children}
+                        </div>
                     </div>
-                </div>
-                <Footer/>
-            </main>
+                    <Footer/>
+                </main>
+            </Breakpoint>
+            <Breakpoint medium up>
+                <main className={classes.content}>
+                    <div className={classes.fullHeightContainer}>
+                        <div className={classes.children}>
+                            {props.children}
+                        </div>
+                    </div>
+                    <Footer/>
+                </main>
+            </Breakpoint>
         </React.Fragment>
     );
 };
