@@ -118,20 +118,20 @@ export function LoginPageComponent(props) {
     function handleLogin() {
         startLoading();
 
-        axios.post(BACKEND_URL + "login/helper", {email: state.email, password: state.password})
+        axios.post(BACKEND_URL + "authentication/login/helper", {
+            email: state.email, password: state.password
+        })
             .then(response => {
-
                 setTimeout(() => {
-                    if (response.data.status === "ok") {
-                        props.handleLogin(response);
-                    } else {
-                        stopLoading();
-                        props.openMessage(response.data.status);
-                    }
+                    props.handleLogin(state.email, response.data.api_key);
                 }, 500);
-            }).catch(response => {
+            }).catch(error => {
                 stopLoading();
-                props.openMessage("");
+                if (error.response) {
+                    props.openMessage(error.response.data.status);
+                } else {
+                    props.openMessage("");
+                }
             });
     }
 
@@ -231,7 +231,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleLogin: (response) => dispatch(handleLogin(response)),
+    handleLogin: (email, api_key) => dispatch(handleLogin(email, api_key)),
     openMessage: (text) => dispatch(openMessage(text)),
     closeMessage: () => dispatch(closeMessage()),
 });

@@ -77,8 +77,8 @@ function FilterComponent(props) {
 
     const classes = useStyles();
 
-    let [typeFilter, setTypeFilter] = useState(props.filters.type);
-    let [languageFilter, setLanguageFilter] = useState(props.filters.language);
+    let [typeFilter, setTypeFilter] = useState(props.filter.call_type);
+    let [languageFilter, setLanguageFilter] = useState(props.filter.language);
 
     function handleTypeFilterClick(newState) {
 
@@ -185,8 +185,8 @@ function FilterComponent(props) {
             email: props.email,
             api_key: props.api_key,
 
-            filter_type_local: newState.type.local,
-            filter_type_global: newState.type.global,
+            filter_call_type_local: newState.call_type.only_local,
+            filter_call_type_global: newState.call_type.only_global,
 
             filter_language_english: newState.language.english,
             filter_language_german: newState.language.german,
@@ -335,7 +335,7 @@ const mapStateToProps = state => ({
     api_key: state.api_key,
 
     account: state.account,
-    filters: state.filters,
+    filter: state.filter,
 });
 
 const mapDispatchToProps = dispatch => ({

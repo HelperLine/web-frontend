@@ -16,9 +16,6 @@ import {PitchPanel} from "./PitchPanel";
 import {ActivityPanel} from "./ActivityPanel";
 import {SponsorPanel} from "./SponsorPanel";
 import {HeadingPanel} from "./HeadingPanel";
-import {Footer} from "../Footer/Footer";
-
-
 
 
 export const IndexPageComponent = (props) => {

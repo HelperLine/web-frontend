@@ -74,11 +74,11 @@ function PerformanceComponent(props) {
                                      className={classes.performanceImage}/>
                             </Grid>
                             <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
-                                            value={props.performance.area.volunteers}/>
+                                            value={props.performance.helpers}/>
                             <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
-                                            value={props.performance.area.callers}/>
+                                            value={props.performance.callers}/>
                             <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                            value={props.performance.area.calls}/>
+                                            value={props.performance.calls}/>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -92,11 +92,11 @@ function PerformanceComponent(props) {
                                      className={classes.performanceImage}/>
                             </Grid>
                             <PerformanceRow text={CallsPageTranslation.performanceKey1[props.language]}
-                                            value={props.performance.area.volunteers}/>
+                                            value={props.performance.helpers}/>
                             <PerformanceRow text={CallsPageTranslation.performanceKey2[props.language]}
-                                            value={props.performance.area.callers}/>
+                                            value={props.performance.callers}/>
                             <PerformanceRow text={CallsPageTranslation.performanceKey3[props.language]}
-                                            value={props.performance.area.calls}/>
+                                            value={props.performance.calls}/>
                         </Grid>
                     </Grid>
                 </Grid>

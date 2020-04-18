@@ -25,10 +25,20 @@ function storeReducer(state = {
 
     account: {},
     performance: {
-        area: {},
-        account: {}
+        callers: 0,
+        calls: 0,
+        helpers: 0
     },
-    filters: {},
+    filter: {
+        call_type: {
+            only_local: false,
+            only_global: false,
+        },
+        language: {
+            english: false,
+            german: false,
+        }
+    },
     calls: {
         accepted: [],
         fulfilled: []
@@ -49,11 +59,6 @@ function storeReducer(state = {
 
             newState.email = action.email;
             newState.api_key = action.api_key;
-
-            newState.account = action.account;
-            newState.performance = action.performance;
-            newState.filters = action.filters;
-            newState.calls = action.calls;
 
             Cookies.set('email', action.email, {expires: 7});
             Cookies.set('api_key', action.api_key, {expires: 7});
@@ -123,7 +128,7 @@ let cookieApiKey =  Cookies.get('api_key');
 
 if (cookieEmail !== undefined && cookieApiKey !== undefined) {
     store.dispatch(startAutoLogin());
-    axios.post(BACKEND_URL + "login/helper", {email: cookieEmail, api_key: cookieApiKey})
+    axios.post(BACKEND_URL + "authentication/login/helper", {email: cookieEmail, api_key: cookieApiKey})
         .then(response => {
             if (response.data.status === "ok") {
                 // Instant view-change looks laggy rather than fast -> 1.0 second delay
@@ -134,10 +139,8 @@ if (cookieEmail !== undefined && cookieApiKey !== undefined) {
                 store.dispatch(abortAutoLogin());
             }
         }).catch(response => {
-        console.log("Axios promise rejected! Response:");
-        console.log(response);
-        store.dispatch(abortAutoLogin());
-    });
+            store.dispatch(abortAutoLogin());
+        });
 }
 
 
@@ -166,3 +169,4 @@ export const ReduxWrapper = (props) => {
         </Provider>
     );
 };
+

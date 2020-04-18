@@ -4,9 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 import './Footer.scss';
 
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import clsx from 'clsx';
 import Container from "@material-ui/core/Container";
@@ -16,6 +14,7 @@ import CopyrightIcon from '@material-ui/icons/Copyright';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import DeveloperModeIcon from '@material-ui/icons/DeveloperMode';
 import GroupIcon from '@material-ui/icons/Group';
+
 
 const useStyles = makeStyles(theme => ({
     footer: {

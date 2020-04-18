@@ -3,16 +3,11 @@ export const handleLogout = () => ({
     type: "LOGOUT"
 });
 
-export const handleLogin = (response) => ({
+export const handleLogin = (email, api_key) => ({
     type: "LOGIN",
 
-    email: response.data.email,
-    api_key: response.data.api_key,
-
-    account: response.data.account,
-    performance: response.data.performance,
-    filters: response.data.filters,
-    calls: response.data.calls,
+    email: email,
+    api_key: api_key,
 });
 
 export const startAutoLogin = () => ({
