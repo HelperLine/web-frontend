@@ -19,7 +19,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import {CallsPageTranslation} from "../../Translations/Pages/CallsPageTranslation";
 
-import {handleNewAccountData, openMessage, closeMessage} from "../../ReduxActions";
+import {handleNewAccountData, openMessage, closeMessage, setFilter, setForward} from "../../ReduxActions";
 import clsx from "clsx";
 
 
@@ -77,43 +77,55 @@ function FilterComponent(props) {
 
     const classes = useStyles();
 
-    let [typeFilter, setTypeFilter] = useState(props.filter.call_type);
-    let [languageFilter, setLanguageFilter] = useState(props.filter.language);
+    let [formFilter, setFormFilter] = useState(props.filter);
 
-    function handleTypeFilterClick(newState) {
+    function toggleFilter(filterType, category) {
 
         props.closeMessage();
+        let newFilterProposal;
 
-        if (newState.local !== undefined) {
-            if (newState.local) {
-                Object.assign(newState, {global: false})
+        if (filterType === "call_type") {
+            let newCallType;
+
+            if (category === "only_local") {
+                newCallType = {
+                    only_local: !formFilter.call_type.only_local,
+                    only_global: false,
+                }
             } else {
-                Object.assign(newState, {global: typeFilter.global})
+                newCallType = {
+                    only_local: false,
+                    only_global: !formFilter.call_type.only_global,
+                }
+            }
+
+            newFilterProposal = {
+                call_type: newCallType,
+                language: formFilter.language
             }
         } else {
-            if (newState.global) {
-                Object.assign(newState, {local: false})
+            let newLanguage;
+
+            if (category === "english") {
+                newLanguage = {
+                    english: !formFilter.language.english,
+                    german: formFilter.language.german,
+                }
             } else {
-                Object.assign(newState, {local: typeFilter.local})
+                newLanguage = {
+                    english: formFilter.language.english,
+                    german: !formFilter.language.german,
+                }
+            }
+
+            newFilterProposal = {
+                call_type: formFilter.call_type,
+                language: newLanguage
             }
         }
 
-        pushFilterChange({type: newState, language: languageFilter});
-        setTypeFilter(newState);
-    }
-
-    function handleLanguageFilterClick(newState) {
-
-        props.closeMessage();
-
-        if (newState.german !== undefined) {
-            Object.assign(newState, {english: languageFilter.english})
-        } else {
-            Object.assign(newState, {german: languageFilter.german})
-        }
-
-        pushFilterChange({type: typeFilter, language: newState});
-        setLanguageFilter(newState);
+        pushFilterChange(newFilterProposal);
+        setFormFilter(newFilterProposal);
     }
 
 
@@ -126,73 +138,81 @@ function FilterComponent(props) {
         if (!props.account.phone_number_verified) {
             props.openMessage("phone number not verified");
         } else {
+
+            let forwardProposal = {
+                online: true,
+                schedule_active: false,
+                stay_online_after_call: false,
+                schedule: []
+            }
+
             props.closeMessage();
             setSwitchingOnline(true);
-            setTimeout(() => {
-                axios.put(BACKEND_URL + "forward/online", {
-                    email: props.email,
-                    api_key: props.api_key,
 
-                    filter_type_local: typeFilter.local,
-                    filter_type_global: typeFilter.global,
+            axios.put(BACKEND_URL + "settings/forward", {
+                email: props.email,
+                api_key: props.api_key,
+                forward: forwardProposal,
+                filter: formFilter
 
-                    filter_language_english: languageFilter.english,
-                    filter_language_german: languageFilter.german,
-
-                }).then((response) => {
+            }).then(() => {
+                setTimeout(() => {
                     setSwitchingOnline(false);
+                    setForward(forwardProposal);
+                }, 500);
 
-                    if (response.data.status === "ok") {
-                        props.handleNewAccountData(response);
-                    } else {
-                        props.openMessage(response.data.status);
-                    }
-                }).catch(() => {
-                    setSwitchingOnline(false);
-                    props.openMessage("");
-                })
-            }, 500);
+            }).catch(() => {
+                setSwitchingOnline(false);
+                props.openMessage("");
+            })
         }
     }
 
 
     function goOffline() {
+        let forwardProposal = {
+            online: false,
+            schedule_active: false,
+            stay_online_after_call: false,
+            schedule: []
+        }
+
         props.closeMessage();
         setSwitchingOnline(true);
-        setTimeout(() => {
-            axios.put(BACKEND_URL + "forward/offline", {
-                email: props.email,
-                api_key: props.api_key,
 
-            }).then((response) => {
-                setSwitchingOnline(false);
+        axios.put(BACKEND_URL + "settings/forward", {
+            email: props.email,
+            api_key: props.api_key,
+            forward: forwardProposal
 
-                if (response.data.status === "ok") {
-                    props.handleNewAccountData(response);
-                } else {
-                    console.log(response.data.status);
-                }
-            }).catch(() => {
+        }).then(() => {
+            setTimeout(() => {
                 setSwitchingOnline(false);
-                props.openMessage("");
-            })
-        }, 500);
+                setForward(forwardProposal);
+            }, 500);
+
+        }).catch(() => {
+            setSwitchingOnline(false);
+            props.openMessage("");
+        })
     }
 
 
-    function pushFilterChange(newState) {
-        axios.put(BACKEND_URL + "database/helper", {
+    function pushFilterChange(newFilterProposal) {
+
+        props.closeMessage();
+
+        axios.put(BACKEND_URL + "settings/filter", {
             email: props.email,
             api_key: props.api_key,
-
-            filter_call_type_local: newState.call_type.only_local,
-            filter_call_type_global: newState.call_type.only_global,
-
-            filter_language_english: newState.language.english,
-            filter_language_german: newState.language.german,
+            filter: newFilterProposal
 
         }).then(() => {
-            console.log("Filters successfully changed");
+            setTimeout(() => {
+                console.log("Filters successfully changed");
+                setFilter(newFilterProposal);
+            }, 500);
+
         }).catch(() => {
             console.log("Filters could not be changed");
         })
@@ -202,22 +222,17 @@ function FilterComponent(props) {
 
         if (!props.account.email_verified) {
             props.openMessage("email not verified");
-        } else if (!languageFilter.german && !languageFilter.english) {
+        } else if (!formFilter.language.german && !formFilter.language.english) {
             props.openMessage("no language selected");
         } else {
             props.closeMessage();
             setLoadingNewCall(true);
             setTimeout(() => {
 
-                axios.post(BACKEND_URL + "calls/accept", {
+                axios.post(BACKEND_URL + "/database/call", {
                     email: props.email,
                     api_key: props.api_key,
-
-                    filter_type_local: typeFilter.local,
-                    filter_type_global: typeFilter.global,
-
-                    filter_language_german: languageFilter.german,
-                    filter_language_english: languageFilter.english,
+                    filter: formFilter
                 })
                     .then(response => {
                         setLoadingNewCall(false);
@@ -247,15 +262,15 @@ function FilterComponent(props) {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={typeFilter.local}
-                                      onChange={() => handleTypeFilterClick({local: !typeFilter.local})}/>
+                            <Checkbox checked={formFilter.call_type.only_local}
+                                      onChange={() => toggleFilter("call_type", "only_local")}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter2[props.language]}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={typeFilter.global}
-                                      onChange={() => handleTypeFilterClick({global: !typeFilter.global})}/>
+                            <Checkbox checked={formFilter.call_type.only_global}
+                                      onChange={() => toggleFilter("call_type", "only_global")}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter3[props.language]}
                             </Typography>
@@ -270,15 +285,15 @@ function FilterComponent(props) {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={languageFilter.german}
-                                      onChange={() => handleLanguageFilterClick({german: !languageFilter.german})}/>
+                            <Checkbox checked={formFilter.language.german}
+                                      onChange={() => toggleFilter("language", "german")}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter5[props.language]}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} className={classes.checkListRow}>
-                            <Checkbox checked={languageFilter.english}
-                                      onChange={() => handleLanguageFilterClick({english: !languageFilter.english})}/>
+                            <Checkbox checked={formFilter.language.english}
+                                      onChange={() => toggleFilter("language", "english")}/>
                             <Typography variant="subtitle1">
                                 {CallsPageTranslation.filter6[props.language]}
                             </Typography>
@@ -301,17 +316,17 @@ function FilterComponent(props) {
                         <div className={classes.wrapper}>
                             <Button variant="contained"
                                     disabled={loadingNewCall || switchingOnline}
-                                    color={props.account.online ? "secondary" : ""}
-                                    onClick={props.account.online ? goOffline : goOnline}
+                                    color={props.forward.online ? "secondary" : ""}
+                                    onClick={props.forward.online ? goOffline : goOnline}
                                     startIcon={switchingOnline ?
                                         <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
-                                        (props.account.online ?
+                                        (props.forward.online ?
                                                 <CloudDoneIcon className={classes.buttonIcon}/> :
                                                 <CloudOffIcon className={classes.buttonIcon}/>
                                         )
                                     }
-                                    className={clsx(classes.button, (!props.account.online ? classes.grayButton : ""))}>
-                                {props.account.online ?
+                                    className={clsx(classes.button, (!props.forward.online ? classes.grayButton : ""))}>
+                                {props.forward.online ?
                                     CallsPageTranslation.currentlyOnline[props.language] :
                                     CallsPageTranslation.currentlyOffline[props.language]}
                             </Button>
@@ -336,15 +351,20 @@ const mapStateToProps = state => ({
 
     account: state.account,
     filter: state.filter,
+    forward: state.forward,
 });
 
 const mapDispatchToProps = dispatch => ({
     handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
     openMessage: (text) => dispatch(openMessage(text)),
     closeMessage: () => dispatch(closeMessage()),
+
+    setFilter: (filter) => dispatch(setFilter(filter)),
+    setForward: (forward) => dispatch(setForward(forward)),
 });
 
 export const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);
+
 
 
 

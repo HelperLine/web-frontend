@@ -11,6 +11,7 @@ export const handleLogin = (email, fetchallResponse) => ({
 
     account: fetchallResponse.account,
     filter: fetchallResponse.filter,
+    forward: fetchallResponse.forward,
     calls: fetchallResponse.calls,
     performance: fetchallResponse.performance,
 });
@@ -48,4 +49,17 @@ export const openMessage = (text) => ({
 
 export const closeMessage = () => ({
     type: "CLOSE_MESSAGE",
+});
+
+
+
+
+export const setForward = (forward) => ({
+    type: "SET_FORWARD",
+    forward: forward,
+});
+
+export const setFilter = (filter) => ({
+    type: "SET_FILTER",
+    filter: filter,
 });

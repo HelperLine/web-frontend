@@ -41,6 +41,11 @@ function storeReducer(state = {
             german: false,
         }
     },
+    forward: {
+        online: false,
+        schedule_active: false,
+        schedule: []
+    },
     calls: {
         accepted: [],
         fulfilled: []
@@ -68,6 +73,7 @@ function storeReducer(state = {
 
             newState.account = action.account;
             newState.filter = action.filter;
+            newState.forward = action.forward;
             newState.calls = action.calls;
             newState.performance = action.performance;
 
@@ -180,3 +186,4 @@ export const ReduxWrapper = (props) => {
         </Provider>
     );
 };
+
