@@ -123,7 +123,7 @@ function FilterComponent(props) {
 
 
     function goOnline() {
-        if (!props.account.phone_number_verified || !props.account.phone_number_confirmed) {
+        if (!props.account.phone_number_verified) {
             props.openMessage("phone number not verified");
         } else {
             props.closeMessage();
@@ -229,9 +229,9 @@ function FilterComponent(props) {
                         }
 
                     }).catch(() => {
-                        setLoadingNewCall(false);
-                        props.openMessage("");
-                    });
+                    setLoadingNewCall(false);
+                    props.openMessage("");
+                });
             }, 1000);
         }
     }
@@ -306,8 +306,8 @@ function FilterComponent(props) {
                                     startIcon={switchingOnline ?
                                         <CircularProgress size={20} className={classes.buttonIcon} color="secondary"/> :
                                         (props.account.online ?
-                                            <CloudDoneIcon className={classes.buttonIcon}/> :
-                                            <CloudOffIcon className={classes.buttonIcon}/>
+                                                <CloudDoneIcon className={classes.buttonIcon}/> :
+                                                <CloudOffIcon className={classes.buttonIcon}/>
                                         )
                                     }
                                     className={clsx(classes.button, (!props.account.online ? classes.grayButton : ""))}>
@@ -345,5 +345,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);
+
+
+
+
 
 

@@ -23,11 +23,13 @@ function storeReducer(state = {
     email: "",
     api_key: "",
 
-    account: {},
-    performance: {
-        callers: 0,
-        calls: 0,
-        helpers: 0
+    account: {
+        email: "",
+        email_verified: "",
+        phone_number: "",
+        phone_number_verified: "",
+        zip_code: "",
+        country: "",
     },
     filter: {
         call_type: {
@@ -43,7 +45,11 @@ function storeReducer(state = {
         accepted: [],
         fulfilled: []
     },
-
+    performance: {
+        callers: 0,
+        calls: 0,
+        helpers: 0
+    },
     message: {
         open: false,
         text: ""
@@ -59,6 +65,11 @@ function storeReducer(state = {
 
             newState.email = action.email;
             newState.api_key = action.api_key;
+
+            newState.account = action.account;
+            newState.filter = action.filter;
+            newState.calls = action.calls;
+            newState.performance = action.performance;
 
             Cookies.set('email', action.email, {expires: 7});
             Cookies.set('api_key', action.api_key, {expires: 7});
@@ -118,6 +129,7 @@ function storeReducer(state = {
     }
 }
 
+// noinspection JSCheckFunctionSignatures
 let store = createStore(storeReducer);
 
 
@@ -129,18 +141,17 @@ let cookieApiKey =  Cookies.get('api_key');
 if (cookieEmail !== undefined && cookieApiKey !== undefined) {
     store.dispatch(startAutoLogin());
     axios.post(BACKEND_URL + "authentication/login/helper", {email: cookieEmail, api_key: cookieApiKey})
-        .then(response => {
-            if (response.data.status === "ok") {
-                // Instant view-change looks laggy rather than fast -> 1.0 second delay
-                setTimeout(() => {
-                    store.dispatch(handleLogin(response));
-                }, 1000);
-            } else {
+        .then(loginResponse => {
+            let query_string = "database/fetchall?email=" + cookieEmail + "&api_key=" + loginResponse.data.api_key;
+            axios.get(BACKEND_URL + query_string)
+                .then(fetchallResponse => {
+                    store.dispatch(handleLogin(cookieEmail, fetchallResponse.data));
+                }).catch(() => {
                 store.dispatch(abortAutoLogin());
-            }
-        }).catch(response => {
-            store.dispatch(abortAutoLogin());
-        });
+            })
+        }).catch(() => {
+        store.dispatch(abortAutoLogin());
+    });
 }
 
 
@@ -169,4 +180,3 @@ export const ReduxWrapper = (props) => {
         </Provider>
     );
 };
-

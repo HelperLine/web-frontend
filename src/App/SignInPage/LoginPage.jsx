@@ -121,10 +121,19 @@ export function LoginPageComponent(props) {
         axios.post(BACKEND_URL + "authentication/login/helper", {
             email: state.email, password: state.password
         })
-            .then(response => {
-                setTimeout(() => {
-                    props.handleLogin(state.email, response.data.api_key);
-                }, 500);
+            .then(loginResponse => {
+                let query_string = "database/fetchall?email=" + state.email + "&api_key=" + loginResponse.data.api_key;
+                axios.get(BACKEND_URL + query_string)
+                    .then(fetchallResponse => {
+                        props.handleLogin(state.email, fetchallResponse.data);
+                    }).catch(error => {
+                        stopLoading();
+                        if (error.response) {
+                            props.openMessage(error.response.data.status);
+                        } else {
+                            props.openMessage("");
+                        }
+                    });
             }).catch(error => {
                 stopLoading();
                 if (error.response) {
