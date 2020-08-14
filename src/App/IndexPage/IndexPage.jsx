@@ -59,7 +59,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleNewAccountData: (response) => dispatch(handleNewAccountData(response)),
 });
 
 export const IndexPage = connect(mapStateToProps, mapDispatchToProps)(IndexPageComponent);

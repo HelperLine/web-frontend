@@ -12,7 +12,7 @@ import './Wrapper.scss';
 /* Component Imports ------------------------------------------------------------- */
 import {ReduxWrapper} from "./ReduxWrapper";
 import {Router} from "./Router";
-import {MessageSnackbar} from "../Components/MessageSnackbar";
+import {ShutdownSnackbar} from "../Components/ShutdownSnackbar";
 
 
 /* Component --------------------------------------------------------------------- */
@@ -65,7 +65,7 @@ export const Wrapper = () => {
 			<BreakpointProvider>
 				<ReduxWrapper>
 					<Router/>
-					<MessageSnackbar/>
+					<ShutdownSnackbar/>
 				</ReduxWrapper>
 			</BreakpointProvider>
 		</ThemeProvider>

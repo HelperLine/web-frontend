@@ -135,4 +135,9 @@ export const IndexPageTranslation = {
         deutsch: "Bingo! Kontaktiert uns via",
     },
 
+    supportedBy: {
+        english: 'Supported By',
+        deutsch: 'Unterstützt durch',
+    }
+
 };

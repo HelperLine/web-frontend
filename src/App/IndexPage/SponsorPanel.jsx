@@ -8,6 +8,8 @@ import MongoDBLogo from './sponsors/MongoDBLogo_800px.png';
 import GCPLogo from './sponsors/GCPLogo_800px.png';
 import TwilioLogo from './sponsors/TwilioLogo_800px.png';
 
+import {IndexPageTranslation} from "../../Translations/Pages/IndexPageTranslation";
+
 import clsx from "clsx";
 
 export const SponsorPanel = (props) => {
@@ -20,7 +22,7 @@ export const SponsorPanel = (props) => {
                 <Grid container justify="center" spacing={4}>
                     <Grid item xs={12}>
                         <Typography variant="h5" className={clsx(classes.centerText)}>
-                            Proudly Sponsored By:
+                            {IndexPageTranslation['supportedBy'][props.language]}:
                         </Typography>
                     </Grid>
                     <Grid item xs={8} md={4}>
